@@ -1,0 +1,31 @@
+I"’(function() {
+  jQuery(function() {
+    var form_id;
+    form_id = "#" + $("[id^=edit_product]").attr('id');
+    console.log(form_id);
+    return $(form_id).fileupload({
+      dataType: "script",
+      add: function(e, data) {
+        var file, types;
+        types = /(\.|\/)(gif|jpe?g|png|zip)$/i;
+        file = data.files[0];
+        if (types.test(file.type) || types.test(file.name)) {
+          data.context = $(tmpl("template-upload", file));
+          $(form_id).append(data.context);
+          return data.submit();
+        } else {
+          return alert(file.name + " is not a gif, jpeg, or png image file");
+        }
+      },
+      progress: function(e, data) {
+        var progress;
+        if (data.context) {
+          progress = parseInt(data.loaded / data.total * 100, 10);
+          return data.context.find('.bar').css('width', progress + '%');
+        }
+      }
+    });
+  });
+
+}).call(this);
+:ET

@@ -1,0 +1,19 @@
+= simple_form_for [@supplier, @address], :html => { :class => 'form-horizontal' } do |f|
+  = f.input :name
+  = error_span(@address[:name])
+  = f.input :pincode
+  = error_span(@address[:pincode])
+  = f.input :address_line_1
+  = error_span(@address[:address_line_1])
+  = f.input :address_line_2
+  = error_span(@address[:address_line_2])
+  = f.input :city
+  = error_span(@address[:city])
+  = f.input :state
+  = error_span(@address[:state])
+  = f.input :country
+  = error_span(@address[:country])
+  = f.input :supplier_id
+  = error_span(@address[:supplier_id])
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), supplier_addresses_path, :class => 'btn btn-default'

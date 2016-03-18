@@ -1,0 +1,4 @@
+- if @product.new_record
+  = alert("Failled to upload image")
+- else
+  $(#images).append("= j render(@product)")

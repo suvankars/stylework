@@ -1,0 +1,11 @@
+= simple_form_for @tax_rate, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :name
+  = error_span(@tax_rate[:name])
+  = f.input :code
+  = error_span(@tax_rate[:code])
+  = f.input :description
+  = error_span(@tax_rate[:description])
+  = f.input :rate
+  = error_span(@tax_rate[:rate])
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), tax_rates_path, :class => 'btn btn-default'

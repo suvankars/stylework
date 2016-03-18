@@ -1,0 +1,5 @@
+- model_class = TaxRate
+= content_for :header do
+  %p.buttons= link_to t('back_to_tax_rate_list') , :tax_rates, :class => 'btn btn-primary'
+  %h2=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
+= render :partial => "form"

@@ -1,0 +1,5 @@
+= f.select :field_type, %w[text_field check_box shirt_sizes numeric mg], :class => "caret"
+= f.text_field :name, placeholder: "Tyme custom field name here", :class => "form-control"
+= f.hidden_field :_destroy
+= link_to "remove", '#', class: "remove_fields"
+%br 

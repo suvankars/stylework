@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  price_list: MyString
+  currency: MyString
+  tax_code: MyString
+  email: MyString
+  registration_number: MyString
+  payment_method: MyString
+  credit_limit: 1
+  credit_lead_time: 1
+  bank_name: MyString
+  account_number: 1
+  IFSC_code: MyString
+  supplier_id: 
+
+two:
+  price_list: MyString
+  currency: MyString
+  tax_code: MyString
+  email: MyString
+  registration_number: MyString
+  payment_method: MyString
+  credit_limit: 1
+  credit_lead_time: 1
+  bank_name: MyString
+  account_number: 1
+  IFSC_code: MyString
+  supplier_id: 

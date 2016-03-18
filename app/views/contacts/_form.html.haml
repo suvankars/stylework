@@ -1,0 +1,17 @@
+= simple_form_for [@supplier, @contact], :html => { :class => 'form-horizontal' } do |f|
+  = f.input :email
+  = error_span(@contact[:email])
+  = f.input :telephone
+  = error_span(@contact[:telephone])
+  = f.input :mobile
+  = error_span(@contact[:mobile])
+  = f.input :website
+  = error_span(@contact[:website])
+  = f.input :fax
+  = error_span(@contact[:fax])
+  = f.input :skype
+  = error_span(@contact[:skype])
+  = f.input :supplier_id
+  = error_span(@contact[:supplier_id])
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), supplier_contacts_path, :class => 'btn btn-default'

@@ -1,0 +1,27 @@
+= simple_form_for [@supplier, @finance], :html => { :class => 'form-horizontal' } do |f|
+  = f.input :price_list
+  = error_span(@finance[:price_list])
+  = f.input :currency
+  = error_span(@finance[:currency])
+  = f.input :tax_code
+  = error_span(@finance[:tax_code])
+  = f.input :email
+  = error_span(@finance[:email])
+  = f.input :registration_number
+  = error_span(@finance[:registration_number])
+  = f.input :payment_method
+  = error_span(@finance[:payment_method])
+  = f.input :credit_limit
+  = error_span(@finance[:credit_limit])
+  = f.input :credit_lead_time
+  = error_span(@finance[:credit_lead_time])
+  = f.input :bank_name
+  = error_span(@finance[:bank_name])
+  = f.input :account_number
+  = error_span(@finance[:account_number])
+  = f.input :IFSC_code
+  = error_span(@finance[:IFSC_code])
+  = f.input :supplier_id
+  = error_span(@finance[:supplier_id])
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), supplier_path, :class => 'btn btn-default'

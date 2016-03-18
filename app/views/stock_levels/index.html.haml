@@ -1,0 +1,32 @@
+- model_class = StockLevel
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+  = simple_form_for @new_stock_level do |f|
+    = hidden_field_tag 'product_id', params[:product_id]
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th{:width => '25%'}= model_class.human_attribute_name(:date)
+          %th{:width => '50%'}= model_class.human_attribute_name(:description)
+          %th{:width => '25%'}= model_class.human_attribute_name(:adjustment)
+      %tbody
+        %tr.form
+          %td
+          %td.desc= f.input :description, label: false 
+          %td
+            .input-group
+              = f.input :adjustment, label: false 
+              %span.input-group-btn
+                = f.button :submit, 'Add', :class => 'btn-primary'
+            - for stock_level in @stock_levels
+              %tr
+                %td= l(stock_level.created_at, format: :long)
+                %td= stock_level.description
+                %td
+                  .input-group
+                    =stock_level.adjustment > 0  ? "+#{stock_level.adjustment}" : stock_level.adjustment
+                    %span.input-group-btn
+                      %span.float-right= link_to t('.destroy', :default => t("helpers.links.destroy")), stock_level_path(stock_level), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+
