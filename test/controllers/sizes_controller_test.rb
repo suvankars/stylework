@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SizesControllerTest < ActionController::TestCase
+class Backend::SizesControllerTest < BackendController
   setup do
     @size = sizes(:one)
   end

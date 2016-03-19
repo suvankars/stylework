@@ -1,0 +1,43 @@
+- model_class = Finance
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:price_list)
+      %th= model_class.human_attribute_name(:currency)
+      %th= model_class.human_attribute_name(:tax_code)
+      %th= model_class.human_attribute_name(:email)
+      %th= model_class.human_attribute_name(:registration_number)
+      %th= model_class.human_attribute_name(:payment_method)
+      %th= model_class.human_attribute_name(:credit_limit)
+      %th= model_class.human_attribute_name(:credit_lead_time)
+      %th= model_class.human_attribute_name(:bank_name)
+      %th= model_class.human_attribute_name(:account_number)
+      %th= model_class.human_attribute_name(:IFSC_code)
+      %th= model_class.human_attribute_name(:supplier_id)
+      %th= model_class.human_attribute_name(:created_at)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @finances.each do |finance|
+      %tr
+        %td= link_to finance.id, finance_path(finance)
+        %td= finance.price_list
+        %td= finance.currency
+        %td= finance.tax_code
+        %td= finance.email
+        %td= finance.registration_number
+        %td= finance.payment_method
+        %td= finance.credit_limit
+        %td= finance.credit_lead_time
+        %td= finance.bank_name
+        %td= finance.account_number
+        %td= finance.IFSC_code
+        %td= finance.supplier_id
+        %td=l finance.created_at
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_finance_path(finance), :class => 'btn btn-default btn-xs'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), finance_path(finance), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_finance_path, :class => 'btn btn-primary'

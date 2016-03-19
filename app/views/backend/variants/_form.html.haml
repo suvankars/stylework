@@ -1,0 +1,25 @@
+= link_to t('variants.back_to_variants'), [@product, :variants]
+
+= simple_form_for [@product, @variant], :url => @variant.new_record? ? product_variants_path(@product) : product_variant_path(@product, @variant), :html => {:multipart => true} do |f|
+  
+  = f.input :name
+  = error_span(@variant[:name])
+
+  =f.input :permalink
+  = error_span(@variant[:permalink])
+
+  =f.input :skuid
+  = error_span(@variant[:skuid])
+
+  = f.input :price
+  = error_span(@variant[:price])
+  = f.input :cost_price
+  = error_span(@variant[:cost_price])
+  = f.input :tax_rate_id, :label => t('variants.tax_rate'), :collection => @tax_rates, :selected => @default_tax_rate, :data => {:placeholder => t('shoppe.variants.no_tax')}
+  = f.input :size_id, :collection => @sizes, :selected => @default_size
+    
+  = f.input :quantity
+  = error_span(@product[:quantity])
+
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), products_path, :class => 'btn btn-default'

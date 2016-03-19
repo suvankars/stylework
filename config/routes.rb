@@ -10,34 +10,39 @@ Rails.application.routes.draw do
         resources :categories
       end
   end
-  resources :sizes
-  resources :tax_rates
-  resources :brands
-  resources :brands
-  resources :brands
-  scope "suppliers/:supplier_id" do
-    resources :registration_steps
-  end
 
-  resources :suppliers do
-    resources :contacts
-    resources :addresses
-    resources :finances
-  end
+  scope '/admin', :module => 'backend' do
   
-  resources :stock_levels, :only => [:index, :create, :destroy]
-    
-  get 'dashboard' => 'dashboard#index'
+      root 'welcome#index'
+      resources :sizes
+      resources :tax_rates
+      resources :brands
+      resources :brands
+      resources :brands
+      scope "suppliers/:supplier_id" do
+        resources :registration_steps
+      end
 
-  resources :products do
-    resources :variants
-    resources :images, :only => [:create, :destroy]
-  end
+      resources :suppliers do
+        resources :contacts
+        resources :addresses
+        resources :finances
+      end
+      
+      resources :stock_levels, :only => [:index, :create, :destroy]
+        
+      get 'dashboard' => 'dashboard#index'
 
-  resources :categories do
-    resources :subcategories
-  end
+      resources :products do
+        resources :variants
+        resources :images, :only => [:create, :destroy]
+      end
 
+      resources :categories do
+        resources :subcategories
+      end
+    end
+  #end
   #resources :images, :only => [:create, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -45,7 +50,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'welcome#index'
+   
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

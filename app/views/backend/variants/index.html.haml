@@ -1,0 +1,25 @@
+%h1= t('variants.variants_of', product: @product.name.titleize)
+
+= link_to t('variants.edit_product'), [:edit, @product], :class => 'button'
+= link_to t('variants.new_variant'), [:new, @product, :variant], :class => 'button green'
+
+.table
+  %table.data
+    %thead
+      %tr
+        %th{:width => '20%'}= t('sku')
+        %th{:width => '50%'}= t('name')
+        %th{:width => '15%'}= t('price')
+        %th{:width => '15%'}= t('stock')
+    %tdody
+      - if (@variants.nil? or @variants.empty?)
+        %tr.empty
+          %td{:colspan => 4}= t('variants.no_products')
+      - else  
+        -@variants.each do |variant|
+          %tr
+            %td= variant.skuid
+            %td= link_to variant.name, edit_product_variant_path(@product, variant)
+            %td= number_to_currency variant.price
+            %td= variant.quantity
+

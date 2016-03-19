@@ -1,0 +1,9 @@
+= simple_form_for @size, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :name
+  = error_span(@size[:name])
+  = f.input :volume
+  = error_span(@size[:volume])
+  = f.input :unit
+  = error_span(@size[:unit])
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), sizes_path, :class => 'btn btn-default'

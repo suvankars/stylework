@@ -1,0 +1,5 @@
+= content_for :header do
+  %p.buttons= link_to t('.back_to_supplier_list'), suppliers_path, :class => 'btn btn-primary'
+  %h2= 'Contact Information'
+
+= render "backend/suppliers/contact_form", contact: @contact

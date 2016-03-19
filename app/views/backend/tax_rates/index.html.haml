@@ -1,0 +1,29 @@
+- model_class = TaxRate
+= content_for :header do
+  %p.buttons
+    = link_to t('.new', :default => t("helpers.links.new")), new_tax_rate_path, :class => 'btn btn-success'
+  %h2=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:code)
+      %th= model_class.human_attribute_name(:description)
+      %th= model_class.human_attribute_name(:rate)
+      %th= model_class.human_attribute_name(:created_at)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @tax_rates.each do |tax_rate|
+      %tr
+        %td= link_to tax_rate.id, tax_rate_path(tax_rate)
+        %td= tax_rate.name
+        %td= tax_rate.code
+        %td= tax_rate.description
+        %td= tax_rate.rate
+        %td=l tax_rate.created_at
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_tax_rate_path(tax_rate), :class => 'btn btn-default btn-xs'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), tax_rate_path(tax_rate), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+

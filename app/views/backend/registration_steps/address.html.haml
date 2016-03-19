@@ -1,0 +1,9 @@
+= content_for :header do
+ %p.buttons= link_to t('.back_to_supplier_list'), suppliers_path, :class => 'btn btn-primary'
+ %h2= 'Address details'
+
+- if !@addresses.empty?
+ - @addresses.each do |address|
+  = render "backend/suppliers/address_form", address: address
+- else
+ = render "backend/suppliers/address_form", address: @address

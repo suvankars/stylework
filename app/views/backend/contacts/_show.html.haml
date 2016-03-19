@@ -1,0 +1,40 @@
+- model_class = Contact
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.titleize
+  
+- if @contact.nil?
+  %h4= "No Contact added to this #{@supplier.company} supplier"
+- else   
+  %p
+    %strong= model_class.human_attribute_name(:email) + ':'
+    %br
+    = @contact.email
+  %p
+    %strong= model_class.human_attribute_name(:telephone) + ':'
+    %br
+    = @contact.telephone
+  %p
+    %strong= model_class.human_attribute_name(:mobile) + ':'
+    %br
+    = @contact.mobile
+  %p
+    %strong= model_class.human_attribute_name(:website) + ':'
+    %br
+    = @contact.website
+  %p
+    %strong= model_class.human_attribute_name(:fax) + ':'
+    %br
+    = @contact.fax
+  %p
+    %strong= model_class.human_attribute_name(:skype) + ':'
+    %br
+    = @contact.skype
+  %p
+    %strong= model_class.human_attribute_name(:supplier_id) + ':'
+    %br
+    = @contact.supplier_id
+
+
+  = link_to t('.back', :default => t("helpers.links.back")), supplier_path, :class => 'btn btn-default'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_supplier_contact_path(@supplier, @contact), :class => 'btn btn-default'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), supplier_contact_path(@supplier, @contact), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

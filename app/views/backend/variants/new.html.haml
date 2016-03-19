@@ -1,0 +1,4 @@
+- @page_title = "#{t('shoppe.variants.variants')} - #{@product.name}"
+= link_to t('variants.back_to_variants') , [@product, :variants]
+%h2.products= t('variants.variants_of', product: @product.name.titleize)
+=render :partial => 'form'
