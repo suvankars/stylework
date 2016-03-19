@@ -1,16 +1,20 @@
-%h1= t('variants.variants_of', product: @product.name.titleize)
+- model_class = Product
+= content_for :header do
+  %p.buttons= link_to t('.back_to_product_list'), suppliers_path, :class => 'btn btn-primary'
+  %p.buttons= link_to t('variants.edit_product'), [:edit, @product], :class => 'btn btn-primary'
+  %p.buttons= link_to t('variants.new_variant'), [:new, @product, :variant], :class => 'btn btn-primary'
+  %h2= t('variants.variants_of', product: @product.name.titleize)
 
-= link_to t('variants.edit_product'), [:edit, @product], :class => 'button'
-= link_to t('variants.new_variant'), [:new, @product, :variant], :class => 'button green'
 
-.table
-  %table.data
-    %thead
-      %tr
-        %th{:width => '20%'}= t('sku')
-        %th{:width => '50%'}= t('name')
-        %th{:width => '15%'}= t('price')
-        %th{:width => '15%'}= t('stock')
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:sku)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:price)
+      %th= model_class.human_attribute_name(:stock)
+      %th.headactions
+        =t '.actions', :default => t("helpers.actions")
     %tdody
       - if (@variants.nil? or @variants.empty?)
         %tr.empty
@@ -22,4 +26,9 @@
             %td= link_to variant.name, edit_product_variant_path(@product, variant)
             %td= number_to_currency variant.price
             %td= variant.quantity
+            %td.actions
+              =link_to 'edit', edit_product_variant_path(@product, variant), :class => 'btn btn-default btn-xs'
+              = link_to t('.destroy', :default => t("helpers.links.destroy")), product_variant_path(@product, variant), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+           
 
+            

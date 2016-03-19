@@ -10,10 +10,11 @@ Rails.application.routes.draw do
         resources :categories
       end
   end
+  
+  root 'backend/welcome#index'
 
   scope '/admin', :module => 'backend' do
   
-      root 'welcome#index'
       resources :sizes
       resources :tax_rates
       resources :brands
