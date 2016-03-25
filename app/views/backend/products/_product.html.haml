@@ -1,7 +1,33 @@
 - if !@product.cloudinary_images.nil?
   = link_to 'Remove All', remove_all_product_images_path(@product), :method => :get
 
+  .deleteAll
+    = link_to "Delete All", "#", :method => :get, :rel => "nofollow", data: { confirm: "Are you sure you want to delete ALL images?" }
+
   -@product.cloudinary_images.each do |image|
-    %li
+    %li{:id => image["public_id"]}
       = image_tag(image["thumbnail_url"])
-      = link_to "Delete", product_image_path(@product, image["public_id"]), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" }
+      = link_to "Delete", product_image_path(@product, image["public_id"]), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" }, :remote => true
+      
+:javascript
+  $(document).ready(function() {
+      $('.deleteAll').click(function () {
+          var Url = "#{Rails.application.routes.url_helpers.remove_all_product_images_path(@product)}"
+          alert(Url);
+          $('#images').empty();
+          $(this).closest('p').fadeOut(1000);
+          $.get(Url);
+          return false;
+      });
+  });
+
+  $(document).ready(function() {
+      $('.deleteOne').click(function () {
+          var Url = "#{Rails.application.routes.url_helpers.remove_all_product_images_path(@product)}"
+          alert(Url);
+          $('#images').empty();
+          $(this).closest('p').fadeOut(1000);
+          $.get(Url);
+          return false;
+      });
+  });

@@ -9,13 +9,26 @@ class Backend::ImagesController < BackendController
 
   def destroy
     #binding.pry
+    @product
     remove_by_pub_id(params[:id])
+    @public_id = params[:id]
     flash[:error] = "Failed deleting image" unless @product.save
-    redirect_to :back
+    @product
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js { }
+    end
   end
 
   def remove_all
-    #TODO find a way to delete elements from fields 
+    #TODO find a way to delete each elements from cloudinary_image fields
+    #This is bad
+    #Delete all image from cloude and as well as from DB
+
+    @product.cloudinary_images.each do |image|
+      Cloudinary::Uploader.destroy(image["public_id"])
+    end
+
     @product.cloudinary_images = [] #Just assiging blank; to get work done as of now
     @product.save
     redirect_to :back

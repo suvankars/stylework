@@ -1,0 +1,7 @@
+alert("@public_id");
+/$('#images ').empty();
+console.log("I am here");
+var public_id = "#{@public_id}";
+console.log(public_id);
+console.log('#'+public_id.replace(/\//g, "\\\/"));
+$('#'+public_id.replace(/\//g, "\\\/")).empty();
