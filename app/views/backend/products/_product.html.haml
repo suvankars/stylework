@@ -1,0 +1,7 @@
+- if !@product.cloudinary_images.nil?
+  = link_to 'Remove All', remove_all_product_images_path(@product), :method => :get
+
+  -@product.cloudinary_images.each do |image|
+    %li
+      = image_tag(image["thumbnail_url"])
+      = link_to "Delete", product_image_path(@product, image["public_id"]), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" }

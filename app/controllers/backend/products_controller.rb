@@ -114,8 +114,15 @@ end
   end
   
   def update
-   if request.xhr?
-    save_images
+    if request.xhr?
+      respond_to do |format|
+        if @product.update_column :cloudinary_images, populate_images   
+          format.js   {}
+        else
+          render js: "alert('There is some issue to store images')"
+        end
+    end
+    #save_images
   
    else 
      respond_to do |format|

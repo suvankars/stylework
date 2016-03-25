@@ -36,7 +36,12 @@ Rails.application.routes.draw do
 
       resources :products do
         resources :variants
-        resources :images, :only => [:create, :destroy]
+        resources :images, :only => [:create, :destroy] do
+          collection do
+            get 'remove_all'
+          end
+        end
+
       end
 
       resources :categories do

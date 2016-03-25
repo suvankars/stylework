@@ -8,8 +8,16 @@ class Backend::ImagesController < BackendController
   end
 
   def destroy
-    remove_image_at_index(params[:id].to_i)
+    #binding.pry
+    remove_by_pub_id(params[:id])
     flash[:error] = "Failed deleting image" unless @product.save
+    redirect_to :back
+  end
+
+  def remove_all
+    #TODO find a way to delete elements from fields 
+    @product.cloudinary_images = [] #Just assiging blank; to get work done as of now
+    @product.save
     redirect_to :back
   end
 
@@ -23,6 +31,14 @@ class Backend::ImagesController < BackendController
     images = @product.images # copy the old images 
     images += new_images # concat old images with new ones
     @product.images = images # assign back
+  end
+
+  def remove_by_pub_id(public_id)
+    #binding.pry
+    remain_images = @product.cloudinary_images # copy the array
+    deleted_image = @product.cloudinary_images.delete_if { |i| i["public_id"] == public_id } # delete the target image
+    Cloudinary::Uploader.destroy(public_id, options = {})
+    @product.cloudinary_images = remain_images # re-assign back
   end
 
   def remove_image_at_index(index)
