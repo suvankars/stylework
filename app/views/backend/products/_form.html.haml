@@ -36,8 +36,13 @@
     
   = field_set_tag 'Attachments' do
     %a.btn.btn-primary#upload_widget_opener{:href => "#"} Upload multiple images
-    %span.status
-    .preview
+    %ul#images
+      = render @product
+
+
+    / %span.status /Uncommment this two line to show uploaded images in unobtrusive way in edit page 
+    / .preview  /Uncomment this too
+            
     / %dl
     /   %dd
     /     - if !@product.cloudinary_images.nil?
