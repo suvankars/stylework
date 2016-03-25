@@ -109,9 +109,11 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.integer  "tax_rate_id"
     t.integer  "brand_id"
     t.integer  "size_id"
+    t.integer  "user_id"
     t.string   "images",                                    default: "--- []\n"
     t.string   "image_name"
-    t.integer  "user_id"
+    t.string   "image_id"
+    t.text     "cloudinary_images"
   end
 
   add_index "products", ["brand_id"], name: "index_products_on_brand_id"

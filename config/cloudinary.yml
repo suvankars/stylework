@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dijs1yfba
+  api_key: '488196417269728'
+  api_secret: 1aRCLZf05HItEdyb8k5HzqHXmw8
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: dijs1yfba
+  api_key: '488196417269728'
+  api_secret: 1aRCLZf05HItEdyb8k5HzqHXmw8
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: dijs1yfba
+  api_key: '488196417269728'
+  api_secret: 1aRCLZf05HItEdyb8k5HzqHXmw8
+  enhance_image_tag: true
+  static_image_support: false

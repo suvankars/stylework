@@ -31,22 +31,7 @@ end
   end
 
   # GET /products/new
-  def new
-    #TODO Refactor, Nasty code
-    @product = Product.new(subcategory_id: params[:subcategory_id])
-    @subcategory_names = Subcategory.all.map{|sub| [sub.name, sub.id] }
-    @supplier_names = Supplier.all.map{|sup| [sup.company, sup.id]}
-    @brand_names = Brand.all.map{|br| [br.name, br.id]}
-    @default_brand = @brand_names.first
-    @default_subcategory = @subcategory_names.first
-    @default_supplier  = @subcategory_names.first
-    @tax_rates = TaxRate.all.map{|tr| [tr.tax_description, tr.id]}
-    @default_tax_rate = @tax_rates.first
-
-    @sizes = Size.all.map{|s| [s.description, s.id]}
-    @default_size = @sizes.first
-  end
-
+  
   # GET /products/1/edit
   def edit
     @product = Product.find(params[:id])
@@ -81,6 +66,7 @@ end
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
+   
     respond_to do |format|
       if @product.update(product_params.except(:images))
         new_images = product_params[:images]
@@ -122,6 +108,7 @@ end
                                       :price, :cost_price, :size_id, :quantity,
                                       {images: []},
                                       :remove_images,
+                                      :image_id,
                                       #:images => {:extra => file_params },
                                        properties: params[:product][:properties].try(:keys))
     end

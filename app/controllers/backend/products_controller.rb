@@ -1,7 +1,7 @@
 class Backend::ProductsController < BackendController
   before_filter :authenticate_user!
   load_and_authorize_resource
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit,  :destroy]
 
 
 
@@ -60,12 +60,21 @@ end
     @default_tax_rate = [@product.tax_rate.tax_description, @product.tax_rate.id]
   end
 
+  def image_id
+     if product_params[:image_id].present?
+      preloaded = Cloudinary::PreloadedFile.new(product_params[:image_id])
+      # Verify signature by calling preloaded.valid?
+      return preloaded.identifier
+    end
+  end
+
   # POST /products
   # POST /products.json
   def create
     @product = Product.new(product_params)
     
     @product.user = current_user
+    @product.image_id = image_id
 
     respond_to do |format|
       if @product.save
@@ -80,19 +89,51 @@ end
 
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
+
+  def populate_images
+
+    images = @product.cloudinary_images # copy the old images 
+    
+    if params[:data_value].present?
+      data_values = params[:data_value]
+      data_values.each do |index, image_metadata|
+        metadata = image_metadata.permit(:public_id, :version, :signature, :width, :height, :format, :resource_type, :created_at, :bytes, :type, :etag, :url, :secure_url, :original_filename, :delete_token, :path, :thumbnail_url)
+        images << metadata.to_h
+      end
+    end
+    images
+  end
+
+
+  def save_images
+    if @product.update_column :cloudinary_images, populate_images   
+        render nothing: true
+    else
+      render js: "alert('There is some issue to store images')"
+    end
+  end
+  
   def update
-    respond_to do |format|
-      if @product.update(product_params.except(:images))
-        new_images = product_params[:images]
-        images = @product.images # copy the old images 
-        images += new_images if !new_images.nil? # concat old images with new ones
-        @product.images = images
-        @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+   if request.xhr?
+    save_images
+  
+   else 
+     respond_to do |format|
+          #set_product if @product.nil?
+      
+          if @product.update(product_params.except(:images))
+            # new_images = product_params[:images]
+            # images = @product.images # copy the old images 
+            # images += new_images if !new_images.nil? # concat old images with new ones
+            #@product.images = images
+            #@product.image_id = image_id
+            @product.save
+            format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+            format.json { render :show, status: :ok, location: @product }
+          else
+            format.html { render :edit }
+            format.json { render json: @product.errors, status: :unprocessable_entity }
+          end
       end
     end
   end
@@ -121,9 +162,14 @@ end
                                       :subcategory_id, :supplier_id, 
                                       :permalink, :description, :short_description, 
                                       :price, :cost_price, :size_id, :quantity,
-                                      {images: []},
+                                      
                                       :remove_images,
+                                      :image_id,
                                       #:images => {:extra => file_params },
                                        properties: params[:product][:properties].try(:keys))
+
+     
     end
+
+   
 end

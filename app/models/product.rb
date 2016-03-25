@@ -1,5 +1,6 @@
 class Product < ActiveRecord::Base
   serialize :images
+  serialize :cloudinary_images, Array
   # Add dependencies for products
   #require_dependency provides a way to load a file using the current 
   #loading mechanism, and keeping track of constants defined in that file

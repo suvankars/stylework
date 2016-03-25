@@ -1,6 +1,5 @@
 - model_class = Product
 = content_for :header do
-  %p.buttons= link_to t('back_to_product_list') , :products, :class => 'btn btn-primary black-background white'
   %h2=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
 
-= render :partial => "form"
+ =render :partial => "form"
