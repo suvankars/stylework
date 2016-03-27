@@ -1,6 +1,6 @@
-- if !@product.cloudinary_images.nil?
+- if !@product.cloudinary_images.empty?
   .deleteAll
-    = link_to "Delete All", "#", :method => :get, :rel => "nofollow", data: { confirm: "Are you sure you want to delete ALL images?" }
+    = link_to "Delete All", "#", :method => :get, data: { confirm: "Are you sure you want to delete ALL images?" }
 
   -@product.cloudinary_images.each do |image|
     %li{:id => image["public_id"]}
@@ -11,9 +11,8 @@
   $(document).ready(function() {
       $('.deleteAll').click(function () {
           var Url = "#{Rails.application.routes.url_helpers.remove_all_product_images_path(@product)}"
-          alert(Url);
           $('#images').empty();
-          $(this).closest('p').fadeOut(1000);
+          
           $.get(Url);
           return false;
       });

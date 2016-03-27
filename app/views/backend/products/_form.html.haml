@@ -33,26 +33,22 @@
   /   .preview
   
   
-    
+  /For adding new product using javascript to update the dom image div, as new image is uploaded 
+  /through cloudinary image uploader
+  / For Update imges of an product, used rails js based partial to fetch existing image in the 
+  / update form then, if new images are added to the update form it will be saved by ajax call and 
+  // Corrosponding div will be updated by ajax get request on success full image upload completion call back
+
+  
   = field_set_tag 'Attachments' do
     %a.btn.btn-primary#upload_widget_opener{:href => "#"} Upload multiple images
     %ul#images
-    /For adding new product using javascript to update the dom image div, as new image is uploaded 
-    /through cloudinary image uploader
-    / For Update imges of an product, used rails js based partial to fetch existing image in the 
-    / update form then, if new images are added to the update form it will be saved by ajax call and 
-    // Corrosponding div will be updated by ajax get request on success full image upload completion call back
-
-    -if @product.new_record?
-      ="here"  
       %span.status 
-      .preview 
-    -else
-      %span.status 
-      .preview 
-      ="edit here" 
-      = render @product
+      .preview
+      -if !@product.new_record?
+        = render @product
 
+      
   / %span.status /Uncommment this two line to show uploaded images in unobtrusive way in edit page 
   / .preview  /Uncomment this too
 
@@ -119,14 +115,11 @@ $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
       function(error, result) { console.log(error, result);
       var preview = $(".preview");
       $(".status").text("");
-      console.log(preview ) ;
-      console.log(result) ;
+ 
       var arrayLength = result.length;
       for (var i = 0; i < arrayLength; i++) {
         var imageMetadata = result[i];
-        console.log(imageMetadata.public_id);
-        alert("going to apppedn");
-        alert(preview);
+        
         $.cloudinary.image(imageMetadata.public_id, {
             format: result.format, width: 50, height: 50, crop: "fit"
           }).appendTo(preview);
@@ -137,10 +130,7 @@ $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
           html('&times;').
           appendTo(preview).click(function() {
             $.cloudinary.delete_by_token(imageMetadata.delete_token).done(function(){
-              console.log(data);
-              console.log(imageMetadata.delete_token);
-              console.log($(this).data('delete_token'));
-              alert($(this).data('delete_token'))
+             
               
             }).fail(function() {
                 $('.status').text("Cannot delete image");

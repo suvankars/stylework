@@ -1,5 +1,5 @@
 class Backend::ImagesController < BackendController
-  before_action :set_gallery
+  before_action :set_product
 
   def create
     add_more_images(images_params[:images])
@@ -8,14 +8,12 @@ class Backend::ImagesController < BackendController
   end
 
   def destroy
-    #binding.pry
-    @product
     remove_by_pub_id(params[:id])
     @public_id = params[:id]
     flash[:error] = "Failed deleting image" unless @product.save
-    @product
+    
     respond_to do |format|
-      format.html { redirect_to root_path }
+      format.html { redirect_to back }
       format.js { }
     end
   end
@@ -24,19 +22,22 @@ class Backend::ImagesController < BackendController
     #TODO find a way to delete each elements from cloudinary_image fields
     #This is bad
     #Delete all image from cloude and as well as from DB
+    if request.xhr?
+      respond_to do |format|
+        @product.cloudinary_images.each do |image|
+          Cloudinary::Uploader.destroy(image["public_id"])
+        end
 
-    @product.cloudinary_images.each do |image|
-      Cloudinary::Uploader.destroy(image["public_id"])
+        @product.cloudinary_images = [] #Just assiging blank; to get work done as of now
+        @product.save
+        format.js   {}
+      end
     end
-
-    @product.cloudinary_images = [] #Just assiging blank; to get work done as of now
-    @product.save
-    redirect_to :back
   end
 
   private
 
-  def set_gallery
+  def set_product
     @product = Product.find(params[:product_id])
   end
 
@@ -54,13 +55,7 @@ class Backend::ImagesController < BackendController
     @product.cloudinary_images = remain_images # re-assign back
   end
 
-  def remove_image_at_index(index)
-    remain_images = @product.images # copy the array
-    deleted_image = remain_images.delete_at(index) # delete the target image
-    deleted_image.try(:remove!) # delete image from S3
-    @product.images = remain_images # re-assign back
-  end
-
+  
   def images_params
     params.require(:product).permit({images: []}) # allow nested params as array
   end

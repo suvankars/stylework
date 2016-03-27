@@ -144,8 +144,8 @@ end
     if request.xhr?
       respond_to do |format|
         if @product.update_column :cloudinary_images, populate_images   
-          render nothing: true
-          #format.js   {}
+          #render nothing: true
+          format.js   {}
         else
           render js: "alert('There is some issue to store images')"
         end
@@ -176,7 +176,10 @@ end
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    #binding.pry
+    @product.cloudinary_images.each do |image|
+      Cloudinary::Uploader.destroy(image["public_id"])
+    end
+
     @product.destroy
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
