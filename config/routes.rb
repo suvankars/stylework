@@ -35,6 +35,11 @@ Rails.application.routes.draw do
       get 'dashboard' => 'dashboard#index'
 
       resources :products do
+        post 'park_images', :on => :collection
+        # collection do
+        # post :schedule
+        # put :save_scheduling
+        #end
         resources :variants
         resources :images, :only => [:create, :destroy] do
           collection do

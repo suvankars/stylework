@@ -27,29 +27,42 @@
       %dd= f.input :short_description, :level => false
       %dd= error_span(@product[:short_description])
 
-  = field_set_tag 'File Attachments' do
-    = f.cl_image_upload(:image_id, :return_delete_token=>true)
-    %span.status
-    .preview
+  / = field_set_tag 'File Attachments' do
+  /   = f.cl_image_upload(:image_id, :return_delete_token=>true)
+  /   %span.status
+  /   .preview
   
   
     
   = field_set_tag 'Attachments' do
     %a.btn.btn-primary#upload_widget_opener{:href => "#"} Upload multiple images
     %ul#images
+    /For adding new product using javascript to update the dom image div, as new image is uploaded 
+    /through cloudinary image uploader
+    / For Update imges of an product, used rails js based partial to fetch existing image in the 
+    / update form then, if new images are added to the update form it will be saved by ajax call and 
+    // Corrosponding div will be updated by ajax get request on success full image upload completion call back
+
+    -if @product.new_record?
+      ="here"  
+      %span.status 
+      .preview 
+    -else
+      %span.status 
+      .preview 
+      ="edit here" 
       = render @product
 
+  / %span.status /Uncommment this two line to show uploaded images in unobtrusive way in edit page 
+  / .preview  /Uncomment this too
 
-    / %span.status /Uncommment this two line to show uploaded images in unobtrusive way in edit page 
-    / .preview  /Uncomment this too
-            
-    / %dl
-    /   %dd
-    /     - if !@product.cloudinary_images.nil?
-    /       - @product.cloudinary_images.each_with_index do |image, index|
-    /         =image_tag(image["thumbnail_url"]) 
-    /         = link_to "Delete", product_image_path(@product, image["public_id"]), :inline_label => true, :method => :delete, data: { confirm: "Are you sure you want to delete this image?" }
-        
+  / %dl
+  /   %dd
+  /     - if !@product.cloudinary_images.nil?
+  /       - @product.cloudinary_images.each_with_index do |image, index|
+  /         =image_tag(image["thumbnail_url"]) 
+  /         = link_to "Delete", product_image_path(@product, image["public_id"]), :inline_label => true, :method => :delete, data: { confirm: "Are you sure you want to delete this image?" }
+      
     
 
   / = field_set_tag 'Attachments' do
@@ -104,7 +117,7 @@ $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
 
     cloudinary.openUploadWidget({ cloud_name: 'dijs1yfba', upload_preset: 'sample_a3cb73f3e13fc75f53e20e800352e1b509ee1f7b'}, 
       function(error, result) { console.log(error, result);
-      var preview = $(".preview").html('');
+      var preview = $(".preview");
       $(".status").text("");
       console.log(preview ) ;
       console.log(result) ;
@@ -112,6 +125,8 @@ $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
       for (var i = 0; i < arrayLength; i++) {
         var imageMetadata = result[i];
         console.log(imageMetadata.public_id);
+        alert("going to apppedn");
+        alert(preview);
         $.cloudinary.image(imageMetadata.public_id, {
             format: result.format, width: 50, height: 50, crop: "fit"
           }).appendTo(preview);
@@ -134,14 +149,23 @@ $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
       }
       
        
-        
+      /*Make a function  How bad coding I wonder of myself:) */
+      var form_type = $("[class^=simple_form]").attr('id');
+      var action_path = $("[class^=simple_form]").attr('action');
+
+      var request_type = "patch";
       
-      var edit_path = $("[class^=simple_form]").attr('action');
+      if (form_type == "new_product"){
+        request_type = "post";
+        action_path = "park_images";
+      }
+
+      
       
       $.ajax({
 
-        url : edit_path,
-        type : "patch",
+        url : action_path,
+        type : request_type,
         data : { data_value: result }
       });
 
@@ -158,12 +182,13 @@ $(document).ready(function() {
 });
 
   $(document).ready(function() {
+    /*
     // Cloudinary jQuery integration library uses jQuery File Upload widget
     // (see http://blueimp.github.io/jQuery-File-Upload/).
     // Any file input field with cloudinary-fileupload class is automatically
     // wrapped using the File Upload widget and configured for Cloudinary uploads.
     // You can further customize the configuration using .fileupload method
-    // as we do below.
+    // as we do below.*/
     $(".cloudinary-fileupload")
       .cloudinary_fileupload({
         // Uncomment the following lines to enable client side image resizing and valiation.

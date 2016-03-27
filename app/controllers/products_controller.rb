@@ -31,6 +31,8 @@ end
   end
 
   # GET /products/new
+  def new
+  end
   
   # GET /products/1/edit
   def edit

@@ -2,7 +2,7 @@ class Backend::ProductsController < BackendController
   before_filter :authenticate_user!
   load_and_authorize_resource
   before_action :set_product, only: [:show, :edit,  :destroy]
-
+  attr_accessor :parked_images
 
 
 def cors_set_access_control_headers
@@ -60,7 +60,7 @@ end
     @default_tax_rate = [@product.tax_rate.tax_description, @product.tax_rate.id]
   end
 
-  def image_id
+  def get_image_id
      if product_params[:image_id].present?
       preloaded = Cloudinary::PreloadedFile.new(product_params[:image_id])
       # Verify signature by calling preloaded.valid?
@@ -68,15 +68,34 @@ end
     end
   end
 
+  
+  #POST /products/park_images
+  
+  def park_images
+    #Rails casche provides a way to pass temporary objects between controller actions. 
+    
+    if request.xhr?
+      Rails.cache.write("images", populate_images)
+      render nothing: true
+    else
+      #Do something!
+      #DO not Assumed that everything will fine forever
+    end
+  end
+
   # POST /products
   # POST /products.json
-  def create
-    @product = Product.new(product_params)
-    
-    @product.user = current_user
-    @product.image_id = image_id
 
+  def create
     respond_to do |format|
+      @product = Product.new(product_params)
+      @product.user = current_user
+      #@product.image_id = get_image_id
+      @product.cloudinary_images = Rails.cache.read("images")  
+      
+      #Clear cache once it is used 
+      Rails.cache.delete('images')
+      
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
@@ -90,9 +109,17 @@ end
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
 
-  def populate_images
+  def previous_images
+    # Incase of park_images action; no product object is initialized; till then return an empty []   
+    if !@product.nil? 
+      images = @product.cloudinary_images # copy the old images 
+    else
+      images = []  
+    end
+  end
 
-    images = @product.cloudinary_images # copy the old images 
+  def populate_images
+    images = previous_images
     
     if params[:data_value].present?
       data_values = params[:data_value]
@@ -117,7 +144,8 @@ end
     if request.xhr?
       respond_to do |format|
         if @product.update_column :cloudinary_images, populate_images   
-          format.js   {}
+          render nothing: true
+          #format.js   {}
         else
           render js: "alert('There is some issue to store images')"
         end
