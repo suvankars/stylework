@@ -1,5 +1,0 @@
-- model_class = Subcategory
-= content_for :header do
-  %p.buttons= link_to t('back_to_category_list') , :categories, :class => 'btn btn-primary'
-  %h2=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
-= render :partial => "form"
