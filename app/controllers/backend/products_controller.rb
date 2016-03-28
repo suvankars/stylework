@@ -114,7 +114,7 @@ end
     if !@product.nil? 
       images = @product.cloudinary_images # copy the old images 
     else
-      images = []  
+      images = !Rails.cache.read("images").nil? ? Rails.cache.read("images") : []
     end
   end
 

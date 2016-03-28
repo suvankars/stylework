@@ -5,13 +5,14 @@ ruby "2.2.3"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 # Use sqlite3 as the database for Active Record
-group :development, :test do
-	gem 'sqlite3'
-end
+# Use pg in both place; learned from image hash store issue; inconsistant behaviour in case of hash store
+# group :development, :test do
+# 	gem 'sqlite3'
+#end
 
-gem 'pg', group: :production
+gem 'pg'#, group: :production
 gem 'rails-html-sanitizer', '~>1.0.2'
-
+gem 'postgres_ext'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -58,7 +59,7 @@ end
 
 gem 'react-rails'
 gem 'haml-rails'
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", '3.2.0'
 gem 'bootstrap-sass'
 gem "less-rails" 
 gem 'country_select'

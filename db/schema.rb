@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160229212922) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "addresses", force: :cascade do |t|
     t.string   "name"
     t.integer  "pincode"
@@ -26,7 +29,7 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "addresses", ["supplier_id"], name: "index_addresses_on_supplier_id"
+  add_index "addresses", ["supplier_id"], name: "index_addresses_on_supplier_id", using: :btree
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -56,7 +59,7 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "contacts", ["supplier_id"], name: "index_contacts_on_supplier_id"
+  add_index "contacts", ["supplier_id"], name: "index_contacts_on_supplier_id", using: :btree
 
   create_table "finances", force: :cascade do |t|
     t.string   "price_list"
@@ -75,7 +78,7 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.datetime "updated_at",          null: false
   end
 
-  add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id"
+  add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id", using: :btree
 
   create_table "product_fields", force: :cascade do |t|
     t.string   "name"
@@ -86,7 +89,7 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "product_fields", ["subcategory_id"], name: "index_product_fields_on_subcategory_id"
+  add_index "product_fields", ["subcategory_id"], name: "index_product_fields_on_subcategory_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
@@ -96,33 +99,33 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.text     "description"
     t.text     "short_description"
     t.boolean  "active",                                    default: true
-    t.integer  "quantity"
+    t.integer  "quantity",                                  default: 0
     t.decimal  "price",             precision: 8, scale: 2, default: 0.0
     t.decimal  "cost_price",        precision: 8, scale: 2, default: 0.0
     t.boolean  "stock_control",                             default: true
     t.integer  "subcategory_id"
     t.integer  "parent_id"
-    t.datetime "created_at",                                                     null: false
-    t.datetime "updated_at",                                                     null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.string   "properties"
     t.integer  "supplier_id"
     t.integer  "tax_rate_id"
     t.integer  "brand_id"
     t.integer  "size_id"
-    t.integer  "user_id"
-    t.string   "images",                                    default: "--- []\n"
+    t.string   "images",                                    default: [],                array: true
     t.string   "image_name"
     t.string   "image_id"
-    t.text     "cloudinary_images"
+    t.json     "cloudinary_images"
+    t.integer  "user_id"
   end
 
-  add_index "products", ["brand_id"], name: "index_products_on_brand_id"
-  add_index "products", ["parent_id"], name: "index_products_on_parent_id"
-  add_index "products", ["size_id"], name: "index_products_on_size_id"
-  add_index "products", ["subcategory_id"], name: "index_products_on_subcategory_id"
-  add_index "products", ["supplier_id"], name: "index_products_on_supplier_id"
-  add_index "products", ["tax_rate_id"], name: "index_products_on_tax_rate_id"
-  add_index "products", ["user_id"], name: "index_products_on_user_id"
+  add_index "products", ["brand_id"], name: "index_products_on_brand_id", using: :btree
+  add_index "products", ["parent_id"], name: "index_products_on_parent_id", using: :btree
+  add_index "products", ["size_id"], name: "index_products_on_size_id", using: :btree
+  add_index "products", ["subcategory_id"], name: "index_products_on_subcategory_id", using: :btree
+  add_index "products", ["supplier_id"], name: "index_products_on_supplier_id", using: :btree
+  add_index "products", ["tax_rate_id"], name: "index_products_on_tax_rate_id", using: :btree
+  add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
   create_table "sizes", force: :cascade do |t|
     t.string   "name"
@@ -141,7 +144,7 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "stock_levels", ["product_id"], name: "index_stock_levels_on_product_id"
+  add_index "stock_levels", ["product_id"], name: "index_stock_levels_on_product_id", using: :btree
 
   create_table "subcategories", force: :cascade do |t|
     t.string   "name"
@@ -151,7 +154,7 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "subcategories", ["category_id"], name: "index_subcategories_on_category_id"
+  add_index "subcategories", ["category_id"], name: "index_subcategories_on_category_id", using: :btree
 
   create_table "suppliers", force: :cascade do |t|
     t.string   "company"
@@ -187,7 +190,19 @@ ActiveRecord::Schema.define(version: 20160229212922) do
     t.boolean  "admin",                  default: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "addresses", "suppliers"
+  add_foreign_key "contacts", "suppliers"
+  add_foreign_key "finances", "suppliers"
+  add_foreign_key "product_fields", "subcategories"
+  add_foreign_key "products", "brands"
+  add_foreign_key "products", "sizes"
+  add_foreign_key "products", "subcategories"
+  add_foreign_key "products", "suppliers"
+  add_foreign_key "products", "tax_rates"
+  add_foreign_key "products", "users"
+  add_foreign_key "stock_levels", "products"
+  add_foreign_key "subcategories", "categories"
 end

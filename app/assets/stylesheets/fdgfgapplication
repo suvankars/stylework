@@ -24,29 +24,8 @@
  */
 
 $font: 'Helvetica Neue', Arial, sans-serif;
+
 html { font-family:$font; font-size:12px; color:#000; -webkit-font-smoothing:antialiased; background-color:#f7f9fc; overflow-y:scroll}
-
-
-
-
-
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('../assets/glyphicons-halflings-regular.eot');
-  src: url('../assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
-       url('../assets/glyphicons-halflings-regular.woff') format('woff'), 
-       url('../assets/glyphicons-halflings-regular.ttf') format('truetype'), 
-       url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
-
-
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
-$font: 'Helvetica Neue', Arial, sans-serif;
-
-
-
 
 nav.sidebar {
   width:200px;
@@ -54,14 +33,10 @@ nav.sidebar {
   position:fixed;
   top:0;
   bottom:0;
-
-  p.user { background: #5B6270;}
-  
   header.logo {
     height: 93px;
-    background:image-url('transport.svg') rgba(118, 212, 47, 0.83) no-repeat 22px 25px;
-    background-size: 63px;
-    background-position: 1px;
+    background:image-url('transport.png') #74BBFB no-repeat 22px 25px;
+    background-size: 45px;
     padding-left: 63px;
     padding-top: 2px;
 
@@ -69,28 +44,26 @@ nav.sidebar {
       text-decoration: none;
       background-color: rgba(133, 255, 0, 0);
       color: #FFFFFF;
-      font-size: .75em;
     }
 
     a:visited {
       color: #FFFFFF;
     }
 
-    p { color:#fff; font-size:0.75em;  }
-
-    logged {
-     background: #5B6270;
-      padding: 12px 10px;
-      color: #fff;
-      font-size: 0.9em;
-      margin-left: -76px;
-      margin-top: -17px;
-      padding-top: 10px;
-      padding-right: 46px;
-      padding-bottom: 9px;
-      margin-bottom: 10px;
-      }
+    p { color:#fff; font-size:0.9em; margin-top:4px; }
   }
+
+
+  p.logged {
+    background:#5B6270;
+    padding:12px 20px;
+    color:#fff;
+    font-size:0.9em;
+  }
+
+
+
+
 
   ul {
     li {
@@ -129,20 +102,6 @@ nav.sidebar {
           background:rgba(0,0,0,0.08);
         }
       }
-
-      login {
-        color:#ece5e5;
-        font-size:0.9em;
-      }
-      logged {
-        background:#5B6270;
-        padding:12px 10px;
-        color:#fff;
-        font-size:0.9em;
-        margin-left: -62px;
-        margin-top: -7px;
-      }
-
     }
   }
 }
@@ -162,17 +121,12 @@ nav.sidebar {
 }
 
 
-.top-row {
-  
-  height: 100px;
-}
 
 .row {
-  margin-left: -15px;
-  margin-right: -15px;
-  padding-left: 156px;
+  margin-left: 150px;
+  margin-right: -44px;
 }
-  #content fieldset {
+  fieldset {
     border:1px solid rgba(145, 218, 15, 0.46);
     background:#fff;
     padding-top:15px;
@@ -230,40 +184,29 @@ form {
       box-shadow: 0 0px 15px -2px rgba(0, 0, 0, 0.2);
       padding:15px;
       padding-left: 40px;
-      padding-right: 40px;
-      background-color: white;
+      padding-right: 140px;
 }
 
-header.main {
-  position:fixed;
-  left:200px;
-  right:0;
-  height:93px;
-  background:#fff;
-  box-shadow: 0 0px 15px -2px rgba(0,0,0,0.2);
 
 
-   p.buttons { 
+.page-header {
+  
+  
+  p.buttons { 
     float:right; 
     margin-top:27px; 
     margin-right:35px;
   } 
 
-
-  h2 { margin-top:28px; margin-left:35px; font-size:2.0em; font-weight:300; color:#333; background-repeat:no-repeat; background-size:22px; background-position:0 5px; padding-left:32px;}
-
-  h2 span { font-size:24px; font-weight:normal; color:#999; margin-left:10px;}
-
-}
-
-#content {
-  padding-left: 140px;
-  padding-top: 93px;
-  margin-right: -60px;
-
-  section.main {
-    padding:35px;
-  }
+  h2 { 
+    font-size:2.0em; 
+    font-weight:300; 
+    color:#333; 
+    padding-left:32px;
+    font-size: 2.0em;
+    padding-left: 35px;
+    padding-top: 27px
+  } 
 }
 
 td.actions {
@@ -304,18 +247,3 @@ a:hover img{ display: block; }
 .black-background {background-color:#000000;}
 .white {color:#ffffff;}
 
-
-table.table.table-striped {
-  background-color: white;
-  thead th { border:1px solid #40454D; background:#40454D; text-align:left; font-weight:normal; font-size:0.9em; color:#fff; }
-}
-
-.main-button{
-  
-  button.btn.btn-default {
-    height: 93px;
-    font-size: 2em;
-  }
-}
-
-body { background-color: #f7f9fc }
