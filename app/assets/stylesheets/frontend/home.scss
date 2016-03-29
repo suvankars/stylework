@@ -1,3 +1,12 @@
-// Place all the styles related to the frontend/home controller here.
+// Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.main-button{
+  
+  .button.btn.btn-default {
+    height: 93px;
+    font-size: 2em;
+    padding-top: 30px;
+  }
+}

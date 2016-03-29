@@ -8,6 +8,9 @@
         %span.icon-bar
         %span.icon-bar
       = link_to 'Home', root_path, class: 'navbar-brand'
+    %p.buttons
+      = link_to 'Seller Hub', "admin/dashboard", :class => 'btn btn-primary'
+
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
         = render 'layouts/frontend/navigation_links'
