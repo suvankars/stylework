@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   
 
 
+  namespace :frontend do
+    get 'home/index'
+  end
+
   devise_for :users
   apipie
   namespace :api do
@@ -11,7 +15,9 @@ Rails.application.routes.draw do
       end
   end
   
-  root 'backend/welcome#index'
+  root 'frontend/home#index'
+
+  get 'backend/welcome/index'
 
   scope '/admin', :module => 'backend' do
   

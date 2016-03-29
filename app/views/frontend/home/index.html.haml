@@ -1,0 +1,16 @@
+.main-button
+  .btn-group.btn-group-justified.btn-group-lg{"aria-label" => "...", :role => "group"}
+    .btn-group{:role => "group"}
+      %a.button.btn.btn-default{:type => "button", :href => "rents/index"} Rent
+    .btn-group{:role => "group"}
+      %a.button.btn.btn-default{:type => "button", :href => "visitors/index"} Buy
+    .btn-group{:role => "group"}
+      %a.button.btn.btn-default{:type => "button", :href => "sellers/index"} Sell
+    .btn-group{:role => "group"}  
+      = link_to t('Seller Hub'), "admin/products", :class => 'btn btn-success'  
+
+    
+    =image_tag "search.png"
+
+
+
