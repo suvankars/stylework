@@ -16,7 +16,7 @@ class Product < ActiveRecord::Base
   belongs_to :brand
   belongs_to :tax_rate
   belongs_to :size
-  has_many :stock_level
+  has_many :stock_level, dependent: :destroy
 
   belongs_to :user
   

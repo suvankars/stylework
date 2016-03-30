@@ -1,10 +1,13 @@
 - model_class = Product
 = content_for :header do
-	%p.buttons
-		= link_to t('new_product'), :new_product, :class => 'btn btn-success' 
-	%h2
-		%span.glyphicon.glyphicon-tags	
-		= t '.title', :default => model_class.model_name.human.pluralize.titleize
+  .new-product-form
+    %p.buttons
+      = form_tag new_product_path, method: :get 
+      = select_tag 'subcategory_id', options_from_collection_for_select(Subcategory.all, :id, :name, 1)
+      = submit_tag "new", name: nil, :class => 'btn btn-primary'
+  %h2
+    %span.glyphicon.glyphicon-tags	
+      = t '.title', :default => model_class.model_name.human.pluralize.titleize
 
 = render "table", :products => @products, :categories => @categories 
 

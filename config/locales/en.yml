@@ -36,6 +36,11 @@ en:
       stock: "Stock"
       no_products: "No products to display."
       edit: "Edit"
+  category:
+    no_categories: 'No Category to display.'
+  subcategory:
+    no_subcategories: 'No Sub Category to display.'
+    title: 'Subcategories of %{category}'
   number:
     currency:
       format:

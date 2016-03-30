@@ -4,7 +4,7 @@
   = f.input :description
   = error_span(@category[:description])
   - f.fields_for :field do |builder|
-    = render 'subcategories/field_fields', f: builder 
+    = render 'backend/subcategories/field_fields', f: builder 
   %br
   = link_to_add_fields "Add Field", f, :fields, 'add_fields btn btn-success pull-right btn-lg'
   %br

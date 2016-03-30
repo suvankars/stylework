@@ -89,12 +89,15 @@
       %dl.half
         %dd= f.input :quantity
         %dd= error_span(@product[:quantity])
-     
-    = f.fields_for :properties, OpenStruct.new(@product.properties) do |builder|
-      - if !@product.subcategory.nil?
-        - @product.subcategory.fields.each do |field|
-          = render "products/fields/#{field.field_type}", field: field, f:builder 
   
+  = field_set_tag 'Customized Properties' do
+    .splitContainer
+      %dl.half
+        = f.fields_for :properties, OpenStruct.new(@product.properties) do |builder|
+          - if !@product.subcategory.nil?
+            - @product.subcategory.fields.each do |field|
+              = render "backend/products/fields/#{field.field_type}", field: field, f:builder 
+      
   %p.submit
     = f.button :submit, :class => 'btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), products_path, :class => 'btn btn-default'

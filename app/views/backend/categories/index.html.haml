@@ -13,14 +13,18 @@
       %th= model_class.human_attribute_name(:created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
-    - @categories.each do |category|
-      %tr
-        %td= link_to category.id, category_path(category)
-        %td= category.name
-        %td= category.description
-        %td=l category.created_at
-        %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_category_path(category), :class => 'btn btn-default btn-xs'
-          = link_to t('.add', :default => t("helpers.links.Subcategory")), category_path(category), :class => 'btn btn-default btn-xs'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), category_path(category), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+    - if @categories.empty?
+      %tr.empty
+      %td{:colspan => 5}= t('category.no_categories')
+    -else  
+      - @categories.each do |category|
+        %tr
+          %td= link_to category.id, category_path(category)
+          %td= link_to category.name, category_path(category)
+          %td= category.description
+          %td=l category.created_at
+          %td
+            = link_to t('.edit', :default => t("helpers.links.edit")), edit_category_path(category), :class => 'btn btn-default btn-xs'
+            = link_to t('.add', :default => t("helpers.links.Subcategory")), category_path(category), :class => 'btn btn-default btn-xs'
+            = link_to t('.destroy', :default => t("helpers.links.destroy")), category_path(category), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
 
