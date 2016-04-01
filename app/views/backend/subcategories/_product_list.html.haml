@@ -8,23 +8,28 @@
       %th= model_class.human_attribute_name(:skuid)
       %th= model_class.human_attribute_name(:brand)
       %th= model_class.human_attribute_name(:category)
-      - @products.last.properties.keys.each do |prop|
-        %th= model_class.human_attribute_name(prop)
+      - if @products.present?
+        - @products.last.properties.keys.each do |prop|
+          %th= model_class.human_attribute_name(prop)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
-    - @products.each do |product|
-      %tr
-        %td= link_to product.id, product_path(product)
-        %td= product.name
-        %td= product.skuid
-        %td= product.brand.name
-        %td 
-          = link_to t(product.subcategory.name, :default => product.subcategory.name), category_subcategory_path(product.subcategory.category, product.subcategory), :class => 'btn btn-info btn-xs'
-        - @products.last.properties.values.each do |val|
-          %td= val
-        %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_product_path(product), :class => 'btn btn-default btn-xs'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), product_path(product), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+    - if @products.empty?
+      %tr.empty
+      %td{:colspan => 5}= t('products.no_products')
+    - else
+      - @products.each do |product|
+        %tr
+          %td= link_to product.id, product_path(product)
+          %td= product.name
+          %td= product.skuid
+          %td= product.brand.name
+          %td 
+            = link_to t(product.subcategory.name, :default => product.subcategory.name), category_subcategory_path(product.subcategory.category, product.subcategory), :class => 'btn btn-info btn-xs'
+          - @products.last.properties.values.each do |val|
+            %td= val
+          %td
+            = link_to t('.edit', :default => t("helpers.links.edit")), edit_product_path(product), :class => 'btn btn-default btn-xs'
+            = link_to t('.destroy', :default => t("helpers.links.destroy")), product_path(product), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
 
 
 
