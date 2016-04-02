@@ -1,0 +1,33 @@
+= simple_form_for @list, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :ride_title
+  = error_span(@list[:ride_title])
+  = f.input :ride_description
+  = error_span(@list[:ride_description])
+  = f.input :rider_height
+  = error_span(@list[:rider_height])
+  = f.input :frame_size
+  = error_span(@list[:frame_size])
+  = f.input :hourly_rental
+  = error_span(@list[:hourly_rental])
+  = f.input :morning_rental
+  = error_span(@list[:morning_rental])
+  = f.input :evening_rental
+  = error_span(@list[:evening_rental])
+  = f.input :daily_rental
+  = error_span(@list[:daily_rental])
+  = f.input :weekly_rental
+  = error_span(@list[:weekly_rental])
+  = f.input :willing_to_deliver
+  = error_span(@list[:willing_to_deliver])
+  = f.input :address
+  = error_span(@list[:address])
+  = f.input :city
+  = error_span(@list[:city])
+  = f.input :state
+  = error_span(@list[:state])
+  = f.input :pincode
+  = error_span(@list[:pincode])
+  = f.input :landmark
+  = error_span(@list[:landmark])
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), lists_path, :class => 'btn btn-default'

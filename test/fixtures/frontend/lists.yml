@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ride_title: MyString
+  ride_description: MyText
+  rider_height: MyString
+  frame_size: 
+  hourly_rental: 9.99
+  daily_rental: 9.99
+  weekly_rental: 9.99
+  willing_to_deliver: false
+  address: MyString
+  city: MyText
+  state: MyText
+  pincode: 1
+  landmark: MyText
+
+two:
+  ride_title: MyString
+  ride_description: MyText
+  rider_height: MyString
+  frame_size: 
+  hourly_rental: 9.99
+  daily_rental: 9.99
+  weekly_rental: 9.99
+  willing_to_deliver: false
+  address: MyString
+  city: MyText
+  state: MyText
+  pincode: 1
+  landmark: MyText

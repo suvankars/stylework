@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229212922) do
+ActiveRecord::Schema.define(version: 20160402064009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,47 @@ ActiveRecord::Schema.define(version: 20160229212922) do
   end
 
   add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id", using: :btree
+
+  create_table "frontend_lists", force: :cascade do |t|
+    t.string   "ride_title"
+    t.string   "ride_description"
+    t.string   "text"
+    t.string   "rider_height"
+    t.string   "frame_size"
+    t.string   "accessories"
+    t.json     "images"
+    t.decimal  "hourly_rent"
+    t.decimal  "daily_rent"
+    t.decimal  "weekly_rental"
+    t.datetime "availability"
+    t.string   "address"
+    t.text     "city"
+    t.text     "state"
+    t.integer  "pincode"
+    t.text     "landmark"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string   "ride_title"
+    t.text     "ride_description"
+    t.string   "rider_height"
+    t.string   "frame_size"
+    t.decimal  "hourly_rental"
+    t.decimal  "morning_rental"
+    t.decimal  "evening_rental"
+    t.decimal  "daily_rental"
+    t.decimal  "weekly_rental"
+    t.boolean  "willing_to_deliver"
+    t.string   "address"
+    t.text     "city"
+    t.text     "state"
+    t.integer  "pincode"
+    t.text     "landmark"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
 
   create_table "product_fields", force: :cascade do |t|
     t.string   "name"

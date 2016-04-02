@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  
+  scope module: 'frontend' do
+    resources :lists
+  end
 
 
   namespace :frontend do
