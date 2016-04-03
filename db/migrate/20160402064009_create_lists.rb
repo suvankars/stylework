@@ -14,10 +14,10 @@ class CreateLists < ActiveRecord::Migration
       t.string :address
       t.float :latitude
       t.float :longitude
-      t.text :city
-      t.text :state
+      t.string :city
+      t.string :state
       t.integer :pincode
-      t.text :landmark
+      t.string :landmark
 
       t.timestamps null: false
     end

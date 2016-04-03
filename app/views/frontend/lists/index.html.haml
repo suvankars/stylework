@@ -1,6 +1,12 @@
 - model_class = List
 .page-header
   %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+= form_tag lists_path, :method => :get do
+  %p
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search Near", :name => nil
+
 %table.table.table-striped
   %thead
     %tr
@@ -18,6 +24,8 @@
       %th= model_class.human_attribute_name(:address)
       %th= model_class.human_attribute_name(:city)
       %th= model_class.human_attribute_name(:state)
+      %th= model_class.human_attribute_name(:latitude)
+      %th= model_class.human_attribute_name(:longitude)
       %th= model_class.human_attribute_name(:pincode)
       %th= model_class.human_attribute_name(:landmark)
       %th= model_class.human_attribute_name(:created_at)
@@ -39,6 +47,8 @@
         %td= list.address
         %td= list.city
         %td= list.state
+        %td= list.latitude
+        %td= list.longitude
         %td= list.pincode
         %td= list.landmark
         %td=l list.created_at

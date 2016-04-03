@@ -47,6 +47,14 @@
   %br
   = @list.address
 %p
+  %strong= model_class.human_attribute_name(:latitude) + ':'
+  %br
+  = @list.latitude
+%p
+  %strong= model_class.human_attribute_name(:longitude) + ':'
+  %br
+  = @list.longitude  
+%p
   %strong= model_class.human_attribute_name(:city) + ':'
   %br
   = @list.city
@@ -71,7 +79,12 @@
         = link_to "Delete", image_path(:id => @list.id, :resource => @list.class, :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
 
 
-  
+%h3 Nearby locations
+%ul
+  - for list in @list.nearbys(3)
+    %li
+      = link_to list.address, list
+      (#{list.distance.round(2)} miles)  
 
 = link_to t('.back', :default => t("helpers.links.back")), lists_path, :class => 'btn btn-default'
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_list_path(@list), :class => 'btn btn-default'

@@ -80,27 +80,6 @@ ActiveRecord::Schema.define(version: 20160402073025) do
 
   add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id", using: :btree
 
-  create_table "frontend_lists", force: :cascade do |t|
-    t.string   "ride_title"
-    t.string   "ride_description"
-    t.string   "text"
-    t.string   "rider_height"
-    t.string   "frame_size"
-    t.string   "accessories"
-    t.json     "images"
-    t.decimal  "hourly_rent"
-    t.decimal  "daily_rent"
-    t.decimal  "weekly_rental"
-    t.datetime "availability"
-    t.string   "address"
-    t.text     "city"
-    t.text     "state"
-    t.integer  "pincode"
-    t.text     "landmark"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
   create_table "lists", force: :cascade do |t|
     t.string   "ride_title"
     t.text     "ride_description"
@@ -115,13 +94,19 @@ ActiveRecord::Schema.define(version: 20160402073025) do
     t.string   "address"
     t.float    "latitude"
     t.float    "longitude"
-    t.text     "city"
-    t.text     "state"
+    t.string   "city"
+    t.string   "state"
     t.integer  "pincode"
-    t.text     "landmark"
+    t.string   "landmark"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "category_id"
+    t.integer  "subcategory_id"
+    t.json     "images"
   end
+
+  add_index "lists", ["category_id"], name: "index_lists_on_category_id", using: :btree
+  add_index "lists", ["subcategory_id"], name: "index_lists_on_subcategory_id", using: :btree
 
   create_table "product_fields", force: :cascade do |t|
     t.string   "name"
@@ -239,6 +224,8 @@ ActiveRecord::Schema.define(version: 20160402073025) do
   add_foreign_key "addresses", "suppliers"
   add_foreign_key "contacts", "suppliers"
   add_foreign_key "finances", "suppliers"
+  add_foreign_key "lists", "categories"
+  add_foreign_key "lists", "subcategories"
   add_foreign_key "product_fields", "subcategories"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "sizes"

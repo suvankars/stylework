@@ -3,7 +3,11 @@ class Frontend::ListsController < FrontendController
 
 
   def index
-    @lists = List.all
+    if params[:search].present?
+      @lists = List.near(params[:search], 5)
+    else
+      @lists = List.all
+    end
   end
 
 
