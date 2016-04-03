@@ -19,7 +19,9 @@ module Mammoth
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-
+    # http://stackoverflow.com/questions/18934115/rails-4-organize-rails-models-in-sub-path-without-namespacing-models
+    # To Add a nested model without namespace 
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{*/}')]
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     #To get the glyphicons working

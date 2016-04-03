@@ -63,7 +63,36 @@
   %br
   = @list.landmark
 
+%p
+  - if !@list.images.nil?
+    - @list.images.each_with_index do |image, index|
+      %li{:id => image["public_id"]}
+        = image_tag(image["thumbnail_url"])
+        = link_to "Delete", image_path(:id => @list.id, :resource => @list.class, :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
+
+
+  
 
 = link_to t('.back', :default => t("helpers.links.back")), lists_path, :class => 'btn btn-default'
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_list_path(@list), :class => 'btn btn-default'
 = link_to t('.destroy', :default => t("helpers.links.destroy")), list_path(@list), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+
+
+#carousel-example-generic.carousel.slide{"data-ride" => "carousel"}
+  %ol.carousel-indicators
+    %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
+    %li{"data-slide-to" => "1", "data-target" => "#carousel-example-generic"}
+    %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
+  .carousel-inner{:role => "listbox"}
+    .carousel-item.active
+      %img{:alt => "First slide", "data-src" => "..."}
+    .carousel-item
+      %img{:alt => "Second slide", "data-src" => "..."}
+    .carousel-item
+      %img{:alt => "Third slide", "data-src" => "..."}
+  %a.left.carousel-control{"data-slide" => "prev", :href => "#carousel-example-generic", :role => "button"}
+    %span.icon-prev{"aria-hidden" => "true"}
+    %span.sr-only Previous
+  %a.right.carousel-control{"data-slide" => "next", :href => "#carousel-example-generic", :role => "button"}
+    %span.icon-next{"aria-hidden" => "true"}
+    %span.sr-only Next

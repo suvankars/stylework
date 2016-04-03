@@ -1,0 +1,4 @@
+/$('#images ').empty();
+
+var public_id = "#{@public_id}";
+$('#'+public_id.replace(/\//g, "\\\/")).remove();

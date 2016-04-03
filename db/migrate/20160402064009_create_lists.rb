@@ -12,6 +12,8 @@ class CreateLists < ActiveRecord::Migration
       t.decimal :weekly_rental
       t.boolean :willing_to_deliver
       t.string :address
+      t.float :latitude
+      t.float :longitude
       t.text :city
       t.text :state
       t.integer :pincode

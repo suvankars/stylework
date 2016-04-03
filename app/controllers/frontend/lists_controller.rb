@@ -22,7 +22,8 @@ class Frontend::ListsController < FrontendController
 
   def create
     @list = List.new(list_params)
-
+    @list.images = Rails.cache.read("images")
+    Rails.cache.delete('images')  
     respond_to do |format|
       if @list.save
         format.html { redirect_to @list, notice: 'List was successfully created.' }
@@ -36,8 +37,13 @@ class Frontend::ListsController < FrontendController
 
 
   def update
+    parked_images = Rails.cache.read("images")
+    Rails.cache.delete('images')
+
+    @list.update_column :images , parked_images
+    
     respond_to do |format|
-      if @list.update(frontend_list_params)
+      if @list.update(list_params)
         format.html { redirect_to @list, notice: 'List was successfully updated.' }
         format.json { render :show, status: :ok, location: @list }
       else

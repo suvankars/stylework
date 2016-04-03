@@ -54,6 +54,7 @@ Rails.application.routes.draw do
         resources :images, :only => [:create, :destroy] do
           collection do
             get 'remove_all'
+            #post 'park_images'
           end
         end
 
@@ -64,7 +65,13 @@ Rails.application.routes.draw do
       end
     end
   #end
-  #resources :images, :only => [:create, :destroy]
+      
+
+  scope module: 'common' do
+    resources :images do 
+      post 'park_images', :on => :collection
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   #root 'welcome#index'

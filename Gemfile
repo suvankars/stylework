@@ -79,7 +79,7 @@ gem 'mini_magick', :git => 'git://github.com/minimagick/minimagick.git', :ref =>
 gem 'devise'
 gem 'cancancan', '~> 1.10' 
 gem 'cloudinary' #Cloudinary is a cloud service that offers a solution to a web application's entire image management pipeline
-
+gem 'geocoder'
 
 gem 'better_errors'
 gem 'quiet_assets'
