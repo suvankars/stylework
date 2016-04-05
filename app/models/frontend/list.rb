@@ -6,7 +6,7 @@ class List < ActiveRecord::Base
 
   geocoded_by :address   
   # auto-fetch coordinates
-  after_validation :geocode, :if => address_changed?
-
+  after_validation :geocode
+   
 end
 

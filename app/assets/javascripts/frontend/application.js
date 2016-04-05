@@ -17,4 +17,8 @@
 //= require cloudinary
 //=cloudinary-jquery-file-upload
 //=widget.cloudinary.com/global/all.js
+//= require underscore
+//= require gmaps/google
+//= require jquery-ui
+//= require gmaps-auto-complete
 //= require_tree .

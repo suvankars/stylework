@@ -8,10 +8,23 @@ class Frontend::ListsController < FrontendController
     else
       @lists = List.all
     end
+
+    @hash = Gmaps4rails.build_markers(@lists) do |list, marker|
+      marker.lat list.latitude
+      marker.lng list.longitude
+      marker.json({:id => list.id })
+    end
+    
+    if request.xhr?
+      respond_to do |format|
+        format.json { render :json => @hash }
+      end
+    end
   end
 
 
   def show
+
   end
 
 

@@ -1,4 +1,6 @@
 = simple_form_for @list, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
+  #gmaps-canvas
   = f.input :ride_title
   = error_span(@list[:ride_title])
   = f.input :ride_description
@@ -19,8 +21,8 @@
   = error_span(@list[:weekly_rental])
   = f.input :willing_to_deliver
   = error_span(@list[:willing_to_deliver])
-  = f.input :address
-  = error_span(@list[:address])
+  / = f.input :address
+  / = error_span(@list[:address])
   = f.input :city
   = error_span(@list[:city])
   = f.input :state
@@ -47,11 +49,24 @@
 
 
 <!-- Configure Cloudinary jQuery plugin -->
-%script{:src => "//widget.cloudinary.com/global/all.js", :type => "text/javascript"}
+
 
 = cloudinary_js_config
 
 :javascript
+jQuery(function() {
+  var completer;
+
+  completer = new GmapsCompleter({
+    inputField: '#gmaps-input-address',
+    errorField: '#gmaps-error'
+  });
+
+  completer.autoCompleteInit({
+    country: "us"
+  });
+});
+
 $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
 
 

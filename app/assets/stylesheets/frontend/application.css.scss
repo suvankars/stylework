@@ -10,6 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require jquery-ui
  *= require_tree .
  *= require_self
  */
@@ -23,4 +24,13 @@ p.buttons {
     float: right;
     margin-top: 27px;
     margin-right: 35px;
+}
+
+#gmaps-canvas {
+  height: 400px;
+
+  border: 1px solid #999;
+  -moz-box-shadow:    0px 0px 5px #ccc;
+  -webkit-box-shadow: 0px 0px 5px #ccc;
+  box-shadow:         0px 0px 5px #ccc;
 }

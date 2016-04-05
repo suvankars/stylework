@@ -2,11 +2,18 @@
 .page-header
   %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
 
-= form_tag lists_path, :method => :get do
-  %p
-    = text_field_tag :search, params[:search]
-    = submit_tag "Search Near", :name => nil
+/ only if you need custom infoboxes
 
+
+
+%div{:style => "width: 800px;"}
+  #map{:style => "width: 800px; height: 400px;"}
+
+= form_tag lists_path, :method => :get, remote: true do
+  %p
+    = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
+    = submit_tag "Search Near", :name => nil, :id=>"ajax" 
+  
 %table.table.table-striped
   %thead
     %tr
@@ -57,3 +64,81 @@
           = link_to t('.destroy', :default => t("helpers.links.destroy")), list_path(list), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
 
 = link_to t('.new', :default => t("helpers.links.new")), new_list_path, :class => 'btn btn-primary'
+
+
+
+%script{:src => "//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js"}
+%script{:src => "//google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.9/src/infobox_packed.js", :type => "text/javascript"}
+
+
+
+:javascript
+
+jQuery(function() {
+  var completer;
+
+  completer = new GmapsCompleter({
+    inputField: '#gmaps-input-address',
+    errorField: '#gmaps-error'
+
+  });
+
+  completer.autoCompleteInit({
+    country: "in"
+  })
+});
+
+
+$(function(){ 
+  function rePositionMarkers(data) {
+    var data_hash = data;
+    var handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(data_hash);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+    });
+  }
+
+  $("#ajax").click(function(){
+    var valuesToSubmit = $('#gmaps-input-address').val();
+    $.ajax({
+        type: "GET",
+        url: $(this).attr('action'),
+        data: { search: valuesToSubmit},
+        dataType: "JSON" 
+    }).success(function(json){
+        rePositionMarkers(json); 
+        
+    });
+    return false; // prevents normal behaviour
+  })
+});  
+
+
+
+/ $(function(){
+
+/   $("#ajax").click(function(){
+
+/     alert("");
+/     $.getJSON('/lists.json', function(json){
+/       alert("Your jeson will apear her");
+/       alert(json);
+/       console.log("HHHHHHHHHHHHHHHHHHHHHH");
+/       console.log(json);
+/       console.log("HHHHHHHHHHHHHHHHHHHHHHENDDDDDDDDD");
+/     })
+/   })
+/ });  
+
+
+
+  $(document).ready(function(){
+  var handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers(#{raw @hash.to_json });
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+  });
