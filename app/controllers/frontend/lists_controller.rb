@@ -3,6 +3,7 @@ class Frontend::ListsController < FrontendController
 
 
   def index
+
     if params[:search].present?
       @lists = List.near(params[:search], 5)
     else
@@ -16,8 +17,9 @@ class Frontend::ListsController < FrontendController
     end
     
     if request.xhr?
+      payload = {"lists": JSON::parse(@lists.to_json), "hash": @hash }
       respond_to do |format|
-        format.json { render :json => @hash }
+        format.json { render :json => payload}
       end
     end
   end
