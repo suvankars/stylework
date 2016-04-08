@@ -2,11 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.main-button{
-  
-  .button.btn.btn-default {
-    height: 93px;
-    font-size: 2em;
-    padding-top: 30px;
-  }
+
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-70%, -80%);
+}
+
+#gmaps-input-address {
+  height: 35px;
+  width: 400px;
+  border-color: darkorange;
+  border-bottom-style: dotted;
 }

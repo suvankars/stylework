@@ -5,7 +5,7 @@ class Frontend::ListsController < FrontendController
   def index
 
     if params[:search].present?
-      @lists = List.near(params[:search], 5)
+      @lists = List.near(params[:search], 30)
     else
       @lists = List.all
     end
@@ -79,7 +79,7 @@ class Frontend::ListsController < FrontendController
 
     @list_id = @list.id #or params[:id]
     respond_to do |format|
-      format.html { redirect_to frontend_lists_url, notice: 'List was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'List was successfully destroyed.' }
       format.js {}
     end
   end

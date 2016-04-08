@@ -15,8 +15,7 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require cloudinary
-//=cloudinary-jquery-file-upload
-//=widget.cloudinary.com/global/all.js
+//= widget.cloudinary.com/global/all.js
 //= require underscore
 //= require gmaps/google
 //= require jquery-ui

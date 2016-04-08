@@ -1,38 +1,60 @@
 = simple_form_for @list, :html => { :class => 'form-horizontal' } do |f|
-  = f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
-  #gmaps-canvas
-  = f.input :ride_title
-  = error_span(@list[:ride_title])
-  = f.input :ride_description
-  = error_span(@list[:ride_description])
-  = f.input :rider_height
-  = error_span(@list[:rider_height])
-  = f.input :frame_size
-  = error_span(@list[:frame_size])
-  = f.input :hourly_rental
-  = error_span(@list[:hourly_rental])
-  = f.input :morning_rental
-  = error_span(@list[:morning_rental])
-  = f.input :evening_rental
-  = error_span(@list[:evening_rental])
-  = f.input :daily_rental
-  = error_span(@list[:daily_rental])
-  = f.input :weekly_rental
-  = error_span(@list[:weekly_rental])
-  = f.input :willing_to_deliver
-  = error_span(@list[:willing_to_deliver])
+  = field_set_tag 'Describe your ride offer' do  
+    = f.input :ride_title
+    = error_span(@list[:ride_title])
+    = f.input :ride_description
+    = error_span(@list[:ride_description])
+  
+  = field_set_tag 'Pick up address' do
+    = f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
+    #gmaps-canvas
+
+    = f.input :landmark
+    = error_span(@list[:landmark])
+  
+  = field_set_tag 'Suitable Raider' do
+    .splitContainer
+      %dl.third
+        %dd= f.input :rider_height
+        %dd= error_span(@list[:rider_height])
+      %dl.third
+        %dd= f.input :frame_size
+        %dd= error_span(@list[:frame_size])
+      %dl.third
+
+  = field_set_tag 'Rental information' do    
+    .splitContainer
+      %dl.sixth
+        %dd= f.input :morning_rental
+        %dd= error_span(@list[:morning_rental])
+      %dl.sixth
+        %dd= f.input :evening_rental
+        %dd= error_span(@list[:evening_rental])
+      %dl.sixth
+        %dd= f.input :hourly_rental
+        %dd= error_span(@list[:hourly_rental])
+      %dl.sixth
+        %dd= f.input :daily_rental
+        %dd= error_span(@list[:daily_rental])  
+      %dl.sixth
+        %dd= f.input :weekly_rental
+        %dd= error_span(@list[:weekly_rental])         
+      %dl
+        = f.input :willing_to_deliver
+
+ 
   / = f.input :address
   / = error_span(@list[:address])
-  = f.input :city
-  = error_span(@list[:city])
-  = f.input :state
-  = error_span(@list[:state])
-  = f.input :pincode
-  = error_span(@list[:pincode])
-  = f.input :landmark
-  = error_span(@list[:landmark])
+  /= f.input :city
+  /= error_span(@list[:city])
+  / = f.input :state
+  / = error_span(@list[:state])
+  / = f.input :pincode
+  / = error_span(@list[:pincode])
+  /= f.input :landmark
+  /1= error_span(@list[:landmark])
 
-  = field_set_tag 'Attachments' do
+  = field_set_tag 'Attach Images' do
     %a.btn.btn-primary#upload_widget_opener{:href => "#"} Upload multiple images
     %ul#images
       %span.status 
@@ -45,8 +67,8 @@
   = f.button :submit, :class => 'btn-primary'
   = link_to t('.cancel', :default => t("helpers.links.cancel")), lists_path, :class => 'btn btn-default'
 
-
-
+/Should we move this script to application.js? It is only required wen this form is opend  
+%script{:src => "//widget.cloudinary.com/global/all.js", :type => "text/javascript"}
 
 <!-- Configure Cloudinary jQuery plugin -->
 
@@ -56,7 +78,6 @@
 :javascript
 jQuery(function() {
   var completer;
-
   completer = new GmapsCompleter({
     inputField: '#gmaps-input-address',
     errorField: '#gmaps-error'

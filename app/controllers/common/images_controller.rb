@@ -78,7 +78,7 @@ class Common::ImagesController < BackendController
   def set_resource
     #Deter mine wheather this delete request for which type of resource
     #Product or List 
-    binding.pry
+    
     @resource_type = params[:resource_type].constantize
     @resource = @resource_type.find(params[:id])
   end

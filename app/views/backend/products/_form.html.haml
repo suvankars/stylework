@@ -12,6 +12,7 @@
         %dd= f.input :permalink
         %dd= error_span(@product[:permalink])
       %dl.third 
+      
     .splitContainer
       %dl.third
         %dd= f.input :supplier_id, collection: @supplier_names, :selected => @default_supplier
