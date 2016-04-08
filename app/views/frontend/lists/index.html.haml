@@ -74,6 +74,11 @@ $(function(){
     });
   }
 
+  $("#delete-btn").click(function(event){
+    console.log("From TOP ");
+  });
+  
+
   $("#ajax").click(function(){
     var valuesToSubmit = $('#gmaps-input-address').val();
     $.ajax({
@@ -90,7 +95,7 @@ $(function(){
         
         $(function() {
             $.each(listings, function(i, list) {
-                $('<tr>').append(
+                $('<tr ' + 'id=list_' + list.id + '>').append(
                 $('<td>').text(list.id),
                 $('<td>').text(list.ride_title),
                 $('<td>').text(list.ride_description),
@@ -111,10 +116,7 @@ $(function(){
                 $('<td>').text(list.landmark),
                 $('<td>').text(list.created_at),
                 $('<td>').append("<a class='btn btn-default btn-xs' href='/lists/" + list.id +"/edit'>Edit</a>"),
-                $('<td>').append("<a data-confirm='Are you sure?' class='btn btn-xs btn-danger' rel='nofollow' data-remote='true' data-method='delete' href='/lists/" + list.id + "'>Delete</a>").s
-                success( function(data, status, xhr){
-                alert ("Success")
-                }
+                $('<td>').append("<a data-confirm='Are you sure?' class='btn btn-xs btn-danger' rel='nofollow' data-remote='true' data-method='delete' href='/lists/" + list.id + "'>Delete</a>")
 
               ).appendTo('tbody#content');
             });
@@ -127,24 +129,11 @@ $(function(){
 
 
 
-/ $(function(){
-
-/   $("#ajax").click(function(){
-
-/     alert("");
-/     $.getJSON('/lists.json', function(json){
-/       alert("Your jeson will apear her");
-/       alert(json);
-/       console.log("HHHHHHHHHHHHHHHHHHHHHH");
-/       console.log(json);
-/       console.log("HHHHHHHHHHHHHHHHHHHHHHENDDDDDDDDD");
-/     })
-/   })
-/ });  
-
-
 
   $(document).ready(function(){
+  
+  
+
   var handler = Gmaps.build('Google');
   handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
     markers = handler.addMarkers(#{raw @hash.to_json });

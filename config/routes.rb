@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   
   
   scope module: 'frontend' do
-    resources :lists
+    resources :lists do
+      get 'search_index', :on => :collection 
+    end
   end
 
 

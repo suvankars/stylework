@@ -74,9 +74,13 @@ class Frontend::ListsController < FrontendController
 
   def destroy
     @list.destroy
+    #list_id will be used to remove listing from index page
+    #TBD remove marker from map. is it required?
+
+    @list_id = @list.id #or params[:id]
     respond_to do |format|
       format.html { redirect_to frontend_lists_url, notice: 'List was successfully destroyed.' }
-      format.json { head :no_content }
+      format.js {}
     end
   end
 
