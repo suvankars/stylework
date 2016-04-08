@@ -78,9 +78,14 @@ class Common::ImagesController < BackendController
   def set_resource
     #Deter mine wheather this delete request for which type of resource
     #Product or List 
-    
-    @resource_type = params[:resource_type].constantize
-    @resource = @resource_type.find(params[:id])
+    #There are few issue in this dynamic calls finder.. will work on letter
+    #bad patch
+    if (!params[:resource_type].nil? && !params[:id].nil?) 
+      @resource_type = params[:resource_type].constantize
+      @resource = @resource_type.find(params[:id])
+      return @resource
+    end
+
   end
 
 
