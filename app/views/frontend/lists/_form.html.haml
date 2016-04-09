@@ -63,6 +63,8 @@
         = render partial: 'images', list: @list
     
   
+  = field_set_tag 'Attach Images' do
+    = render partial: "schedule/form", schedule: @schedule
   
   = f.button :submit, :class => 'btn-primary'
   = link_to t('.cancel', :default => t("helpers.links.cancel")), lists_path, :class => 'btn btn-default'

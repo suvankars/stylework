@@ -1,0 +1,14 @@
+class List < ActiveRecord::Base
+  #AUTO LOADING not working though I have explicitly added this file to load path; 
+  # Will investigate and make it work letter
+  #List can have one product category and a subcatrgory "
+  #but as list is not a product it does't belongs to product 
+  has_one :category
+  has_one :subcategory
+
+  geocoded_by :address   
+  # auto-fetch coordinates
+  after_validation :geocode
+   
+end
+

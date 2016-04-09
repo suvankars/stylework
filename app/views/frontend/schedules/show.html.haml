@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Start date:
+  = @frontend_schedule.start_date
+%p
+  %b End date:
+  = @frontend_schedule.end_date
+%p
+  %b Start time:
+  = @frontend_schedule.start_time
+%p
+  %b End time:
+  = @frontend_schedule.end_time
+%p
+  %b Morning ride:
+  = @frontend_schedule.morning_ride
+%p
+  %b Evening ride:
+  = @frontend_schedule.evening_ride
+%p
+  %b All day:
+  = @frontend_schedule.all_day
+
+= link_to 'Edit', edit_frontend_schedule_path(@frontend_schedule)
+\|
+= link_to 'Back', frontend_schedules_path

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   
   
+  namespace :frontend do
+    resources :schedules
+  end
   scope module: 'frontend' do
     resources :calendars, :only => [:index ]
     resources :lists do

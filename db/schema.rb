@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160402073025) do
+ActiveRecord::Schema.define(version: 20160409143031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,21 @@ ActiveRecord::Schema.define(version: 20160402073025) do
   add_index "products", ["tax_rate_id"], name: "index_products_on_tax_rate_id", using: :btree
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
+  create_table "schedules", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.boolean  "morning_ride"
+    t.boolean  "evening_ride"
+    t.boolean  "all_day"
+    t.integer  "list_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "schedules", ["list_id"], name: "index_schedules_on_list_id", using: :btree
+
   create_table "sizes", force: :cascade do |t|
     t.string   "name"
     t.decimal  "volume"
@@ -233,6 +248,7 @@ ActiveRecord::Schema.define(version: 20160402073025) do
   add_foreign_key "products", "suppliers"
   add_foreign_key "products", "tax_rates"
   add_foreign_key "products", "users"
+  add_foreign_key "schedules", "lists"
   add_foreign_key "stock_levels", "products"
   add_foreign_key "subcategories", "categories"
 end

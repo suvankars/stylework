@@ -1,0 +1,33 @@
+%h1 Listing frontend_schedules
+
+%table
+  %thead
+    %tr
+      %th Start date
+      %th End date
+      %th Start time
+      %th End time
+      %th Morning ride
+      %th Evening ride
+      %th All day
+      %th
+      %th
+      %th
+
+  %tbody
+    - @frontend_schedules.each do |frontend_schedule|
+      %tr
+        %td= frontend_schedule.start_date
+        %td= frontend_schedule.end_date
+        %td= frontend_schedule.start_time
+        %td= frontend_schedule.end_time
+        %td= frontend_schedule.morning_ride
+        %td= frontend_schedule.evening_ride
+        %td= frontend_schedule.all_day
+        %td= link_to 'Show', frontend_schedule
+        %td= link_to 'Edit', edit_frontend_schedule_path(frontend_schedule)
+        %td= link_to 'Destroy', frontend_schedule, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Schedule', new_frontend_schedule_path
