@@ -2,8 +2,13 @@ Rails.application.routes.draw do
   
   
   scope module: 'frontend' do
+    resources :calendars, :only => [:index ]
     resources :lists do
       get 'search_index', :on => :collection 
+      get 'get_lists', :on => :collection 
+
+      patch 'availability', on: :member
+      
     end
   end
 
@@ -13,7 +18,9 @@ Rails.application.routes.draw do
   end
 
   devise_for :users
+  
   apipie
+  
   namespace :api do
       namespace :v1 do
         resources :products
@@ -48,15 +55,10 @@ Rails.application.routes.draw do
 
       resources :products do
         post 'park_images', :on => :collection
-        # collection do
-        # post :schedule
-        # put :save_scheduling
-        #end
         resources :variants
         resources :images, :only => [:create, :destroy] do
           collection do
             get 'remove_all'
-            #post 'park_images'
           end
         end
 

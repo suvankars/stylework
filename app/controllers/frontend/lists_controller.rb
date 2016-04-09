@@ -24,7 +24,21 @@ class Frontend::ListsController < FrontendController
     end
   end
 
+  def get_lists
+    
+    @lists = List.all#where(created_at: params[:start].to_date..params[:start].to_date)
+    
+    events = []
+    @lists.each do |list|
+      events << {:id => list.id, :title => "#{list.ride_title}", :start => "#{list.created_at}",:end => "#{list.created_at}" }
+    end
+    
+    render json: events
+  end
 
+  def availability
+  end
+  
   def show
 
   end
