@@ -122,15 +122,21 @@ ActiveRecord::Schema.define(version: 20160402073025) do
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.string   "skuid"
-    t.string   "brand"
     t.string   "permalink"
     t.text     "description"
     t.text     "short_description"
     t.boolean  "active",                                    default: true
-    t.integer  "quantity",                                  default: 0
-    t.decimal  "price",             precision: 8, scale: 2, default: 0.0
-    t.decimal  "cost_price",        precision: 8, scale: 2, default: 0.0
+    t.integer  "quantity",                                  default: 1
+    t.decimal  "price",             precision: 8, scale: 2
+    t.decimal  "cost_price",        precision: 8, scale: 2
     t.boolean  "stock_control",                             default: true
+    t.string   "location"
+    t.string   "model_title"
+    t.string   "model_size"
+    t.string   "phone_number"
+    t.text     "reason"
+    t.string   "purchase_year"
+    t.string   "brand_name"
     t.integer  "subcategory_id"
     t.integer  "parent_id"
     t.datetime "created_at",                                               null: false

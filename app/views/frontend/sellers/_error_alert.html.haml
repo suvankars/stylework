@@ -1,0 +1,6 @@
+- if !@sell_product.errors.empty?
+  .alert.alert-danger
+    %a.close{"aria-label" => "close", "data-dismiss" => "alert", :href => "#", :title => "close"} &times;
+    %ul
+      - @sell_product.errors.full_messages.each do |msg|
+        %li= msg

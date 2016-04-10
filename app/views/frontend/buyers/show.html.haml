@@ -1,0 +1,47 @@
+.page-header
+  %h2 #{@item.name}
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-4
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title #{@item.name}
+      .panel-body
+        %img{:alt => "", :src => @item.cloudinary_images.first["secure_url"], :height => "300", :width => "320"}/
+  .col-lg-8
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Details
+      .panel-body
+        .ibox-content
+          %table.table.table-hover.no-margins
+            %colgroup
+              %col.col-xs-3
+              %col.col-xs-9
+            %tbody
+              %tr
+                %th{:scope => "row"} Desription
+                %td.description= @item.description
+              %tr
+                %th{:scope => "row"} Location
+                %td.description= @item.location
+              %tr
+                %th{:scope => "row"} Model Name
+                %td.model_title= @item.model_title
+              %tr
+                %th{:scope => "row"} Size
+                %td.model_size= @item.model_size
+              %tr
+                %th{:scope => "row"} Selling Price
+                %td.selling_price= "₹" + number_with_precision(@item.price, :precision => 2).to_s
+              %tr
+                %th{:scope => "row"} Actual Price
+                %td.current_market_price= "₹" + number_with_precision(@item.cost_price, :precision => 2).to_s
+              %tr
+                %th{:scope => "row"} Reason
+                %td.reason= @item.reason
+              %tr
+                %th{:scope => "row"} Special Message
+                %td.special_message= @item.short_description
+              %tr
+                %th{:scope => "row"} Contact Me
+                %td.phone_number= @item.phone_number

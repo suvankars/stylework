@@ -1,0 +1,56 @@
+.page-header
+  %h1 Buy a Cycle
+.container
+  .row
+    .col-md-3
+      %p.lead Shop Name
+      .list-group
+        %a.list-group-item{:href => "#"} Category 1
+        %a.list-group-item{:href => "#"} Category 2
+        %a.list-group-item{:href => "#"} Category 3
+    .col-md-9
+      .row.carousel-holder
+        .col-md-12
+          #carousel-example-generic.carousel.slide{"data-ride" => "carousel"}
+            %ol.carousel-indicators
+              %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
+              %li{"data-slide-to" => "1", "data-target" => "#carousel-example-generic"}
+              %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
+            .carousel-inner
+              .item.active
+                %img.slide-image{:alt => "", :src => "../images/cycle1.jpg"}/
+              .item
+                %img.slide-image{:alt => "", :src => "../images/cycle2.jpg"}/
+              .item
+                %img.slide-image{:alt => "", :src => "../images/cycle3.jpg"}/
+            %a.left.carousel-control{"data-slide" => "prev", :href => "#carousel-example-generic"}
+              %span.glyphicon.glyphicon-chevron-left
+            %a.right.carousel-control{"data-slide" => "next", :href => "#carousel-example-generic"}
+              %span.glyphicon.glyphicon-chevron-right
+      .row
+        - @items.each do |i|
+          .col-sm-4.col-lg-4.col-md-4
+            .thumbnail
+              %img{:alt => "", :src => i.cloudinary_images.first["url"], :height => "150", :width => "320"}/
+              .caption
+                %h4.pull-right ₹#{number_with_precision(i.price, :precision => 2)}
+                %h4
+                  = link_to i.name, buyer_path(i)
+                %p
+                  = i.description
+              .ratings
+                %p.pull-right 15 reviews
+                %p
+                  %span.glyphicon.glyphicon-star
+                  %span.glyphicon.glyphicon-star
+                  %span.glyphicon.glyphicon-star
+                  %span.glyphicon.glyphicon-star
+                  %span.glyphicon.glyphicon-star
+.container
+  %hr/
+  / Footer
+  %footer
+    .row
+      .col-lg-12
+        %p Copyright © Your Website 2014
+/ /.container

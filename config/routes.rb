@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  
-  
+
+
   scope module: 'frontend' do
     resources :lists do
-      get 'search_index', :on => :collection 
+      get 'search_index', :on => :collection
     end
   end
+
+  scope module: 'frontend' do
+    resources :sellers, only: [:new, :create]
+    resources :buyers, only: [:index, :show]
+  end
+
 
 
   namespace :frontend do
@@ -20,13 +26,13 @@ Rails.application.routes.draw do
         resources :categories
       end
   end
-  
+
   root 'frontend/home#index'
 
   get 'backend/welcome/index'
 
   scope '/admin', :module => 'backend' do
-  
+
       resources :sizes
       resources :tax_rates
       resources :brands
@@ -41,9 +47,9 @@ Rails.application.routes.draw do
         resources :addresses
         resources :finances
       end
-      
+
       resources :stock_levels, :only => [:index, :create, :destroy]
-        
+
       get 'dashboard' => 'dashboard#index'
 
       resources :products do
@@ -67,10 +73,10 @@ Rails.application.routes.draw do
       end
     end
   #end
-      
+
 
   scope module: 'common' do
-    resources :images do 
+    resources :images do
       post 'park_images', :on => :collection
     end
   end
@@ -80,7 +86,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

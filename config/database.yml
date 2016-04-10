@@ -44,4 +44,3 @@ production:
   encoding: unicode
   database: cycleyard_production
   pool: 5
-
