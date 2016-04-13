@@ -1,6 +1,6 @@
 class Frontend::SchedulesController < FrontendController
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_list, only: [:create, :new, :edit, :destroy]
   def index
     @schedules = Schedule.all
   end
@@ -11,7 +11,9 @@ class Frontend::SchedulesController < FrontendController
 
 
   def new
-    @schedule = Schedule.new
+    respond_to do |format|
+       format.js {render "new", locals: {mah_list: @list} }
+    end
   end
 
 
@@ -19,11 +21,11 @@ class Frontend::SchedulesController < FrontendController
   end
 
   def create
-    @schedule = Schedule.new(schedule_params)
+    @schedule = @list.schedule.new(schedule_params)
 
     respond_to do |format|
       if @schedule.save
-        format.html { redirect_to @schedule, notice: 'Schedule was successfully created.' }
+        format.html { redirect_to list_path(@list), notice: 'Schedule was successfully created.' }
         format.json { render :show, status: :created, location: @schedule }
       else
         format.html { render :new }
@@ -49,7 +51,7 @@ class Frontend::SchedulesController < FrontendController
   def destroy
     @schedule.destroy
     respond_to do |format|
-      format.html { redirect_to schedules_url, notice: 'Schedule was successfully destroyed.' }
+      format.html { redirect_to list_path(@list), notice: 'Schedule was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -60,8 +62,12 @@ class Frontend::SchedulesController < FrontendController
       @schedule = Schedule.find(params[:id])
     end
 
+    def set_list
+      @list = List.find(params[:list_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def schedule_params
-      params.require(:frontend_schedule).permit(:start_date, :end_date, :start_time, :end_time, :morning_ride, :evening_ride, :all_day)
+      params.require(:schedule).permit(:start_time, :end_time, :morning_ride, :evening_ride, :all_day)
     end
 end

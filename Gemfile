@@ -94,3 +94,4 @@ gem 'quiet_assets'
 #FullCalendar, a jQuery plugin that provides a full-sized drag drop calendar 
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
+gem 'fullcalendar_engine'

@@ -113,6 +113,8 @@ GEM
       jquery-rails (>= 4.0.5, < 5.0.0)
       jquery-ui-rails (>= 5.0.2)
       momentjs-rails (>= 2.9.0)
+    fullcalendar_engine (1.0.6)
+      rails (>= 4.0.0)
     geocoder (1.3.2)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -315,6 +317,7 @@ DEPENDENCIES
   country_select
   devise
   fullcalendar-rails
+  fullcalendar_engine
   geocoder
   gmaps-autocomplete-rails
   gmaps4rails

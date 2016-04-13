@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160409143031) do
+ActiveRecord::Schema.define(version: 20160410044729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,29 @@ ActiveRecord::Schema.define(version: 20160409143031) do
   end
 
   add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id", using: :btree
+
+  create_table "fullcalendar_engine_event_series", force: :cascade do |t|
+    t.integer  "frequency",  default: 1
+    t.string   "period",     default: "monthly"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.boolean  "all_day",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fullcalendar_engine_events", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.boolean  "all_day",         default: false
+    t.text     "description"
+    t.integer  "event_series_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id", using: :btree
 
   create_table "lists", force: :cascade do |t|
     t.string   "ride_title"
@@ -156,10 +179,8 @@ ActiveRecord::Schema.define(version: 20160409143031) do
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
   create_table "schedules", force: :cascade do |t|
-    t.date     "start_date"
-    t.date     "end_date"
-    t.time     "start_time"
-    t.time     "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.boolean  "morning_ride"
     t.boolean  "evening_ride"
     t.boolean  "all_day"

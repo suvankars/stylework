@@ -22,7 +22,6 @@
 //= require gmaps-auto-complete
 //= require moment
 
-
 //= require fullcalendar
 
 

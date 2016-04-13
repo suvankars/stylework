@@ -1,0 +1,34 @@
+- model_class = Schedule
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      
+      %th= model_class.human_attribute_name(:start_time)
+      %th= model_class.human_attribute_name(:end_time)
+      %th= model_class.human_attribute_name(:morning_ride)
+      %th= model_class.human_attribute_name(:evening_ride)
+      %th= model_class.human_attribute_name(:all_day)
+      %th= model_class.human_attribute_name(:list_id)
+      %th= model_class.human_attribute_name(:created_at)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - if schedules.present?
+      - schedules.each do |schedule|
+        %tr
+          %td= link_to schedule.id, list_schedule_path(list, schedule)
+         
+          %td= schedule.start_time
+          %td= schedule.end_time
+          %td= schedule.morning_ride
+          %td= schedule.evening_ride
+          %td= schedule.all_day
+          %td= schedule.list_id
+          %td=l schedule.created_at
+          %td
+            = link_to t('.edit', :default => t("helpers.links.edit")), edit_list_schedule_path(list, schedule), :class => 'btn btn-default btn-xs'
+            = link_to t('.destroy', :default => t("helpers.links.destroy")), list_schedule_path(list, schedule), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_list_schedule_path(list), :class => 'btn btn-primary'

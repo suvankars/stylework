@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   
   
-  namespace :frontend do
-    resources :schedules
-  end
+ 
   scope module: 'frontend' do
     resources :calendars, :only => [:index ]
     resources :lists do
@@ -11,7 +9,10 @@ Rails.application.routes.draw do
       get 'get_lists', :on => :collection 
 
       patch 'availability', on: :member
-      
+     
+      resources :schedules do
+        get 'home', :on => :collection
+      end
     end
   end
 
@@ -79,7 +80,7 @@ Rails.application.routes.draw do
       post 'park_images', :on => :collection
     end
   end
-
+  mount FullcalendarEngine::Engine => "/fullcalendar_engine"
   # The priority is based upon order of creation: first created -> highest priority.
   #root 'welcome#index'
   # See how all your routes lay out with "rake routes".

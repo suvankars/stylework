@@ -40,7 +40,6 @@ class Frontend::ListsController < FrontendController
   end
   
   def show
-
   end
 
 

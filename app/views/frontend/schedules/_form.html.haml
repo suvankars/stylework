@@ -1,16 +1,17 @@
-.form-inputs
-  = f.input :start_date
-  = f.input :end_date
+- @schedule = @list.schedule.build
+= simple_form_for [@list, @schedule], :html => { :class => 'form-horizontal' , id: 'event_form' } do |f|
+  
   = f.input :start_time
+  = error_span(@schedule[:start_time])
   = f.input :end_time
+  = error_span(@schedule[:end_time])
   = f.input :morning_ride
+  = error_span(@schedule[:morning_ride])
   = f.input :evening_ride
+  = error_span(@schedule[:evening_ride])
   = f.input :all_day
-
-.form-actions
-  = f.button :submit
-
-
-
-
-
+  = error_span(@schedule[:all_day])
+  %p
+    = f.submit
+    %span#creating_events.spinner{:style => "display:none;"} Creating, Please wait...
+  %hr
