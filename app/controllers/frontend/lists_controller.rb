@@ -1,5 +1,5 @@
 class Frontend::ListsController < FrontendController
-  before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_list, only: [:calendar, :show, :edit, :update, :destroy]
 
 
   def index
@@ -26,13 +26,13 @@ class Frontend::ListsController < FrontendController
 
   def get_lists
     
-    @lists = List.all#where(created_at: params[:start].to_date..params[:start].to_date)
+    @lists = List.last#where(created_at: params[:start].to_date..params[:start].to_date)
     
     events = []
-    @lists.each do |list|
-      events << {:id => list.id, :title => "#{list.ride_title}", :start => "#{list.created_at}",:end => "#{list.created_at}" }
+    @lists.schedule.each do |s|
+      events << {:id => s.id, :title => "#{@lists.ride_title}", :start => "#{s.start_time}",:end => "#{s.end_time}" }
     end
-    
+
     render json: events
   end
 
@@ -51,6 +51,9 @@ class Frontend::ListsController < FrontendController
   def edit
   end
 
+  def calendar
+  
+  end
 
   def create
     @list = List.new(list_params)

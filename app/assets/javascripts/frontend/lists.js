@@ -1,6 +1,6 @@
 var updateEvent;
 var display;
-
+var refetch_events_and_close_dialog;
 
 $(document).ready(function() {
 
@@ -56,6 +56,12 @@ $(document).ready(function() {
     },
   });
 });
+
+refetch_events_and_close_dialog = function (){
+      alert("Hello There");
+      $('#calendar').fullCalendar('refetchEvents');
+      $('.dialog:visible').dialog('destroy');
+    }
 
 display = function(options) {
   /*// alert("I am in display");
@@ -168,10 +174,11 @@ $(document).ready(function(){
       url: $(this).attr('action'),
       beforeSend: show_spinner,
       complete: hide_spinner,
-      success: alert("success"),
+      success: refetch_events_and_close_dialog,
       error: handle_error
     });
 
+    
     function show_spinner() {
       $spinner.show();
     }

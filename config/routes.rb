@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
   
-  
+  get '/lists/:id/calendar' => 'frontend/lists#calendar'
  
   scope module: 'frontend' do
     resources :calendars, :only => [:index ]
     resources :lists do
       get 'search_index', :on => :collection 
       get 'get_lists', :on => :collection 
+      
 
       patch 'availability', on: :member
      

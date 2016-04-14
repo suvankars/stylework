@@ -22,15 +22,11 @@ class Frontend::SchedulesController < FrontendController
 
   def create
     @schedule = @list.schedule.new(schedule_params)
-
-    respond_to do |format|
-      if @schedule.save
-        format.html { redirect_to list_path(@list), notice: 'Schedule was successfully created.' }
-        format.json { render :show, status: :created, location: @schedule }
-      else
-        format.html { render :new }
-        format.json { render json: @schedule.errors, status: :unprocessable_entity }
-      end
+    
+    if @schedule.save
+      render nothing: true
+    else
+      render text: @schedule.errors.full_messages.to_sentence, status: 422
     end
   end
 

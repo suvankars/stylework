@@ -1,6 +1,8 @@
 - model_class = List
 %h1=t '.title', :default => model_class.model_name.human.titleize
 
+#calendar
+
 = content_tag "div", id: "list", data: {list: { list_id: @list.id} } do
   %p
     %strong= model_class.human_attribute_name(:ride_title) + ':'
@@ -94,8 +96,7 @@
   =render partial: "frontend/schedules/schedules", :locals => { :schedules => @list.schedule.all, :list => @list}
 
 
-  #calendar
-
+  
   #create_event_dialog.dialog{:style => "display:none;"}
     = render partial: "frontend/schedules/form"
 
