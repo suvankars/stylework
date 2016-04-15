@@ -103,8 +103,9 @@ render= function(options){
       $hour.prop('selectedIndex', time.getUTCHours());
       $minute.prop('selectedIndex', time.getUTCMinutes());
 
-      // FullcalendarEngine.setTime('#event_endtime', endTime)
-      $('#event_all_day').attr('checked', options['allDay'])
+      // Defaulf checked Morning Ride 
+      //$('#schedule_morning_ride').attr('checked', options['morning_ride'])
+      //$('#schedule_all_day').attr('checked', options['allDay'])
       $('#create_event_dialog').dialog({
         title: 'New Event',
         modal: true,

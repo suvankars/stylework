@@ -1,12 +1,17 @@
 class Frontend::SchedulesController < FrontendController
+  # Actually monkey-patch String 
+  String.include CoreExtensions::String
+   
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
-  before_action :set_list, only: [:create, :new, :edit, :destroy]
+  before_action :set_list, only: [:create, :new, :show, :edit, :destroy]
+  
   def index
     @schedules = Schedule.all
   end
 
 
   def show
+     
   end
 
 
@@ -20,13 +25,34 @@ class Frontend::SchedulesController < FrontendController
   def edit
   end
 
+  def create_slot(slot_time)
+   
+    schedule = @list.schedule.new(schedule_params)
+    
+    slot_time == :morning ? schedule.set_morning_slot  : schedule.set_evening_slot
+
+    schedule.save
+  end
+
   def create
     @schedule = @list.schedule.new(schedule_params)
-    
-    if @schedule.save
-      render nothing: true
+    morning_ride  = params[:schedule][:morning_ride]
+    evening_ride = params[:schedule][:evening_ride]
+
+    if (  morning_ride.to_bool and evening_ride.to_bool )
+      if ( create_slot(:morning) and create_slot(:evening) )
+        render nothing: true
+      else
+      end
     else
-      render text: @schedule.errors.full_messages.to_sentence, status: 422
+      @schedule.set_morning_slot if params[:schedule][:morning_ride].to_bool 
+      @schedule.set_evening_slot if params[:schedule][:evening_ride].to_bool
+      
+      if @schedule.save
+        render nothing: true
+      else
+        render text: @schedule.errors.full_messages.to_sentence, status: 422
+      end
     end
   end
 
