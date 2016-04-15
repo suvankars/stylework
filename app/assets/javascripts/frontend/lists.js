@@ -30,14 +30,15 @@ $(document).ready(function() {
       right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'month',
-    height: 500,
+    height: 600,
+    height: 600,
     slotMinutes: 30,
     eventSources: [
       {
         url: '/lists/get_lists'
       }
     ],
-    timeFormat: 'h:mm t{ - h:mm t} ',
+    timeFormat: 'h:mm',
     dragOpacity: "0.5",
 
     eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc) {
@@ -77,19 +78,20 @@ render= function(options){
       var startTime = options['starttime']
       var endTime = options['endtime'];
       console.log(startTime);
-      // if(startTime.getTime() == endTime.getTime()) { endTime.setMinutes(startTime.getMinutes() + 15); }
-      //setTime('#schedule_start_time', startTime)
-
+      console.log(startTime.toLocaleString());
+      console.log(startTime.toUTCString());
+      console.log(startTime.toUTCString().toLocaleString());
       var type = '#schedule_start_time';
-      var time = startTime;
+      var time = startTime
       var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
-      console.log($year.val(time.getFullYear()));
+      console.log($year.val(time.getUTCFullYear()));
       $year.val(time.getFullYear());
-      $month.prop('selectedIndex', time.getMonth());
-      $day.prop('selectedIndex', time.getDate() - 1);
-      $hour.prop('selectedIndex', time.getHours());
-      $minute.prop('selectedIndex', time.getMinutes());
+      $month.prop('selectedIndex', time.getUTCMonth());
+      $day.prop('selectedIndex', time.getUTCDate() - 1);
+      $hour.prop('selectedIndex', time.getUTCHours());
+      $minute.prop('selectedIndex', time.getUTCMinutes());
 
+      //var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
       /* settime function is not setting values: TODO*/
       var type = '#schedule_end_time';
       var time = endTime;
@@ -98,8 +100,8 @@ render= function(options){
       $year.val(time.getFullYear());
       $month.prop('selectedIndex', time.getMonth());
       $day.prop('selectedIndex', time.getDate() - 1);
-      $hour.prop('selectedIndex', time.getHours());
-      $minute.prop('selectedIndex', time.getMinutes());
+      $hour.prop('selectedIndex', time.getUTCHours());
+      $minute.prop('selectedIndex', time.getUTCMinutes());
 
       // FullcalendarEngine.setTime('#event_endtime', endTime)
       $('#event_all_day').attr('checked', options['allDay'])

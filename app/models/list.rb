@@ -9,5 +9,8 @@ class List < ActiveRecord::Base
   after_validation :geocode
    
   has_many :schedule 
+
+  
 end
+
 

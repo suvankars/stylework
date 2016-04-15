@@ -24,15 +24,31 @@ class Frontend::ListsController < FrontendController
     end
   end
 
+  
+
   def get_lists
-    
+    #binding.pry
     @lists = List.last#where(created_at: params[:start].to_date..params[:start].to_date)
     
     events = []
-    @lists.schedule.each do |s|
-      events << {:id => s.id, :title => "#{@lists.ride_title}", :start => "#{s.start_time}",:end => "#{s.end_time}" }
-    end
+    
 
+  
+
+    schedules = @lists.schedule.between(params[:start], params[:end])
+
+    # #schedules = @lists.schedule.where('
+    #             (start_time >= :start_time and end_time <= :end_time) or
+    #             (start_time >= :start_time and end_time > :end_time and start_time <= :end_time) or
+    #             (start_time <= :start_time and end_time >= :start_time and end_time <= :end_time) or
+    #             (start_time <= :start_time and end_time > :end_time)',
+    #             start_time: start_time, end_time: end_time)
+
+
+    schedules.each do |s|
+      events << {:id => s.id, :title => "#{@lists.ride_title}", :start => "#{s.start_time.iso8601}" ,:end => "#{s.end_time.iso8601}" }
+    end
+    p events
     render json: events
   end
 
