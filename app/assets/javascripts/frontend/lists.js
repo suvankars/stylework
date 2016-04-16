@@ -47,7 +47,9 @@ $(document).ready(function() {
     eventResize: function(event, dayDelta, minuteDelta, revertFunc) {
       return updateEvent(event);
     },
-
+    eventClick: function(event, jsEvent, view){
+      updateEventDetails(event);
+    },
     select: function( startDate, endDate, allDay, jsEvent, view ) {
       display({ 
         starttime: new Date(startDate.toDate()), 
@@ -59,7 +61,6 @@ $(document).ready(function() {
 });
 
 refetch_events_and_close_dialog = function (){
-      alert("Hello There");
       $('#calendar').fullCalendar('refetchEvents');
       $('.dialog:visible').dialog('destroy');
     }
@@ -127,7 +128,6 @@ make_it_work_setTime =  function(type, time) {
 },
 
 fetch = function(options){
-  alert("Going to fetch");
   var list_id = $("#list").data('list').list_id
   $.ajax({
     type: 'get',
@@ -165,7 +165,30 @@ updateEvent = function(the_event) {
  
 };
 
- 
+renderUpdateForm = function(){
+
+};
+
+updateEventDetails = function(schedule){
+  alert("Going to update")
+  var list_id = $("#list").data('list').list_id
+  console.log(event);
+  $.ajax({
+        type: 'GET',
+        dataType: 'script',
+        async: true,
+        url : "/lists/" + list_id + "/schedules/" + schedule.id + "/edit",
+
+        success: function(){ renderUpdateForm() }
+  });
+  
+  $('#event_desc_dialog').dialog({
+        title: "Update Schedules",
+        modal: true,
+        width: 500,
+        close: function(event, ui){ $('#event_desc_dialog').html(''); $('#event_desc_dialog').dialog('destroy') }
+  }); 
+}  
 
 $(document).ready(function(){
   $('#create_event_dialog, #event_desc_dialog').on('submit', "#event_form", function(event) {

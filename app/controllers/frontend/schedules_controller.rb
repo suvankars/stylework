@@ -11,7 +11,7 @@ class Frontend::SchedulesController < FrontendController
 
 
   def show
-     
+     @schedule = Schedule.last
   end
 
 
@@ -23,6 +23,9 @@ class Frontend::SchedulesController < FrontendController
 
 
   def edit
+    respond_to do |format|
+       format.js {render "edit", locals: {list: @list, schedule: @schedule} }
+    end
   end
 
   def create_slot(slot_time)
@@ -35,6 +38,7 @@ class Frontend::SchedulesController < FrontendController
   end
 
   def create
+    #TODO Clean it
     @schedule = @list.schedule.new(schedule_params)
     morning_ride  = params[:schedule][:morning_ride]
     evening_ride = params[:schedule][:evening_ride]
@@ -58,13 +62,20 @@ class Frontend::SchedulesController < FrontendController
 
 
   def update
+    
+
     respond_to do |format|
-      if @schedule.update(schedule_params)
-        format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
-        format.json { render :show, status: :ok, location: @schedule }
+      if @schedule.update(schedule_params.except(:start_time, :end_time))
+        @schedule.set_morning_slot if params[:schedule][:morning_ride].to_bool 
+        @schedule.set_evening_slot if params[:schedule][:evening_ride].to_bool
+
+        #format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @schedule }
+        format.js { render nothing: true}
       else
-        format.html { render :edit }
-        format.json { render json: @schedule.errors, status: :unprocessable_entity }
+        #format.html { render :edit }
+        #format.json { render json: @schedule.errors, status: :unprocessable_entity }
+        format.js {render text: @schedule.errors.full_messages.to_sentence, status: 422}
       end
     end
   end

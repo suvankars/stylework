@@ -26,7 +26,7 @@ class Schedule < ActiveRecord::Base
         :end => end_time.rfc822,
         :allDay => self.all_day,
         :recurring => false,
-        :url => Rails.application.routes.url_helpers.list_schedule_path(list, self)
+        #:url => Rails.application.routes.url_helpers.list_schedule_path(list, self)
         #:color => "red"
       }
   end
