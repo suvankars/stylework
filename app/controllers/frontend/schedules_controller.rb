@@ -4,7 +4,8 @@ class Frontend::SchedulesController < FrontendController
    
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
   before_action :set_list, only: [:create, :new, :show, :edit, :destroy]
-  
+  before_action :set_ride_slot , only: [:update] 
+
   def index
     @schedules = Schedule.all
   end
@@ -28,14 +29,7 @@ class Frontend::SchedulesController < FrontendController
     end
   end
 
-  def create_slot(slot_time)
-   
-    schedule = @list.schedule.new(schedule_params)
-    
-    slot_time == :morning ? schedule.set_morning_slot  : schedule.set_evening_slot
-
-    schedule.save
-  end
+  
 
   def create
     #TODO Clean it
@@ -44,7 +38,7 @@ class Frontend::SchedulesController < FrontendController
     evening_ride = params[:schedule][:evening_ride]
 
     if (  morning_ride.to_bool and evening_ride.to_bool )
-      if ( create_slot(:morning) and create_slot(:evening) )
+      if ( create_slot(:morning, @schedule) and create_slot(:evening, @schedule) )
         render nothing: true
       else
       end
@@ -60,15 +54,33 @@ class Frontend::SchedulesController < FrontendController
     end
   end
 
+  def create_slot(slot_time, schedule )
+    case slot_time
+
+    when :morning  
+      schedule.set_morning_slot 
+    when :evening
+      schedule.set_evening_slot
+    end
+
+    schedule.save
+  end
+
+
 
   def update
-    
-
     respond_to do |format|
       if @schedule.update(schedule_params.except(:start_time, :end_time))
-        @schedule.set_morning_slot if params[:schedule][:morning_ride].to_bool 
-        @schedule.set_evening_slot if params[:schedule][:evening_ride].to_bool
+        
+        if @morning_ride.to_bool
+          create_slot(:morning, @schedule )
+        elsif @evening_ride.to_bool
+          create_slot(:evening, @schedule )
+        end
 
+        #@schedule.set_morning_slot if params[:schedule][:morning_ride].to_bool 
+        #@schedule.set_evening_slot if params[:schedule][:evening_ride].to_bool
+        #@schedule.save
         #format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
         #format.json { render :show, status: :ok, location: @schedule }
         format.js { render nothing: true}
@@ -93,6 +105,11 @@ class Frontend::SchedulesController < FrontendController
     # Use callbacks to share common setup or constraints between actions.
     def set_schedule
       @schedule = Schedule.find(params[:id])
+    end
+
+    def set_ride_slot
+      @morning_ride  = params[:schedule][:morning_ride] || ""
+      @evening_ride = params[:schedule][:evening_ride] || ""
     end
 
     def set_list

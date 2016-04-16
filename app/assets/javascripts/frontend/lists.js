@@ -217,4 +217,10 @@ $(document).ready(function(){
       alert(xhr.responseText);
     }
   })
+
+  $('input.ride').on('change', function() {
+    $('input.ride').not(this).prop('checked', false);  
+  });
+
 });
+

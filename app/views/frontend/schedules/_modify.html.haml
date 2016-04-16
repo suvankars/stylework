@@ -1,15 +1,15 @@
 = simple_form_for [list, schedule], :html => { :class => 'form-horizontal' , id: 'event_form' } do |f|
   = field_set_tag 'Ride Slot' do
     #slot
-      %span#cont
-        = f.input :morning_ride
+      %span#cont.ride
+        = f.input :morning_ride, :input_html => { :class => 'ride' }
         = error_span(schedule[:morning_ride])
-      %span#cont  
-        = f.input :evening_ride
+      %span#cont.ride  
+        = f.input :evening_ride, :input_html => { :class => 'ride' }
         = error_span(schedule[:evening_ride])
 
     #allday  
-      = f.input :all_day
+      = f.input :all_day, :input_html => { :class => 'ride' }
       = error_span(schedule[:all_day])
   
   = f.input :start_time
@@ -21,3 +21,10 @@
     = f.submit
     %span#creating_events.spinner{:style => "display:none;"} Creating, Please wait...
   %hr
+
+:javascript
+$(document).ready(function(){
+  $('input.ride').on('change', function() {
+    $('input.ride').not(this).prop('checked', false);  
+  });
+});
