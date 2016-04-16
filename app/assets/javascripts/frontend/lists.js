@@ -73,6 +73,16 @@ display = function(options) {
   fetch(options);
 },
 
+destroy = function(action_url){
+  console.log(action_url)
+  $.ajax({
+    dataType: 'script',
+    type: 'delete',
+    url: action_url,
+    success: refetch_events_and_close_dialog
+  });
+},
+
 render= function(options){
       $('#event_form').trigger('reset');
       

@@ -38,7 +38,7 @@ class Frontend::SchedulesController < FrontendController
     evening_ride = params[:schedule][:evening_ride]
 
     if (  morning_ride.to_bool and evening_ride.to_bool )
-      if ( create_slot(:morning, @schedule) and create_slot(:evening, @schedule) )
+      if ( create_slot(:morning, @list.schedule.new(schedule_params)) and create_slot(:evening, @list.schedule.new(schedule_params)) )
         render nothing: true
       else
       end
@@ -96,8 +96,9 @@ class Frontend::SchedulesController < FrontendController
   def destroy
     @schedule.destroy
     respond_to do |format|
-      format.html { redirect_to list_path(@list), notice: 'Schedule was successfully destroyed.' }
-      format.json { head :no_content }
+      #format.html { redirect_to list_path(@list), notice: 'Schedule was successfully destroyed.' }
+      #format.json { head :no_content }
+      format.js { render nothing: true}
     end
   end
 

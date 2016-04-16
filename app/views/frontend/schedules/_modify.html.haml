@@ -1,4 +1,4 @@
-= simple_form_for [list, schedule], :html => { :class => 'form-horizontal' , id: 'event_form' } do |f|
+= simple_form_for [list, schedule], :html => { :class => 'form-horizontal' , id: 'modify_form' } do |f|
   = field_set_tag 'Ride Slot' do
     #slot
       %span#cont.ride
@@ -17,9 +17,14 @@
   = f.input :end_time
   = error_span(schedule[:end_time])
   
+  = link_to 'Delete', 'javascript:void()', id: 'delete_schedule', :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
   %p
     = f.submit
-    %span#creating_events.spinner{:style => "display:none;"} Creating, Please wait...
+    %span#creating_events.spinner{:style => "display:none;"} 
+    Creating, Please wait...
+    
+    
+
   %hr
 
 :javascript
@@ -27,4 +32,11 @@ $(document).ready(function(){
   $('input.ride').on('change', function() {
     $('input.ride').not(this).prop('checked', false);  
   });
+
+  $('#delete_schedule').click(function(event) {
+      var action_url = document.getElementById('modify_form').action
+      destroy(action_url);
+      event.preventDefault();
+  });
 });
+
