@@ -85,22 +85,15 @@ render= function(options){
       
       var startTime = options['starttime']
       var endTime = options['endtime'];
-      console.log(startTime);
-      console.log(startTime.toLocaleString());
-      console.log(startTime.toUTCString());
-      console.log(startTime.toUTCString().toLocaleString());
       var type = '#schedule_start_time';
       var time = startTime
       var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
-      console.log($year.val(time.getUTCFullYear()));
       $year.val(time.getFullYear());
       $month.prop('selectedIndex', time.getUTCMonth());
       $day.prop('selectedIndex', time.getUTCDate() - 1);
       $hour.prop('selectedIndex', time.getUTCHours());
       $minute.prop('selectedIndex', time.getUTCMinutes());
 
-      //var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
-      /* settime function is not setting values: TODO*/
       var type = '#schedule_end_time';
       var time = endTime;
       var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
@@ -111,9 +104,6 @@ render= function(options){
       $hour.prop('selectedIndex', time.getUTCHours());
       $minute.prop('selectedIndex', time.getUTCMinutes());
 
-      // Defaulf checked Morning Ride 
-      //$('#schedule_morning_ride').attr('checked', options['morning_ride'])
-      //$('#schedule_all_day').attr('checked', options['allDay'])
       $('#create_event_dialog').dialog({
         title: 'New Event',
         modal: true,
@@ -122,17 +112,17 @@ render= function(options){
       });
 },
 
-make_it_work_setTime =  function(type, time) {
-  //$('#event_form').remove('')
+// make_it_work_setTime =  function(type, time) {
+//   //$('#event_form').remove('')
 
-  var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
-  console.log($year.val(time.getFullYear()));
-  $year.val(time.getFullYear());
-  $month.attr('selectedIndex', time.getMonth());
-  $day.attr('selectedIndex', time.getDate() - 1);
-  $hour.attr('selectedIndex', time.getHours());
-  $minute.attr('selectedIndex', time.getMinutes());
-},
+//   var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
+//   console.log($year.val(time.getFullYear()));
+//   $year.val(time.getFullYear());
+//   $month.attr('selectedIndex', time.getMonth());
+//   $day.attr('selectedIndex', time.getDate() - 1);
+//   $hour.attr('selectedIndex', time.getHours());
+//   $minute.attr('selectedIndex', time.getMinutes());
+// },
 
 fetch = function(options){
   var list_id = $("#list").data('list').list_id
