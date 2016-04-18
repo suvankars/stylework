@@ -2,9 +2,10 @@ class Frontend::SchedulesController < FrontendController
   # Actually monkey-patch String 
   String.include CoreExtensions::String
    
-  before_action :set_schedule, only: [:show, :edit, :update, :destroy]
-  before_action :set_list, only: [:create, :new, :show, :edit, :destroy]
-  before_action :set_ride_slot , only: [:update] 
+  before_action :set_schedule, only: [:move, :resize, :show, :edit, :update, :destroy]
+  before_action :set_list, only: [:move, :resize, :create, :new, :show, :edit, :destroy]
+  before_action :set_ride_slot , only: [:update]
+
 
   def index
     @schedules = Schedule.all
@@ -102,6 +103,27 @@ class Frontend::SchedulesController < FrontendController
     end
   end
 
+
+
+
+  def move
+    if @schedule
+      @schedule.start_time =  delta_to_time(@schedule.start_time)
+      @schedule.end_time   =  delta_to_time(@schedule.end_time)
+      @schedule.save
+    end
+    render nothing: true
+  end
+
+  def resize
+    if @schedule
+      @schedule.end_time = delta_to_time( @schedule.end_time )
+      @schedule.save
+    end    
+    render nothing: true
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_schedule
@@ -120,5 +142,9 @@ class Frontend::SchedulesController < FrontendController
     # Never trust parameters from the scary internet, only allow the white list through.
     def schedule_params
       params.require(:schedule).permit(:start_time, :end_time, :morning_ride, :evening_ride, :all_day)
+    end
+
+    def delta_to_time(event_time)
+      (params[:delta].to_i/1000).seconds.from_now(event_time)
     end
 end

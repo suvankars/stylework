@@ -8,11 +8,10 @@ Rails.application.routes.draw do
       get 'search_index', :on => :collection 
       get 'get_lists', :on => :collection 
       
-
-      patch 'availability', on: :member
-     
       resources :schedules do
         get 'home', :on => :collection
+        patch 'resize', on: :member
+        patch 'move', on: :member
       end
     end
   end

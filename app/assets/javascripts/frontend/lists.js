@@ -41,11 +41,11 @@ $(document).ready(function() {
     timeFormat: 'h:mm',
     dragOpacity: "0.5",
 
-    eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc) {
-      return updateEvent(event);
+    eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ){
+      move(event, delta, revertFunc, jsEvent, ui, view);
     },
-    eventResize: function(event, dayDelta, minuteDelta, revertFunc) {
-      return updateEvent(event);
+    eventResize: function(event, delta, revertFunc, jsEvent, ui, view ){
+      resize(event, delta, revertFunc, jsEvent, ui, view);
     },
     eventClick: function(event, jsEvent, view){
       updateEventDetails(event);
@@ -66,9 +66,6 @@ refetch_events_and_close_dialog = function (){
     }
 
 display = function(options) {
-  /*// alert("I am in display");
-  // console.log(options["starttime"]);
-  // console.log(options["endtime"]);*/
   $('#event_form').remove('');
   fetch(options);
 },
@@ -148,32 +145,46 @@ fetch = function(options){
   });
 },
 
-/*fetch = function(options){
-      alert("I am going to fetch");
-       $('#create_event_dialog').dialog({
-        title: 'New Event',
-        modal: true,
-        width: 500,
-        close: function(event, ui) { $('#create_event_dialog').dialog('destroy') }
-      });
+ move = function(the_event, delta, revertFunc, jsEvent, ui, view ){
+  var list_id = $("#list").data('list').list_id
 
-},*/
-
-updateEvent = function(the_event) {
-  var json_data ={ event: {
-      title: the_event.title,
-      starts_at: "" + the_event.start,
-      ends_at: "" + the_event.end,
-      description: the_event.description
-    }
-  }
-  return $.ajax({
-        url : "/lists/" + the_event.id + "/availability/" ,
+    $.ajax({
+        url : "/lists/" + list_id + "/schedules/" + the_event.id +"/move" ,
         type : "PATCH",
-        data : json_data
-      }); 
+        data:  'title=' + the_event.title + '&delta=' + delta,
+        dataType: 'script',
+        async: true,
+        error: function(xhr){
+          revertFunc();
+          alert(JSON.parse(xhr.responseText)["message"])
+        }
+    }); 
+},
+
+resize = function(the_event, delta, revertFunc, jsEvent, ui, view ) {
+  //Move and resize basically does the same job; add delta to start and end time
+  // For move add delta to both start and end time
+  // For resize add delta to only end time
+  //For seperation of concern create two method and two action in controller to uodate data
+  //There Might be a better way we can handle dis.
+
+  var list_id = $("#list").data('list').list_id
+
+  $.ajax({
+      url : "/lists/" + list_id + "/schedules/" + the_event.id +"/resize" ,
+      type : "PATCH",
+      data:  'title=' + the_event.title + '&delta=' + delta,
+      dataType: 'script',
+      async: true,
+      error: function(xhr){
+        revertFunc();
+        alert(JSON.parse(xhr.responseText)["message"])
+      }
+  }); 
  
 };
+
+
 
 renderUpdateForm = function(){
 
@@ -201,7 +212,7 @@ updateEventDetails = function(schedule){
 }  
 
 $(document).ready(function(){
-  $('#create_event_dialog, #event_desc_dialog').on('submit', "#event_form", function(event) {
+  $('#create_event_dialog, #event_desc_dialog').on('submit', "#event_form, #modify_form", function(event) {
     var $spinner = $('.spinner');
     event.preventDefault();
     $.ajax({
