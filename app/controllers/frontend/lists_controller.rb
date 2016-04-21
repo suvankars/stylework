@@ -30,7 +30,7 @@ class Frontend::ListsController < FrontendController
     #binding.pry
     @lists = List.last#where(created_at: params[:start].to_date..params[:start].to_date)
     events = []
-    schedules = @lists.schedule.between(params[:start], params[:end])
+    schedules = @lists.schedules.between(params[:start], params[:end])
 
     schedules.each do |sch|
       events << sch.format(@lists)

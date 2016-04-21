@@ -8,7 +8,7 @@ class List < ActiveRecord::Base
   # auto-fetch coordinates
   after_validation :geocode
    
-  has_many :schedule 
+  has_many :schedules
 
   
 end

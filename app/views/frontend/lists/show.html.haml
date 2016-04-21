@@ -93,7 +93,7 @@
           (#{list.distance.round(2)} miles)  
 
   %h3 Your Scheduled ride
-  =render partial: "frontend/schedules/schedules", :locals => { :schedules => @list.schedule.all, :list => @list}
+  =render partial: "frontend/schedules/schedules", :locals => { :schedules => @list.schedules.all, :list => @list}
 
 
   

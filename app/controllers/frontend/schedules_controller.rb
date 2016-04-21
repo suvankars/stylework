@@ -34,7 +34,7 @@ class Frontend::SchedulesController < FrontendController
 
   def create
     #TODO Clean it
-    @schedule = @list.schedule.new(schedule_params)
+    @schedule = @list.schedules.new(schedule_params)
     morning_ride  = params[:schedule][:morning_ride]
     evening_ride = params[:schedule][:evening_ride]
 
