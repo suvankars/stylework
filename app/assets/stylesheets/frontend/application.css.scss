@@ -27,13 +27,16 @@ p.buttons {
     margin-right: 35px;
 }
 
+#map{
+    height: 600px;
+}  
+
 #gmaps-canvas {
-  height: 400px;
-  width: 80%;
-  border: 1px solid #999;
+  height: 600px;
+  
   -moz-box-shadow:    0px 0px 5px #ccc;
   -webkit-box-shadow: 0px 0px 5px #ccc;
-  box-shadow:         0px 0px 5px #ccc;
+   box-shadow:         0px 0px 5px #ccc;
 }
 
 $font: 'Helvetica Neue', Arial, sans-serif;
@@ -104,3 +107,8 @@ fieldset {
   display: inline-block;
   margin-right: 80px;
 }
+
+.row {
+  display: block;
+}
+

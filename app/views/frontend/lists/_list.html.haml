@@ -1,24 +1,40 @@
-%tr[list]
-  %td= link_to list.id, list_path(list)
-  %td= list.ride_title
-  %td= list.ride_description
-  %td= list.rider_height
-  %td= list.frame_size
-  %td= list.hourly_rental
-  %td= list.morning_rental
-  %td= list.evening_rental
-  %td= list.daily_rental
-  %td= list.weekly_rental
-  %td= list.willing_to_deliver
-  %td= list.address
-  %td= list.city
-  %td= list.state
-  %td= list.latitude
-  %td= list.longitude
-  %td= list.pincode
-  %td= list.landmark
-  %td= list.created_at
-  %td
-    = link_to t('.edit', :default => t("helpers.links.edit")), edit_list_path(list), :class => 'btn btn-default btn-xs'
-    = link_to t('.destroy', :default => t("helpers.links.destroy")), list_path(list), :method => :delete, :remote => :true, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+%hr
+/%a{:href => "http://example.com"}
+
+#ride-list
+  %li.media[list]
+    = link_to list_path(list), :remote => true do
+      .ride-details
+        .ride-image
+          - image = list.images.first
+          = image_tag(image["thumbnail_url"])
+        / %a.pull-left{:href => "#"}
+        /   %img.media-object{:alt => "...", :src => "http://placehold.it/150x90"}
+        .ride-body
+          %h4.media-heading= list.ride_title
+          %p= list.ride_description
+
+/ %tr[list]
+/ %td= link_to list.id, list_path(list)
+/ %td= list.ride_title
+/ %td= list.ride_description
+/ %td= list.rider_height
+/ %td= list.frame_size
+/ %td= list.hourly_rental
+/ %td= list.morning_rental
+/ %td= list.evening_rental
+/ %td= list.daily_rental
+/ %td= list.weekly_rental
+/ %td= list.willing_to_deliver
+/ %td= list.address
+/ %td= list.city
+/ %td= list.state
+/ %td= list.latitude
+/ %td= list.longitude
+/ %td= list.pincode
+/ %td= list.landmark
+/ %td= list.created_at
+/ %td
+/   = link_to t('.edit', :default => t("helpers.links.edit")), edit_list_path(list), :class => 'btn btn-default btn-xs'
+/   = link_to t('.destroy', :default => t("helpers.links.destroy")), list_path(list), :method => :delete, :remote => :true, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
 

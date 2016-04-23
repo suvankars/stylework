@@ -1,3 +1,6 @@
+
+
+//For Schedule Calendar 
 var updateEvent;
 var display;
 var refetch_events_and_close_dialog;

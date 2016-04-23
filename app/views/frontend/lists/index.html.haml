@@ -1,39 +1,51 @@
 - model_class = List
-.page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+%p
+%p
 = form_tag lists_path, :method => :get, remote: true do
   %p
     = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
     = submit_tag "Search Near", :name => nil, :id=>"ajax" 
 
-%div{:style => "width: 800px;"}
-  #map{:style => "width: 800px; height: 400px;"}
 
-  %table.table.table-striped#listings
-    %thead
-      %tr
-        %th= model_class.human_attribute_name(:id)
-        %th= model_class.human_attribute_name(:ride_title)
-        %th= model_class.human_attribute_name(:ride_description)
-        %th= model_class.human_attribute_name(:rider_height)
-        %th= model_class.human_attribute_name(:frame_size)
-        %th= model_class.human_attribute_name(:hourly_rental)
-        %th= model_class.human_attribute_name(:morning_rental)
-        %th= model_class.human_attribute_name(:evening_rental)
-        %th= model_class.human_attribute_name(:daily_rental)
-        %th= model_class.human_attribute_name(:weekly_rental)
-        %th= model_class.human_attribute_name(:willing_to_deliver)
-        %th= model_class.human_attribute_name(:address)
-        %th= model_class.human_attribute_name(:city)
-        %th= model_class.human_attribute_name(:state)
-        %th= model_class.human_attribute_name(:latitude)
-        %th= model_class.human_attribute_name(:longitude)
-        %th= model_class.human_attribute_name(:pincode)
-        %th= model_class.human_attribute_name(:landmark)
-        %th= model_class.human_attribute_name(:created_at)
-        %th=t '.actions', :default => t("helpers.actions")
-    %tbody#content
-      = render @lists 
+.row.no-gutter
+  .col-lg-8.col-md-6.col-sm-6.hidden-xs
+    #map
+
+  .col-lg-4.col-md-6.col-sm-6
+    %ul.media-list.main-list
+      #ride
+      #rides
+        = render @lists 
+      
+
+/ %div
+  
+
+/   %table.table.table-striped#listings
+/     %thead
+/       %tr
+/         %th= model_class.human_attribute_name(:id)
+/         %th= model_class.human_attribute_name(:ride_title)
+/         %th= model_class.human_attribute_name(:ride_description)
+/         %th= model_class.human_attribute_name(:rider_height)
+/         %th= model_class.human_attribute_name(:frame_size)
+/         %th= model_class.human_attribute_name(:hourly_rental)
+/         %th= model_class.human_attribute_name(:morning_rental)
+/         %th= model_class.human_attribute_name(:evening_rental)
+/         %th= model_class.human_attribute_name(:daily_rental)
+/         %th= model_class.human_attribute_name(:weekly_rental)
+/         %th= model_class.human_attribute_name(:willing_to_deliver)
+/         %th= model_class.human_attribute_name(:address)
+/         %th= model_class.human_attribute_name(:city)
+/         %th= model_class.human_attribute_name(:state)
+/         %th= model_class.human_attribute_name(:latitude)
+/         %th= model_class.human_attribute_name(:longitude)
+/         %th= model_class.human_attribute_name(:pincode)
+/         %th= model_class.human_attribute_name(:landmark)
+/         %th= model_class.human_attribute_name(:created_at)
+/         %th=t '.actions', :default => t("helpers.actions")
+/     %tbody#content
+/       = render @lists 
 
 = link_to t('.new', :default => t("helpers.links.new")), new_list_path, :class => 'btn btn-primary'
 
