@@ -11,6 +11,7 @@ gem 'rails', '4.2.5'
 #end
 
 gem 'pg'#, group: :production
+gem 'mysql2'
 gem 'rails-html-sanitizer', '~>1.0.2'
 gem 'postgres_ext'
 

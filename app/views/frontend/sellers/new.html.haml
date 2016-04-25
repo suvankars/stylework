@@ -2,9 +2,10 @@
 .modal-dialog
   .modal-content
     .modal-body
-      #error_alert
+      - if !@sell_product.errors.empty?
+        =render 'error_alert'
       #sell-post-container
-        = form_for( @sell_product, url: sellers_path, remote: true)  do |f|
+        = form_for( @sell_product, url: sellers_path)  do |f|
           .form-group
             .input-group
               = f.text_field :name, placeholder: 'Name of your Product',  class: 'form-control', :maxlength => 25

@@ -165,6 +165,7 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
+    mysql2 (0.4.3)
     netrc (0.11.0)
     nifty-dialog (1.1.1)
     nifty-utils (1.1.7)
@@ -321,6 +322,7 @@ DEPENDENCIES
   jquery-ui-rails
   less-rails
   mini_magick!
+  mysql2
   nifty-dialog
   nifty-utils
   pg

@@ -3,4 +3,3 @@ class AddImagesToLists < ActiveRecord::Migration
     add_column :lists, :images, :json
   end
 end
-

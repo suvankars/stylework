@@ -11,7 +11,11 @@ class Frontend::SellersController < FrontendController
     respond_to do |format|
       if @sell_product.valid?
         @sell_product.save!
-        format.html { redirect_to @sell_product, notice: 'Sell Post is successfully created.' }
+        @item = Product.find_by(name: @sell_product.name)
+        format.html { redirect_to buyer_path(@item), notice: 'Sell Post is successfully created.' }
+      else
+        puts @sell_product.errors.count
+        format.html { render :new, notice: 'Validations needs to be incorporated.' }
       end
     end
    end
