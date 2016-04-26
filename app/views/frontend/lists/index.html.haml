@@ -12,40 +12,13 @@
     #map
 
   .col-lg-4.col-md-6.col-sm-6
-    %ul.media-list.main-list
-      #ride
-      #rides
-        = render @lists 
-      
+    #main-list
+      %ul.media-list
+        #ride
+        #rides
+          = render @lists 
+        
 
-/ %div
-  
-
-/   %table.table.table-striped#listings
-/     %thead
-/       %tr
-/         %th= model_class.human_attribute_name(:id)
-/         %th= model_class.human_attribute_name(:ride_title)
-/         %th= model_class.human_attribute_name(:ride_description)
-/         %th= model_class.human_attribute_name(:rider_height)
-/         %th= model_class.human_attribute_name(:frame_size)
-/         %th= model_class.human_attribute_name(:hourly_rental)
-/         %th= model_class.human_attribute_name(:morning_rental)
-/         %th= model_class.human_attribute_name(:evening_rental)
-/         %th= model_class.human_attribute_name(:daily_rental)
-/         %th= model_class.human_attribute_name(:weekly_rental)
-/         %th= model_class.human_attribute_name(:willing_to_deliver)
-/         %th= model_class.human_attribute_name(:address)
-/         %th= model_class.human_attribute_name(:city)
-/         %th= model_class.human_attribute_name(:state)
-/         %th= model_class.human_attribute_name(:latitude)
-/         %th= model_class.human_attribute_name(:longitude)
-/         %th= model_class.human_attribute_name(:pincode)
-/         %th= model_class.human_attribute_name(:landmark)
-/         %th= model_class.human_attribute_name(:created_at)
-/         %th=t '.actions', :default => t("helpers.actions")
-/     %tbody#content
-/       = render @lists 
 
 = link_to t('.new', :default => t("helpers.links.new")), new_list_path, :class => 'btn btn-primary'
 
@@ -57,88 +30,6 @@
 
 
 :javascript
-
-jQuery(function() {
-  var completer;
-
-  completer = new GmapsCompleter({
-    inputField: '#gmaps-input-address',
-    errorField: '#gmaps-error'
-
-  });
-
-  completer.autoCompleteInit({
-    country: "in"
-  })
-});
-
-
-$(function(){ 
-  function rePositionMarkers(data) {
-    var data_hash = data;
-    var handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-      markers = handler.addMarkers(data_hash);
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
-    });
-  }
-
-  $("#delete-btn").click(function(event){
-    console.log("From TOP ");
-  });
-  
-
-  $("#ajax").click(function(){
-    var valuesToSubmit = $('#gmaps-input-address').val();
-    $.ajax({
-        type: "GET",
-        url: $(this).attr('action'),
-        data: { search: valuesToSubmit},
-        dataType: "JSON" 
-    }).success( function(data, status, xhr){
-        var listings = data["lists"];
-        var geoLocation = data["hash"];
-        rePositionMarkers(geoLocation);
-        console.log(listings[0]);
-        $("tbody#content").empty();
-        
-        $(function() {
-            $.each(listings, function(i, list) {
-                $('<tr ' + 'id=list_' + list.id + '>').append(
-                $('<td>').text(list.id),
-                $('<td>').text(list.ride_title),
-                $('<td>').text(list.ride_description),
-                $('<td>').text(list.rider_height),
-                $('<td>').text(list.frame_size),
-                $('<td>').text(list.hourly_rental),
-                $('<td>').text(list.morning_rental),
-                $('<td>').text(list.evening_rental),
-                $('<td>').text(list.daily_rental),
-                $('<td>').text(list.weekly_rental),
-                $('<td>').text(list.willing_to_deliver),
-                $('<td>').text(list.address),
-                $('<td>').text(list.city),
-                $('<td>').text(list.state),
-                $('<td>').text(list.latitude),
-                $('<td>').text(list.longitude),
-                $('<td>').text(list.pincode),
-                $('<td>').text(list.landmark),
-                $('<td>').text(list.created_at),
-                $('<td>').append("<a class='btn btn-default btn-xs' href='/lists/" + list.id +"/edit'>Edit</a>"),
-                $('<td>').append("<a data-confirm='Are you sure?' class='btn btn-xs btn-danger' rel='nofollow' data-remote='true' data-method='delete' href='/lists/" + list.id + "'>Delete</a>")
-
-              ).appendTo('tbody#content');
-            });
-        });
-         
-    });
-    return false; 
-  })
-});  
-
-
-
 
   $(document).ready(function(){
   

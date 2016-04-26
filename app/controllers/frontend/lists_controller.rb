@@ -1,11 +1,10 @@
 class Frontend::ListsController < FrontendController
   before_action :set_list, only: [:calendar, :show, :edit, :update, :destroy]
-
+  RADIOUS = 15;
 
   def index
-
     if params[:search].present?
-      @lists = List.near(params[:search], 30)
+      @lists = List.near(params[:search], RADIOUS)
     else
       @lists = List.all
     end

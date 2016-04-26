@@ -1,3 +1,86 @@
+//For gmap auto complete
+
+$(function() {
+  var completer;
+
+  completer = new GmapsCompleter({
+    inputField: '#gmaps-input-address',
+    errorField: '#gmaps-error'
+
+  });
+
+  completer.autoCompleteInit({
+    country: "in"
+  })
+});
+
+
+   
+rePositionMarkers = function(data){
+  var data_hash = data;
+      var handler = Gmaps.build('Google');
+      handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+        markers = handler.addMarkers(data_hash);
+        handler.bounds.extendWith(markers);
+        handler.fitMapToBounds();
+    });
+};
+reRenderRideList = function(listings){
+  //alert("Going to refresh ride list");
+  //Tried out partial rendering but that re-rendering the whole partial 
+  //TBD find a better way to update dom on success respose 
+  $("#rides").empty();
+  $(function() {
+    $.each(listings, function(i, list) {
+      
+      var image = list.images[0]
+      var image_url = image["thumbnail_url"]
+       $('#rides').append('<hr />')
+
+      $('<ride-list>').append(
+        $('<li class="list"' + 'id=list_' + list.id + '>').append( 
+          $('<a data-remote="true" href="/lists/' + list.id + '\">').append(
+            $('<div class="ride-details">').append(
+
+              $('<div class="ride-image">').append('<img src=' + image_url +'>'),
+
+              $('<div class="ride-body">').append(
+                $('<h4 class="media-heading">').text(list.ride_title),
+                $('<p>').text(list.ride_description)
+              )
+            )
+          )
+        )
+      ).appendTo('#rides');
+    });
+  });
+
+};
+
+
+//On Submit a search on map
+//Reposition all available rides on map and update ride-list
+
+$(function(){ 
+  $("#ajax").click(function(){
+    var valuesToSubmit = $('#gmaps-input-address').val();
+    $.ajax({
+        type: "GET",
+        url: $(this).attr('action'),
+        data: { search: valuesToSubmit},
+        dataType: "JSON" 
+    }).success( function(data, status, xhr){
+        var listings = data["lists"];
+        var geoLocation = data["hash"];
+        rePositionMarkers(geoLocation);
+        reRenderRideList(listings);
+    });
+    return false; 
+  })
+});  
+
+
+
 
 
 //For Schedule Calendar 
