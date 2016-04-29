@@ -3,7 +3,14 @@ class Frontend::ListsController < FrontendController
   RADIOUS = 15;
 
   def index
-    if params[:search].present?
+    @filterrific = initialize_filterrific(
+      List,
+      params[:filterrific]
+    ) or return
+
+    if params[:filterrific].present?
+      @lists = @filterrific.find.page(params[:page])
+    elsif params[:search].present?
       @lists = List.near(params[:search], RADIOUS)
     else
       @lists = List.all

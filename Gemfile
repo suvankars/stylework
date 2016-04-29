@@ -95,3 +95,11 @@ gem 'quiet_assets'
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem 'fullcalendar_engine'
+
+#Filterrific is a Rails Engine plugin that makes it easy to filter, search, and sort ActiveRecord lists
+gem 'bootstrap-datepicker-rails'
+gem 'chardinjs-rails'
+gem 'filterrific'
+
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'

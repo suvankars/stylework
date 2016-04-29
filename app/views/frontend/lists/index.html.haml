@@ -7,6 +7,29 @@
     = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
     = submit_tag "Search Near", :name => nil, :id=>"ajax" 
 
+//Adding filter
+= form_for_filterrific @filterrific do |f|
+  .row
+    .col-md-3
+      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by bike title' }
+        %label Search
+        = f.text_field :search_query,
+                       :class => 'filterrific-periodically-observed form-control'
+    .col-md-3
+      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by country.' }
+        %label 
+        = f.text_field :with_rider_height, :class => 'form-control'
+                        
+    .col-md-2
+      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by listed date.' }
+        %label Listed after
+        = f.text_field :with_created_at_gte,
+                       :class => 'js-datepicker form-control'
+
+/ #results
+/   = render :partial => 'students/list',
+/            :locals => { :students => @students }
+
 
 .row.no-gutter
   .col-lg-8.col-md-6.col-sm-6.hidden-xs
@@ -43,3 +66,11 @@
     handler.fitMapToBounds();
   });
   });
+
+
+  $('.js-datepicker').datepicker();
+  $('#overlayTrigger').click(function(event) {
+    event.preventDefault();
+    $('body').chardinJs('start');
+  });
+  

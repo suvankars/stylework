@@ -21,6 +21,8 @@
 //= require jquery-ui
 //= require gmaps-auto-complete
 //= require moment
+//= require filterrific/filterrific-jquery
+//= require chardinjs
 
 //= require fullcalendar
 
