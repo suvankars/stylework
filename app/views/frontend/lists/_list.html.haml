@@ -1,18 +1,18 @@
 %hr
 /%a{:href => "http://example.com"}
-
-#ride-list
-  %li[list]
-    = link_to list_path(list), :remote => true do
-      .ride-details
-        .ride-image
-          - image = list.images.first
-          = image_tag(image["thumbnail_url"])
-        / %a.pull-left{:href => "#"}
-        /   %img.media-object{:alt => "...", :src => "http://placehold.it/150x90"}
-        .ride-body
-          %h4.media-heading= list.ride_title
-          %p= list.ride_description
+-lists.each do |list|
+  #ride-list
+    %li[list]
+      = link_to list_path(list), :remote => true do
+        .ride-details
+          .ride-image
+            - image = list.images.first
+            = image_tag(image["thumbnail_url"])
+          / %a.pull-left{:href => "#"}
+          /   %img.media-object{:alt => "...", :src => "http://placehold.it/150x90"}
+          .ride-body
+            %h4.media-heading= list.ride_title
+            %p= list.ride_description
 
 / %tr[list]
 / %td= link_to list.id, list_path(list)

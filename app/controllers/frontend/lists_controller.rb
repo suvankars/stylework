@@ -3,8 +3,34 @@ class Frontend::ListsController < FrontendController
   RADIOUS = 15;
 
   def index
+    #binding.pry
+    # If search box is clicked without typing any address 
+    # There will be value params[:search] = ""
+    # If so, delete stored session search value
+      
+    session[:search] = nil if params[:search] == ""
+    
+    # If search box is never clicked then
+    # params[:search] = nil
+    # Then load params from session
+    # Situation 1: User came in this page after searching a city
+    # then user selecting filter criteria
+    # Then ajax request comes here, obviously params[:search] is nil for
+    # All ajax request came from filter 
+    # So, restore parama value from session
+    # Is there any better, simpler way to do it? 
+
+    params[:search] = session[:search] if !params[:search].present?
+
+
+    #save search params to session for future requests, like filter
+    session[:search] = params[:search] if !params[:search].nil?
+
+    lists = List.near(params[:search], RADIOUS)
+    
+   
     @filterrific = initialize_filterrific(
-      List,
+      lists.empty? ? List.all : lists,
       params[:filterrific]
     ) or return
 
@@ -26,8 +52,10 @@ class Frontend::ListsController < FrontendController
       payload = {"lists": JSON::parse(@lists.to_json), "hash": @hash }
       respond_to do |format|
         format.json { render :json => payload}
+        format.js 
       end
     end
+
   end
 
   

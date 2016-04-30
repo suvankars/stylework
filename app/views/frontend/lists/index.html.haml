@@ -40,9 +40,12 @@
       %ul.media-list
         #ride
         #rides
-          = render @lists 
+          = render :partial => 'list', :locals => { :lists => @lists } 
         
 
+/ #results
+/   = render :partial => 'students/list',
+/            :locals => { :students => @students }
 
 = link_to t('.new', :default => t("helpers.links.new")), new_list_path, :class => 'btn btn-primary'
 
