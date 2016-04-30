@@ -1,6 +1,8 @@
 class Frontend::ListsController < FrontendController
   before_action :set_list, only: [:calendar, :show, :edit, :update, :destroy]
-  RADIOUS = 15;
+  
+  RADIOUS = 15; #mile
+  DEFAULT_CATEGORY_NAME = "Bicycle"
 
   def index
     #binding.pry
@@ -85,11 +87,18 @@ class Frontend::ListsController < FrontendController
 
 
   def new
+    #TBD: refactor
+    
+    @subcategories = default_category.subcategories.map{|sub| [sub.name, sub.id] }
+    @default_subcategory = @subcategories.first
+
     @list = List.new
   end
 
 
   def edit
+    @subcategories = default_category.subcategories.map{|sub| [sub.name, sub.id] }
+    @default_subcategory = [@list.subcategory.name, @list.subcategory_id]
   end
 
   def calendar
@@ -99,7 +108,9 @@ class Frontend::ListsController < FrontendController
   def create
     @list = List.new(list_params)
     @list.images = Rails.cache.read("images")
-    Rails.cache.delete('images')  
+    Rails.cache.delete('images')
+    @list.category_id = default_category.id
+
     respond_to do |format|
       if @list.save
         format.html { redirect_to @list, notice: 'List was successfully created.' }
@@ -149,6 +160,10 @@ class Frontend::ListsController < FrontendController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
-      params.require(:list).permit(:ride_title, :ride_description, :rider_height, :frame_size, :hourly_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark)
+      params.require(:list).permit(:ride_title, :ride_description, :rider_height, :frame_size, :hourly_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark, :subcategory_id)
+    end
+
+    def default_category
+      Category.where( name: DEFAULT_CATEGORY_NAME).first
     end
 end

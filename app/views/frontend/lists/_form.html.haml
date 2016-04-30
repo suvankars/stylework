@@ -1,9 +1,16 @@
 = simple_form_for @list, :html => { :class => 'form-horizontal' } do |f|
-  = field_set_tag 'Describe your ride offer' do  
-    = f.input :ride_title
-    = error_span(@list[:ride_title])
-    = f.input :ride_description
-    = error_span(@list[:ride_description])
+  = field_set_tag 'Describe your ride offer' do 
+    .splitContainer
+      %dl.large
+        %dd= f.input :ride_title
+        %dd= error_span(@list[:ride_title])
+      %dl.sixth
+        %dd= f.input :subcategory_id, :label => "Bicycle type", :collection => @subcategories, :selected => @default_subcategory
+        %dd= error_span(@list[:frame_size]) 
+    .description
+      = f.input :ride_description
+      = error_span(@list[:ride_description])
+
   
   = field_set_tag 'Pick up address' do
     = f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
@@ -15,13 +22,24 @@
   = field_set_tag 'Suitable Raider' do
     .splitContainer
       %dl.third
-        %dd= f.input :rider_height
+        %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => Choices['heights'].each.collect{|m| [m*2.54 m]}
+        /%dd= f.input :rider_height
         %dd= error_span(@list[:rider_height])
       %dl.third
         %dd= f.input :frame_size
         %dd= error_span(@list[:frame_size])
       %dl.third
 
+  / = field_set_tag 'Bicycle type' do    
+  /   .splitContainer
+  /     %dl.third
+  /       %dd= f.input :supplier_id, collection: @supplier_names, :selected => @default_supplier
+  /     %dl.third
+  /       %dd= f.input :subcategory_id, :label => "Product Category", :collection => @subcategory_names, :selected => @default_subcategory
+  /     %dl.third
+  /       %dd= f.input :brand_id, :label => "Brand", :collection => @brand_names, :selected => @default_brand
+  /       %dd= error_span(@product[:brand])
+            
   = field_set_tag 'Rental information' do    
     .splitContainer
       %dl.sixth

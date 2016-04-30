@@ -1,7 +1,5 @@
 class List < ActiveRecord::Base
-  #List can have one product category and a subcatrgory "
-  #but as list is not a product it does't belongs to product 
-  
+   
   filterrific(
   default_filter_params: { sorted_by: 'created_at_desc' },
   available_filters: [
@@ -13,8 +11,8 @@ class List < ActiveRecord::Base
   ]
   )
 
-  has_one :category
-  has_one :subcategory
+  belongs_to :category
+  belongs_to :subcategory
 
   geocoded_by :address   
   # auto-fetch coordinates

@@ -98,9 +98,21 @@ fieldset {
           margin: 0px;
           float: left;
           &:nth-child(n) { margin-left:3%; width:15%;}
+          &:last-child { margin-left:3%; float:right; width:12%;}
     }
+
+    dl.large {
+        width: 80%;
+        margin: 0px;
+        float: left;
+        
+    }
+
 }  
 
+fieldset .description{
+  
+}
 
 #cont{
   margin: 0px;
