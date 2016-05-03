@@ -33,7 +33,13 @@ class Frontend::ListsController < FrontendController
    
     @filterrific = initialize_filterrific(
       lists.empty? ? List.all : lists,
-      params[:filterrific]
+      params[:filterrific],
+       select_options: {
+        with_subcategory_id: Subcategory.options_for_select,
+        with_rider_height: RiderHeight.options_for_select,
+        with_frame_size: FrameSize.options_for_select,
+        with_morning_rental_lt: List.options_for_select
+      },
     ) or return
 
     if params[:filterrific].present?

@@ -22,11 +22,10 @@
   = field_set_tag 'Suitable Raider' do
     .splitContainer
       %dl.third
-        %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => Choices['heights'].each.collect{|m| [m*2.54 m]}
-        /%dd= f.input :rider_height
+        %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => RiderHeight.all, :label_method => :to_ft_cm, :value_method => :length
         %dd= error_span(@list[:rider_height])
       %dl.third
-        %dd= f.input :frame_size
+        %dd= f.input :frame_size, :prompt => 'Select Frame Size', :collection => FrameSize.all, :label_method => :to_cm, :value_method => :length
         %dd= error_span(@list[:frame_size])
       %dl.third
 

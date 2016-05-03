@@ -9,4 +9,9 @@ class Subcategory < ActiveRecord::Base
   def has_products?
     !self.products.empty?
   end
+
+  #To filter
+  def self.options_for_select
+    order('LOWER(name)').map { |e| [e.name, e.id] }
+  end
 end

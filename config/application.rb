@@ -29,5 +29,6 @@ module Mammoth
     
     config.autoload_paths << Rails.root.join('lib/core_extensions/**/')
     require 'core_extensions/string/to_bool'
+    require 'core_extensions/integer/converter'
   end
 end
