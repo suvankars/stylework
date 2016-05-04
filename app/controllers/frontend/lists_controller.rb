@@ -130,9 +130,12 @@ class Frontend::ListsController < FrontendController
 
 
   def update
+    
+    binding.pry
+    old_images = @list.images
     parked_images = Rails.cache.read("images")
     Rails.cache.delete('images')
-
+    parked_images = parked_images.nil? ? old_images : parked_images
     @list.update_column :images , parked_images
     
     respond_to do |format|
