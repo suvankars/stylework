@@ -1,45 +1,70 @@
 - model_class = List
-%h1=t '.title', :default => model_class.model_name.human.titleize
-
-#calendar
+.jumbotron.jumbotron-md-cover.img-fluid{:style => "background-image: url(#{@cover_image});"}
+  .ride-caption
+    .container
+      .row
+        .col-xs-12.col-sm-8.col-md-8.col-lg-8
+          %h1.trim= model_class.human_attribute_name(@list.ride_title)
+          .hidden-xs.ride-details
+            %h3= @list.subcategory.name
+            .measurement
+              %p
+                = model_class.human_attribute_name(:rider_height)
+                = "#{@list.rider_height.to_i.to_feet} ( #{@list.rider_height.to_i.to_cm })"
+              %p
+                = model_class.human_attribute_name(:frame_size)
+                = @list.frame_size.to_i.to_cm
+        .col-xs-12.col-sm-4.col-md-4.col-lg-4
+          #timer{"data-animated" => "FadeIn"}
+            %p#message
+            #hours.timer_box
+              %h1= @list.hourly_rental.to_i
+              %p= "/Hour"
+            #days.timer_box
+              %h1= @list.daily_rental.to_i 
+              %p= "/Day"
+            #slot.timer_box
+              %h1= @list.morning_rental.to_i 
+              %p= "/Slot"
+            #weekly.timer_box 
+              %h1= @list.weekly_rental.to_i 
+              %p= "/Week"     
+  
+/#calendar
 
 = content_tag "div", id: "list", data: {list: { list_id: @list.id} } do
-  %p
-    %strong= model_class.human_attribute_name(:ride_title) + ':'
-    %br
-    = @list.ride_title
   %p
     %strong= model_class.human_attribute_name(:ride_description) + ':'
     %br
     = @list.ride_description
-  %p
-    %strong= model_class.human_attribute_name(:rider_height) + ':'
-    %br
-    = @list.rider_height
-  %p
-    %strong= model_class.human_attribute_name(:frame_size) + ':'
-    %br
-    = @list.frame_size
-  %p
-    %strong= model_class.human_attribute_name(:hourly_rental) + ':'
-    %br
-    = @list.hourly_rental
-  %p
-    %strong= model_class.human_attribute_name(:morning_rental) + ':'
-    %br
-    = @list.morning_rental
-  %p
-    %strong= model_class.human_attribute_name(:evening_rental) + ':'
-    %br
-    = @list.evening_rental
-  %p
-    %strong= model_class.human_attribute_name(:daily_rental) + ':'
-    %br
-    = @list.daily_rental
-  %p
-    %strong= model_class.human_attribute_name(:weekly_rental) + ':'
-    %br
-    = @list.weekly_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:rider_height) + ':'
+  /   %br
+  /   = @list.rider_height
+  / %p
+  /   %strong= model_class.human_attribute_name(:frame_size) + ':'
+  /   %br
+  /   = @list.frame_size
+  / %p
+  /   %strong= model_class.human_attribute_name(:hourly_rental) + ':'
+  /   %br
+  /   = @list.hourly_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:morning_rental) + ':'
+  /   %br
+  /   = @list.morning_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:evening_rental) + ':'
+  /   %br
+  /   = @list.evening_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:daily_rental) + ':'
+  /   %br
+  /   = @list.daily_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:weekly_rental) + ':'
+  /   %br
+  /   = @list.weekly_rental
   %p
     %strong= model_class.human_attribute_name(:willing_to_deliver) + ':'
     %br
@@ -73,15 +98,15 @@
     %br
     = @list.landmark
 
-  %p
-    - if !@list.images.nil?
-      - @list.images.each_with_index do |image, index|
-        %li{:id => image["public_id"]}
-          = image_tag(image["thumbnail_url"])
-          = link_to "Delete", image_path(:id => @list.id, :resource_type => @list.class, :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
+  / %p
+  /   - if !@list.images.nil?
+  /     - @list.images.each_with_index do |image, index|
+  /       %li{:id => image["public_id"]}
+  /         = image_tag(image["thumbnail_url"])
+  /         = link_to "Delete", image_path(:id => @list.id, :resource_type => @list.class, :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
 
-  = field_set_tag 'Schedule your ride' do
-    = render partial: "frontend/schedules/form"
+  / = field_set_tag 'Schedule your ride' do
+  /   = render partial: "frontend/schedules/form"
 
 
   %h3 Nearby locations

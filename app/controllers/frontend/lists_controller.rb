@@ -85,6 +85,7 @@ class Frontend::ListsController < FrontendController
   end
   
   def show
+    @cover_image = @list.images.first["url"] if !@list.images.nil?
     respond_to do |format|
       format.html {  }
       format.js {}
@@ -130,8 +131,6 @@ class Frontend::ListsController < FrontendController
 
 
   def update
-    
-    binding.pry
     old_images = @list.images
     parked_images = Rails.cache.read("images")
     Rails.cache.delete('images')
