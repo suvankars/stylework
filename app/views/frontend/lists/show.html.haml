@@ -31,6 +31,19 @@
               %p= "/Week"     
   
 /#calendar
+.container
+  .row
+    .col-xs-12.col-sm-12.col-md-4.col-lg-4
+      .row
+        .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
+          .panel.panel-default.panel-picker.js-panel-picker
+            .panel-body
+              .panel-container.no-border-bottom
+    .col-xs-12.col-sm-12.col-md-8.col-lg-8
+      .row
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+    
 
 = content_tag "div", id: "list", data: {list: { list_id: @list.id} } do
   %p
