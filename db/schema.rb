@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410044729) do
+ActiveRecord::Schema.define(version: 20160409143031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,57 +80,6 @@ ActiveRecord::Schema.define(version: 20160410044729) do
 
   add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id", using: :btree
 
-  create_table "fullcalendar_engine_event_series", force: :cascade do |t|
-    t.integer  "frequency",  default: 1
-    t.string   "period",     default: "monthly"
-    t.datetime "starttime"
-    t.datetime "endtime"
-    t.boolean  "all_day",    default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "fullcalendar_engine_events", force: :cascade do |t|
-    t.string   "title"
-    t.datetime "starttime"
-    t.datetime "endtime"
-    t.boolean  "all_day",         default: false
-    t.text     "description"
-    t.integer  "event_series_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id", using: :btree
-
-  create_table "lists", force: :cascade do |t|
-    t.string   "ride_title"
-    t.text     "ride_description"
-    t.string   "rider_height"
-    t.string   "frame_size"
-    t.decimal  "hourly_rental"
-    t.decimal  "morning_rental"
-    t.decimal  "evening_rental"
-    t.decimal  "daily_rental"
-    t.decimal  "weekly_rental"
-    t.boolean  "willing_to_deliver"
-    t.string   "address"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "city"
-    t.string   "state"
-    t.integer  "pincode"
-    t.string   "landmark"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.integer  "category_id"
-    t.integer  "subcategory_id"
-    t.json     "images"
-  end
-
-  add_index "lists", ["category_id"], name: "index_lists_on_category_id", using: :btree
-  add_index "lists", ["subcategory_id"], name: "index_lists_on_subcategory_id", using: :btree
-
   create_table "product_fields", force: :cascade do |t|
     t.string   "name"
     t.string   "field_type"
@@ -178,18 +127,48 @@ ActiveRecord::Schema.define(version: 20160410044729) do
   add_index "products", ["tax_rate_id"], name: "index_products_on_tax_rate_id", using: :btree
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
+  create_table "rides", force: :cascade do |t|
+    t.string   "ride_title"
+    t.text     "ride_description"
+    t.string   "rider_height"
+    t.string   "frame_size"
+    t.decimal  "hourly_rental"
+    t.decimal  "morning_rental"
+    t.decimal  "evening_rental"
+    t.decimal  "daily_rental"
+    t.decimal  "weekly_rental"
+    t.boolean  "willing_to_deliver"
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.integer  "pincode"
+    t.string   "landmark"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "category_id"
+    t.integer  "subcategory_id"
+    t.json     "images"
+  end
+
+  add_index "rides", ["category_id"], name: "index_rides_on_category_id", using: :btree
+  add_index "rides", ["subcategory_id"], name: "index_rides_on_subcategory_id", using: :btree
+
   create_table "schedules", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
     t.boolean  "morning_ride"
     t.boolean  "evening_ride"
     t.boolean  "all_day"
-    t.integer  "list_id"
+    t.integer  "ride_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
-  add_index "schedules", ["list_id"], name: "index_schedules_on_list_id", using: :btree
+  add_index "schedules", ["ride_id"], name: "index_schedules_on_ride_id", using: :btree
 
   create_table "sizes", force: :cascade do |t|
     t.string   "name"
@@ -260,8 +239,6 @@ ActiveRecord::Schema.define(version: 20160410044729) do
   add_foreign_key "addresses", "suppliers"
   add_foreign_key "contacts", "suppliers"
   add_foreign_key "finances", "suppliers"
-  add_foreign_key "lists", "categories"
-  add_foreign_key "lists", "subcategories"
   add_foreign_key "product_fields", "subcategories"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "sizes"
@@ -269,7 +246,9 @@ ActiveRecord::Schema.define(version: 20160410044729) do
   add_foreign_key "products", "suppliers"
   add_foreign_key "products", "tax_rates"
   add_foreign_key "products", "users"
-  add_foreign_key "schedules", "lists"
+  add_foreign_key "rides", "categories"
+  add_foreign_key "rides", "subcategories"
+  add_foreign_key "schedules", "rides"
   add_foreign_key "stock_levels", "products"
   add_foreign_key "subcategories", "categories"
 end

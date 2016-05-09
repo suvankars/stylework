@@ -1,5 +1,5 @@
-- @schedule = @list.schedules.build
-= simple_form_for [@list, @schedule], :html => { :class => 'form-horizontal' , id: 'event_form' } do |f|
+- @schedule = @ride.schedules.build
+= simple_form_for [@ride, @schedule], :html => { :class => 'form-horizontal' , id: 'event_form' } do |f|
   = field_set_tag 'Ride Slot' do
     #slot
       %span#cont

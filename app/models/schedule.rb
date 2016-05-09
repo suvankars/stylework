@@ -1,5 +1,5 @@
 class Schedule < ActiveRecord::Base
-  belongs_to :list
+  belongs_to :ride
   
   MORNING_START = 6
   MORNING_END = 9
@@ -18,15 +18,15 @@ class Schedule < ActiveRecord::Base
   end
 
 
-  def format(list)
+  def format(ride)
       {
         :id => self.id,
-        :title => list.ride_title,
+        :title => ride.ride_title,
         :start => start_time.rfc822,
         :end => end_time.rfc822,
         :allDay => self.all_day,
         :recurring => false,
-        #:url => Rails.application.routes.url_helpers.list_schedule_path(list, self)
+        #:url => Rails.application.routes.url_helpers.ride_schedule_path(ride, self)
         #:color => "red"
       }
   end

@@ -1,6 +1,6 @@
-require 'test_helper'
+require '/home/suvankar/dream/bicycleyard/test/test_helper'
 
-class Backend::SizesControllerTest < BackendController
+class SizesControllerTest < ActionController::TestCase
   setup do
     @size = sizes(:one)
   end

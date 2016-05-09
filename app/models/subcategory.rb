@@ -5,7 +5,7 @@ class Subcategory < ActiveRecord::Base
   accepts_nested_attributes_for :fields, allow_destroy: true 
   validates :name, :description, presence: true
   has_many :products, dependent: :destroy
-  has_many :lists
+  has_many :rides
   def has_products?
     !self.products.empty?
   end

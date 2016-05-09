@@ -1,0 +1,39 @@
+/This content_tag is used to get ride_id in calendar view. Hidden tag might do the job
+.content
+  .container.padded-top
+    .row
+      
+      .col-xs-12.col-sm-8.col-md-8.col-lg-8
+        .panel.panel-success
+          .panel-heading
+            %h3
+              Availability Calendar
+          .panel-body
+            %p=t(:calendar_description)
+            = content_tag "div", id: "ride-info", data: {ride: { ride_id: @ride.id} } do
+              #calendar
+
+
+              #event_desc_dialog.dialog{:style => "display:none;"}
+                  
+
+              #create_event_dialog.dialog{:style => "display:none;"}
+                = render partial: "frontend/schedules/form"
+
+      .col-xs-4.col-sm-4.col-md-4.col-lg-4
+        .panel.panel-success
+          .panel-heading
+            %h3
+              Something goes here
+          .panel-body
+            %p Place holder
+
+/ :javascript
+/ $(document).ready(function() {
+/   var ride_id;
+/   if(document.getElementById("ride-info")){
+/     var ride_id = $("#ride-info").data('ride').ride_id  
+/   }
+/   console.log(ride_id);
+  
+/ }  

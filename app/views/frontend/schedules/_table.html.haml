@@ -1,0 +1,28 @@
+- model_class = Schedule
+%table.table.table-striped
+  %thead
+    %tr
+      /%th= model_class.human_attribute_name(:id)
+      
+      %th= model_class.human_attribute_name(:start_time)
+      %th= model_class.human_attribute_name(:end_time)
+      %th= model_class.human_attribute_name(:morning_ride)
+      %th= model_class.human_attribute_name(:evening_ride)
+      %th= model_class.human_attribute_name(:all_day)
+      /%th= model_class.human_attribute_name(:ride_id)
+  %tbody
+    - if schedules.present?
+      - schedules.each do |schedule|
+        %tr
+          /%td= link_to schedule.id, ride_schedule_path(ride, schedule)
+         
+          %td= schedule.start_time.to_formatted_s(:short)
+          %td= schedule.end_time.to_formatted_s(:short)
+          %td= schedule.morning_ride
+          %td= schedule.evening_ride
+          %td= schedule.all_day
+          /%td= schedule.ride_id
+ 
+
+
+

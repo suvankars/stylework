@@ -24,12 +24,12 @@
   %br
   = @schedule.all_day
 %p
-  %strong= model_class.human_attribute_name(:list_id) + ':'
+  %strong= model_class.human_attribute_name(:ride_id) + ':'
   %br
-  = @schedule.list_id
+  = @schedule.ride_id
 
 
 
-= link_to t('.back', :default => t("helpers.links.back")), list_path(@list), :class => 'btn btn-default'
-= link_to t('.edit', :default => t("helpers.links.edit")), edit_list_schedule_path(@list, self), :class => 'btn btn-default'
-= link_to t('.destroy', :default => t("helpers.links.destroy")), list_schedule_path(@list, self), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+= link_to t('.back', :default => t("helpers.links.back")), ride_path(@ride), :class => 'btn btn-default'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_ride_schedule_path(@ride, self), :class => 'btn btn-default'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), ride_schedule_path(@ride, self), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

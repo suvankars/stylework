@@ -3,7 +3,7 @@ class Frontend::SchedulesController < FrontendController
   String.include CoreExtensions::String
    
   before_action :set_schedule, only: [:move, :resize, :show, :edit, :update, :destroy]
-  before_action :set_list, only: [:move, :resize, :create, :new, :show, :edit, :destroy]
+  before_action :set_ride, only: [:move, :resize, :create, :new, :show, :edit, :destroy]
   before_action :set_ride_slot , only: [:update]
 
 
@@ -19,14 +19,14 @@ class Frontend::SchedulesController < FrontendController
 
   def new
     respond_to do |format|
-       format.js {render "new", locals: {mah_list: @list} }
+       format.js {render "new", locals: {mah_ride: @ride} }
     end
   end
 
 
   def edit
     respond_to do |format|
-       format.js {render "edit", locals: {list: @list, schedule: @schedule} }
+       format.js {render "edit", locals: {ride: @ride, schedule: @schedule} }
     end
   end
 
@@ -34,12 +34,12 @@ class Frontend::SchedulesController < FrontendController
 
   def create
     #TODO Clean it
-    @schedule = @list.schedules.new(schedule_params)
+    @schedule = @ride.schedules.new(schedule_params)
     morning_ride  = params[:schedule][:morning_ride]
     evening_ride = params[:schedule][:evening_ride]
 
     if (  morning_ride.to_bool and evening_ride.to_bool )
-      if ( create_slot(:morning, @list.schedule.new(schedule_params)) and create_slot(:evening, @list.schedule.new(schedule_params)) )
+      if ( create_slot(:morning, @ride.schedule.new(schedule_params)) and create_slot(:evening, @ride.schedule.new(schedule_params)) )
         render nothing: true
       else
       end
@@ -97,7 +97,7 @@ class Frontend::SchedulesController < FrontendController
   def destroy
     @schedule.destroy
     respond_to do |format|
-      #format.html { redirect_to list_path(@list), notice: 'Schedule was successfully destroyed.' }
+      #format.html { redirect_to ride_path(@ride), notice: 'Schedule was successfully destroyed.' }
       #format.json { head :no_content }
       format.js { render nothing: true}
     end
@@ -135,11 +135,11 @@ class Frontend::SchedulesController < FrontendController
       @evening_ride = params[:schedule][:evening_ride] || ""
     end
 
-    def set_list
-      @list = List.find(params[:list_id])
+    def set_ride
+      @ride = Ride.find(params[:ride_id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Never trust parameters from the scary internet, only allow the white ride through.
     def schedule_params
       params.require(:schedule).permit(:start_time, :end_time, :morning_ride, :evening_ride, :all_day)
     end

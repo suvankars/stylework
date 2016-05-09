@@ -11,7 +11,7 @@
       %th= model_class.human_attribute_name(:morning_ride)
       %th= model_class.human_attribute_name(:evening_ride)
       %th= model_class.human_attribute_name(:all_day)
-      %th= model_class.human_attribute_name(:list_id)
+      %th= model_class.human_attribute_name(:ride_id)
       %th= model_class.human_attribute_name(:created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
@@ -24,7 +24,7 @@
         %td= schedule.morning_ride
         %td= schedule.evening_ride
         %td= schedule.all_day
-        %td= schedule.list_id
+        %td= schedule.ride_id
         %td=l schedule.created_at
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_schedule_path(schedule), :class => 'btn btn-default btn-xs'

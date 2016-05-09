@@ -1,0 +1,153 @@
+- model_class = Ride
+/#calendar
+.jumbotron.jumbotron-md-cover.img-fluid{:style => "background-image: url(#{@cover_image});"}
+  .ride-caption
+    .container
+      .row
+        .col-xs-12.col-sm-8.col-md-8.col-lg-8
+          %h1.trim= model_class.human_attribute_name(@ride.ride_title)
+          .hidden-xs.ride-details
+            %h3= @ride.subcategory.name
+            .measurement
+              %p
+                = model_class.human_attribute_name(:rider_height)
+                = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
+              %p
+                = model_class.human_attribute_name(:frame_size)
+                = @ride.frame_size.to_i.to_cm
+        .col-xs-12.col-sm-4.col-md-4.col-lg-4
+          #timer{"data-animated" => "FadeIn"}
+            %p#message
+            #hours.timer_box
+              %h1= @ride.hourly_rental.to_i
+              %p= "/Hour"
+            #days.timer_box
+              %h1= @ride.daily_rental.to_i 
+              %p= "/Day"
+            #slot.timer_box
+              %h1= @ride.morning_rental.to_i 
+              %p= "/Slot"
+            #weekly.timer_box 
+              %h1= @ride.weekly_rental.to_i 
+              %p= "/Week"     
+  
+
+.container
+  .row
+    .col-xs-12.col-sm-12.col-md-4.col-lg-4
+      .row
+        .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
+          .panel.panel-default.panel-picker.js-panel-picker
+            .panel-body
+              .panel-container.no-border-bottom
+    .col-xs-12.col-sm-12.col-md-8.col-lg-8
+      .row
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+    
+
+= content_tag "div", id: "ride-info", data: {ride: { ride_id: @ride.id} } do
+  %p
+    %strong= model_class.human_attribute_name(:ride_description) + ':'
+    %br
+    = @ride.ride_description
+  / %p
+  /   %strong= model_class.human_attribute_name(:rider_height) + ':'
+  /   %br
+  /   = @ride.rider_height
+  / %p
+  /   %strong= model_class.human_attribute_name(:frame_size) + ':'
+  /   %br
+  /   = @ride.frame_size
+  / %p
+  /   %strong= model_class.human_attribute_name(:hourly_rental) + ':'
+  /   %br
+  /   = @ride.hourly_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:morning_rental) + ':'
+  /   %br
+  /   = @ride.morning_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:evening_rental) + ':'
+  /   %br
+  /   = @ride.evening_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:daily_rental) + ':'
+  /   %br
+  /   = @ride.daily_rental
+  / %p
+  /   %strong= model_class.human_attribute_name(:weekly_rental) + ':'
+  /   %br
+  /   = @ride.weekly_rental
+  %p
+    %strong= model_class.human_attribute_name(:willing_to_deliver) + ':'
+    %br
+    = @ride.willing_to_deliver
+  %p
+    %strong= model_class.human_attribute_name(:address) + ':'
+    %br
+    = @ride.address
+  %p
+    %strong= model_class.human_attribute_name(:latitude) + ':'
+    %br
+    = @ride.latitude
+  %p
+    %strong= model_class.human_attribute_name(:longitude) + ':'
+    %br
+    = @ride.longitude  
+  %p
+    %strong= model_class.human_attribute_name(:city) + ':'
+    %br
+    = @ride.city
+  %p
+    %strong= model_class.human_attribute_name(:state) + ':'
+    %br
+    = @ride.state
+  %p
+    %strong= model_class.human_attribute_name(:pincode) + ':'
+    %br
+    = @ride.pincode
+  %p
+    %strong= model_class.human_attribute_name(:landmark) + ':'
+    %br
+    = @ride.landmark
+
+  / %p
+  /   - if !@ride.images.nil?
+  /     - @ride.images.each_with_index do |image, index|
+  /       %li{:id => image["public_id"]}
+  /         = image_tag(image["thumbnail_url"])
+  /         = link_to "Delete", image_path(:id => @ride.id, :resource_type => @ride.class, :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
+
+  / = field_set_tag 'Schedule your ride' do
+  /   = render partial: "frontend/schedules/form"
+
+
+  %h3 Nearby locations
+  %ul
+    - if !@ride.nearbys(3).nil?
+      - for ride in @ride.nearbys(3)
+        %li
+          = link_to ride.address, ride
+          (#{ride.distance.round(2)} miles)  
+
+  %h3 Your Scheduled ride
+  =render partial: "frontend/schedules/schedules", :locals => { :schedules => @ride.schedules.all, :ride => @ride}
+
+
+  
+  #event_desc_dialog.dialog{:style => "display:none;"}
+    
+
+  #create_event_dialog.dialog{:style => "display:none;"}
+    = render partial: "frontend/schedules/form"
+
+
+
+
+   
+  = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-default'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_ride_path(@ride), :class => 'btn btn-default'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), ride_path(@ride), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+
+

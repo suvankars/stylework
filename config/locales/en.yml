@@ -54,3 +54,9 @@ en:
   stock_levels:
     create_notice: 'Stock level has been adjusted successfully'
     current_stock_level_html: "Current stock level is <b>%{product_stock}</b>"
+
+  calendar_description: 'Choose your availability on the schedule below for all of your listed rides. Just choose days that you are generally Unavailable and we willl make sure no one requests your rides then'
+  ride: 
+    no_schedule: "You didn't scheduled any ride, please schedule your ride"
+    schedule: "Schedule Your Ride"
+    nearbys: "No body listed ride nearby you; Make you ride stand out"

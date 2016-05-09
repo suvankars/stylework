@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
   
-  get '/lists/:id/calendar' => 'frontend/lists#calendar'
+  #get '/rides/:id/calendar' => 'frontend/rides#calendar'
+  get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
  
   scope module: 'frontend' do
     resources :calendars, :only => [:index ]
-    resources :lists do
+    resources :rides do
       get 'search_index', :on => :collection 
-      get 'get_lists', :on => :collection 
-      
+      get 'get_rides', :on => :collection
+       member do
+        get 'show_ride'
+        get 'calendar'
+      end
       resources :schedules do
         get 'home', :on => :collection
         patch 'resize', on: :member

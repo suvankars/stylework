@@ -1,0 +1,17 @@
+
+%hr
+-rides.each do |ride|
+  #ride-ride
+    %li[ride]
+      = link_to ride_path(ride), :remote => true do
+        .ride-details
+          .ride-image
+            - if !ride.images.nil?
+              - image = ride.images.first
+              = image_tag(image["thumbnail_url"])
+          .ride-body
+            %h4.media-heading= ride.ride_title
+            %p= ride.ride_description
+    %hr        
+
+

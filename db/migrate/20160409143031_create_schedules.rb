@@ -6,7 +6,7 @@ class CreateSchedules < ActiveRecord::Migration
       t.boolean :morning_ride
       t.boolean :evening_ride
       t.boolean :all_day
-      t.references :list, index: true, foreign_key: true
+      t.references :ride, index: true, foreign_key: true
 
       t.timestamps null: false
     end
