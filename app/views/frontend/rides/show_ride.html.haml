@@ -34,14 +34,20 @@
 
 .container
   .row
-    
     .col-xs-12.col-sm-12.col-md-8.col-lg-8
       .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
           .panel.panel-info
             .panel-heading
-              %h3
-                Ride Details 
+              .row
+                .col-xs-12.col-sm-12.col-md-8.col-lg-8
+                  %h3
+                    Ride Details 
+                .col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  .panel-action  
+                    = link_to t('.edit', :default => t("helpers.links.edit")), edit_ride_path(@ride), :class => 'btn btn-primary'
+                    = link_to t('.destroy', :default => t("helpers.links.destroy")), ride_path(@ride), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' 
+  
             .panel-body
               %p 
                 = @ride.ride_description
@@ -93,10 +99,14 @@
                               .action  
                                 = link_to "Delete", image_path(:id => @ride.id, :resource_type => @ride.class, :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
 
-              .panel-container
-                %h4
-                  Extras
+    
+            .panel-footer
+              .footer-action
+                = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
+  
+              
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
+
     .col-xs-12.col-sm-12.col-md-4.col-lg-4
       .row
         .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
@@ -126,7 +136,8 @@
                     - for ride in @ride.nearby_me
                       %li
                         = link_to ride.address, ride
-                        (#{ride.distance.round(2)} miles) 
+                        (#{ride.distance.round(2)} miles)
+
 = content_tag "div", id: "ride-info", data: {ride: { ride_id: @ride.id} } do
  
 
@@ -221,7 +232,3 @@
 
 
 
-   
-  = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-default'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_ride_path(@ride), :class => 'btn btn-default'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), ride_path(@ride), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

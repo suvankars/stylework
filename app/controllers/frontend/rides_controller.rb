@@ -84,6 +84,14 @@ class Frontend::RidesController < FrontendController
   end
   
   def show
+    @filterrific = initialize_filterrific(
+      @ride,
+      params[:filterrific],
+       select_options: {
+        with_created_at_gte: Ride.options_for_select
+      },
+    ) or return
+
     @cover_image = @ride.images.first["url"] if @ride.images?
     respond_to do |format|
       format.html {  }
