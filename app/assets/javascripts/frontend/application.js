@@ -23,6 +23,7 @@
 //= require moment
 //= require filterrific/filterrific-jquery
 //= require chardinjs
+//= require bootstrap-datetimepicker
 
 //= require fullcalendar
 

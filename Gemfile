@@ -103,3 +103,5 @@ gem 'filterrific'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
+
+gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'

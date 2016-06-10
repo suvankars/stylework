@@ -24,8 +24,10 @@ class Schedule < ActiveRecord::Base
         :title => ride.ride_title,
         :start => start_time.rfc822,
         :end => end_time.rfc822,
-        :allDay => self.all_day,
         :recurring => false,
+        :allDay => self.all_day,
+        :morning_ride => self.morning_ride,
+        :evening_ride => self.evening_ride
         #:url => Rails.application.routes.url_helpers.ride_schedule_path(ride, self)
         #:color => "red"
       }
