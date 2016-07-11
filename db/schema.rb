@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160409143031) do
+ActiveRecord::Schema.define(version: 20160708200132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,11 @@ ActiveRecord::Schema.define(version: 20160409143031) do
   end
 
   add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id", using: :btree
+
+  create_table "insights", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "product_fields", force: :cascade do |t|
     t.string   "name"
@@ -152,10 +157,12 @@ ActiveRecord::Schema.define(version: 20160409143031) do
     t.integer  "category_id"
     t.integer  "subcategory_id"
     t.json     "images"
+    t.integer  "user_id"
   end
 
   add_index "rides", ["category_id"], name: "index_rides_on_category_id", using: :btree
   add_index "rides", ["subcategory_id"], name: "index_rides_on_subcategory_id", using: :btree
+  add_index "rides", ["user_id"], name: "index_rides_on_user_id", using: :btree
 
   create_table "schedules", force: :cascade do |t|
     t.datetime "start_time"
@@ -248,6 +255,7 @@ ActiveRecord::Schema.define(version: 20160409143031) do
   add_foreign_key "products", "users"
   add_foreign_key "rides", "categories"
   add_foreign_key "rides", "subcategories"
+  add_foreign_key "rides", "users"
   add_foreign_key "schedules", "rides"
   add_foreign_key "stock_levels", "products"
   add_foreign_key "subcategories", "categories"

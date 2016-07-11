@@ -14,8 +14,34 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+   config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  # SMTP settings for gmail
+  # Read private information from a yml file
+  Private = YAML.load_file("#{Rails.root}/config/private.yml")
+  # config.action_mailer.smtp_settings = {
+  #  :address              => "smtp.gmail.com",
+  #  :port                 => 587,
+  #  :user_name            => 'suvankar.17@gmail.com',
+  #  :password             => '#n5e88a2012**!',
+  #  :authentication       => "plain"
+  # }
+
+  puts Private['domain']
+  ActionMailer::Base.smtp_settings = {
+    :port           => 587,
+    :address        => "smtp.mailgun.org",
+    :domain         => Private['domain'],
+    :user_name      => Private['username'],
+    :password       => Private['password'],
+    :authentication => :plain,
+  }
+
+
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

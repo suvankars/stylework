@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   
   #get '/rides/:id/calendar' => 'frontend/rides#calendar'
   get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
- 
+  
   scope module: 'frontend' do
     resources :calendars, :only => [:index ]
     resources :rides do
@@ -23,10 +23,14 @@ Rails.application.routes.draw do
 
   namespace :frontend do
     get 'home/index'
+    get 'reservations/index'
+    post 'reservations/create'
   end
 
-  devise_for :users
-  
+  #devise_for :users
+  devise_for :users, controllers: { sessions: 'users/sessions', 
+                                    registrations: 'users/registrations' }
+
   apipie
   
   namespace :api do

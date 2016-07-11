@@ -79,3 +79,18 @@ li.list {
 .panel-container.no-border {
   margin: -17px;
 }
+
+label.info {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: right;
+    float: left;
+    clear: both;
+    margin-right: 15px;
+}
+
+.pading-15 {
+  padding-top: 15px;
+}

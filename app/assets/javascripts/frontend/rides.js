@@ -85,6 +85,7 @@ $(function(){
 var updateEvent;
 var display;
 var refetch_events_and_close_dialog;
+var show_resarvation_status;
 
 $(document).ready(function() {
   if(document.getElementById("ride-info")){
@@ -488,14 +489,12 @@ showRentalAmount = function(rentAmount){
 };
 
 showRentalBreakup = function(rentBreakups){
-  debugger
-  //humainesRentBreakup
+   //humainesRentBreakup
   var slotType = Object.keys(rentBreakups);
   var rentTypes = Object.keys(rentBreakups[slotType]);
   var div = document.getElementById("fare-breakup")
   var msg = "";
   function rentalBreakup(rentType, index, array) {
-    debugger
     var rentDetails = rentBreakups[slotType][rentType];
     //2 Weeks @ $70.00 / week $1200
     msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit + ' = ' + rentDetails.rent + '</br>'
@@ -612,3 +611,57 @@ $(document).ready(function(){
 
 });
 
+$(document).ready(function(){
+  $('#create_reservations').on('click', function() {
+    console.log("I am about to explode")
+    var $spinner = $('.spinner');
+    var startTime = $("#schedule-start").text();
+    var endTime = $("#schedule-end").text();
+    var address = $("#address").text().trim();
+    var price = $("#ride-fare").text();
+    var valuesToSubmit = {startTime: startTime,
+                          endTime: endTime,
+                          address: address,
+                          price: price};
+  
+  console.log(valuesToSubmit);
+
+    event.preventDefault();
+    $.ajax({
+      type: "POST",
+      data: valuesToSubmit,
+      url: '/frontend/reservations/create',
+      beforeSend: show_spinner,
+      complete: hide_spinner,
+      success: show_resarvation_status(startTime, endTime, price),
+      error: handle_error
+    });
+
+    
+    function show_spinner() {
+      $spinner.show();
+    }
+
+    function hide_spinner() {
+      $spinner.hide();
+    }
+
+    function handle_error(xhr) {
+      alert(xhr.responseText);
+    }
+  })
+
+});
+
+
+show_resarvation_status = function (startTime, endTime, price){
+    $('#after-reservation').show();
+    $("#reservation-details").hide();
+    $("#revervaion-calendar").hide();
+    //var msg = "<h3>A Slot has been booked for you<h3> </br> from " + startTime + " "  + endTime;
+    //$("#reservation-details").replaceWith( msg );
+    $('#ride-start-time').text(startTime);
+    $('#ride-end-time').text(endTime);
+    $('#ride-price').text(price);
+    console.log("A Slot has been booked")
+  }

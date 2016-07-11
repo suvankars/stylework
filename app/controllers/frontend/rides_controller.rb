@@ -1,4 +1,6 @@
 class Frontend::RidesController < FrontendController
+  before_filter :authenticate_user!
+
   before_action :set_ride, only: [:show_ride, :get_rides, :calendar, :show, :edit, :update, :destroy]
   
   RADIOUS = 15; #mile
@@ -132,7 +134,7 @@ class Frontend::RidesController < FrontendController
     @ride.images = Rails.cache.read("images")
     Rails.cache.delete('images')
     @ride.category_id = default_category.id
-
+    @ride.user = current_user
     respond_to do |format|
       if @ride.save
         format.html { redirect_to show_ride_ride_path(@ride), notice: 'Ride was successfully created.' }
