@@ -58,93 +58,126 @@
           .panel.panel-default.panel-picker.js-panel-picker
             .panel-body
               .panel-container.no-border
-                = form_for_filterrific @filterrific do |f|
-                  .row
-                    .col-lg-6.col-sm-6.col-md-6
-                      .ride-image
-                      - if !@ride.images.nil?
-                        - image = @ride.images.first
-                        = image_tag(image["thumbnail_url"])
-                    .col-lg-6.col-sm-6.col-md-6
-                      .ride-body
-                        %h4.media-heading= @ride.ride_title
-                        %h4= "#{@ride.subcategory.name} ( #{@ride.frame_size.to_i.to_cm} )"
-                  %hr      
-                  .row
-                    .col-lg-6.col-sm-6.col-md-6
-                      %label Pickup
-                      #schedule-start
-                    .col-lg-6.col-sm-6.col-md-6
-                      %label Drop
-                      #schedule-end
-                  .row
-                    %label Rent Duration
-                    #rent-duration
+                #after-reservation.pading-15
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                    .panel.panel-info
+                      .panel-heading
+                        .row
+                          .col-xs-12.col-sm-12.col-md-8.col-lg-8
+                            %p A slot has been booked for you :)
+                            %h3
+                              Reservation Details 
+                          .col-xs-12.col-sm-12.col-md-4.col-lg-4
+                            .panel-action  
+                              = link_to t('.cancel', :default => t("helpers.links.cancel")), '#', :class => 'btn btn-warn'
+            
+                      .panel-body
+                        %p= @ride.ride_title
+                      %ul.list-group
+                        %li.list-group-item
+                          %label.info From:
+                          #ride-start-time
+                        %li.list-group-item  
+                          %label.info To:
+                          #ride-end-time
+                        %li.list-group-item
+                          %label.info Price:
+                          #ride-price
+                        %li.list-group-item    
+                          %p= @ride.address
+                #reservation-details
+                  = form_for_filterrific @filterrific do |f|
+                    .row
+                      .col-lg-6.col-sm-6.col-md-6
+                        .ride-image
+                        - if !@ride.images.nil?
+                          - image = @ride.images.first
+                          = image_tag(image["thumbnail_url"])
+                      .col-lg-6.col-sm-6.col-md-6
+                        .ride-body
+                          %h4.media-heading= @ride.ride_title
+                          %h4= "#{@ride.subcategory.name} ( #{@ride.frame_size.to_i.to_cm} )"
+                    %hr      
+                    .row
+                      .col-lg-6.col-sm-6.col-md-6
+                        %label Pickup
+                        #schedule-start
+                      .col-lg-6.col-sm-6.col-md-6
+                        %label Drop
+                        #schedule-end
+                    .row
+                      %label Rent Duration
+                      #rent-duration
 
-                  %hr    
-                  .row  
-                    %p= @ride.address
-                    %span.f-w100.size-12.help.pointer.blue{"data-original-title" => "", :onclick => "showModal('GVK One Mall (P3 parking)', '/map?lat=17.41910479096239&amp;lng=78.44821074977517&amp;title=GVK One Mall (P3 parking)');", :title => "sa"}(view map) 
-                  %hr    
-                  .row
-                    %label Price Details
-                    #ride-fare
-                  %hr    
-                  .row
-                    %label Price Breakups
-                    #fare-breakup
-                  .row
-                    #total-fare        
-                        
-                  / .row
-                  /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                  /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                  /       %label Pickup
-                  /       = f.text_field :with_created_at_gte,
-                  /        :class => 'js-datepicker form-control'
-                  / .row  
-                  /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                  /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                  /       %label Drop
-                  /       = f.text_field :with_created_at_gte,
-                  /        :class => 'js-datepicker form-control'
-                  = link_to t('ride.reserve'), calendar_ride_path(@ride), :class => 'btn btn-success btn-block'              
+                    %hr    
+                    .row 
+                      #address 
+                        %p= @ride.address
+                        %span.f-w100.size-12.help.pointer.blue{"data-original-title" => "", :onclick => "showModal('GVK One Mall (P3 parking)', '/map?lat=17.41910479096239&amp;lng=78.44821074977517&amp;title=GVK One Mall (P3 parking)');", :title => "sa"}(view map) 
+                    %hr    
+                    .row
+                      %label Price Details
+                      #ride-fare
+                    %hr    
+                    .row
+                      %label Price Breakups
+                      #fare-breakup
+                    .row
+                      #total-fare        
+                          
+                    / .row
+                    /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
+                    /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+                    /       %label Pickup
+                    /       = f.text_field :with_created_at_gte,
+                    /        :class => 'js-datepicker form-control'
+                    / .row  
+                    /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
+                    /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+                    /       %label Drop
+                    /       = f.text_field :with_created_at_gte,
+                    /        :class => 'js-datepicker form-control'
+                    /= link_to t('ride.reserve'), frontend_reservations_index_path, :data => { :foo => 'bar', :this => 'that' }, :class => 'btn btn-success btn-block' 
+                  #create_reservations
+                    = button_to 'Reserve my slot', frontend_reservations_create_path, :class => 'btn btn-success btn-block'
+                   
 
       .row
-        .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
-          .panel.panel-default.panel-picker.js-panel-picker
-            .panel-body
-              .panel-container.no-border
-                #calendar
-                  /= form_for_filterrific @filterrific do |f|
-                  / .row
-                  /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                  /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                  /       %label Pickup
-                  /       = f.text_field :with_created_at_gte,
-                  /        :class => 'js-datepicker form-control'
-                  / .row  
-                  /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                  /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                  /       %label Drop
-                  /       = f.text_field :with_created_at_gte,
-                  /        :class => 'js-datepicker form-control'     
-                  
-    .container
-      .col-md-5
-        .form-group
-          #datetimepicker6.input-group.date
-            %input.form-control{:type => "text"}/
-            %span.input-group-addon
-              %span.glyphicon.glyphicon-calendar
-      .col-md-5
-        .form-group
-          #datetimepicker7.input-group.date
-            %input.form-control{:type => "text"}/
-            %span.input-group-addon
-              %span.glyphicon.glyphicon-calendar
-   
-  = link_to t('ride.reserve'), calendar_ride_path(@ride), :class => 'btn btn-success btn-block'            
+        #revervaion-calendar
+          .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
+            .panel.panel-default.panel-picker.js-panel-picker
+              .panel-body
+                .panel-container.no-border
+                  #calendar
+                    /= form_for_filterrific @filterrific do |f|
+                    / .row
+                    /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
+                    /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+                    /       %label Pickup
+                    /       = f.text_field :with_created_at_gte,
+                    /        :class => 'js-datepicker form-control'
+                    / .row  
+                    /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
+                    /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+                    /       %label Drop
+                    /       = f.text_field :with_created_at_gte,
+                    /        :class => 'js-datepicker form-control'     
+                    
+    /   .container
+    /     .col-md-5
+    /       .form-group
+    /         #datetimepicker6.input-group.date
+    /           %input.form-control{:type => "text"}/
+    /           %span.input-group-addon
+    /             %span.glyphicon.glyphicon-calendar
+    /     .col-md-5
+    /       .form-group
+    /         #datetimepicker7.input-group.date
+    /           %input.form-control{:type => "text"}/
+    /           %span.input-group-addon
+    /             %span.glyphicon.glyphicon-calendar
+     
+  / = link_to t('ride.reserve'), calendar_ride_path(@ride), :class => 'btn btn-success btn-block'            
 
 = content_tag "div", id: "ride-info", data: {ride: { ride_id: @ride.id} } do
  
@@ -159,6 +192,9 @@
 
 :javascript
 
+
+   $('#after-reservation').hide();
+
   //For date picker in the filter 
   $('.js-datepicker').datepicker();
   $('#overlayTrigger').click(function(event) {
@@ -167,6 +203,7 @@
   });
   
   
+
   $(function () {
       $('#datetimepicker6').datetimepicker();
       $('#datetimepicker7').datetimepicker({

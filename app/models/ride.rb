@@ -20,7 +20,8 @@ class Ride < ActiveRecord::Base
   belongs_to :category
   belongs_to :subcategory
 
-  geocoded_by :address   
+  geocoded_by :address
+  belongs_to :user   
   
   # TBD
   # def address
