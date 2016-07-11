@@ -45,8 +45,8 @@ reRenderRideList = function(rides){
               $('<div class="ride-image">').append('<img src=' + image_url +'>'),
 
               $('<div class="ride-body">').append(
-                $('<h4 class="media-heading">').text(ride.ride_title),
-                $('<p>').text(ride.ride_description)
+                $('<h4 class="media-heading">').text(ride.title),
+                $('<p>').text(ride.description)
               )
             )
           )
@@ -60,7 +60,7 @@ reRenderRideList = function(rides){
 
 //On Submit a search on map
 //Reposition all available rides on map and update ride-list
-
+$('#calendar').fullCalendar();
 $(function(){ 
   $("#ajax").click(function(){
     var valuesToSubmit = $('#gmaps-input-address').val();
@@ -423,15 +423,15 @@ computeRental = function(startTime, endTime, slotType){
   //var duration = moment.duration(startTime.diff(endTime));
 
   //debugger;
-  //debugger
+  debugger
   var breakups= { };
   switch (slotType){
     case "morning_slot":
+      var duration = computeDuration(startTime, endTime);
       var rate = parseInt( document.getElementById("slot").getElementsByTagName('h1')[0].textContent );
-      var rent = rate;
+      var rent = duration.hours*rate;
       //breakups += "Morning Slot @" + rate + "/slot"
       
-      var duration = computeDuration(startTime, endTime);
       var slotType = breakups.morning_slot = {} ;
       slotType.slot =  {
         duration: duration.hours.humaines(duration.hours, "hour"), 
@@ -444,7 +444,7 @@ computeRental = function(startTime, endTime, slotType){
       var duration = computeDuration(startTime, endTime);
 
       var rate = parseInt( document.getElementById("slot").getElementsByTagName('h1')[0].textContent );
-      var rent = rate;
+      var rent = duration.hours*rate;
       var slotType = breakups.evening_slot = {};
       slotType.slot =  {
         duration: duration.hours.humaines(duration.hours, "hour"), 
@@ -457,7 +457,7 @@ computeRental = function(startTime, endTime, slotType){
       var duration = computeDuration(startTime, endTime);
       
       var rate = parseInt( document.getElementById("days").getElementsByTagName('h1')[0].textContent );
-      var rent = rate;
+      var rent = duration.days*rate;
 
       var slotType = breakups.all_day = {};
       slotType.day =  {

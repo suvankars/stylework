@@ -5,16 +5,16 @@
     .container
       .row
         .col-xs-12.col-sm-8.col-md-8.col-lg-8
-          %h1.trim= model_class.human_attribute_name(@ride.ride_title)
+          %h1.trim= model_class.human_attribute_name(@ride.title)
           .hidden-xs.ride-details
             %h3= @ride.subcategory.name
             .measurement
               %p
-                = model_class.human_attribute_name(:rider_height)
-                = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
+                = model_class.human_attribute_name(:amenities)
+                = @ride.amenities
               %p
-                = model_class.human_attribute_name(:frame_size)
-                = @ride.frame_size.to_i.to_cm
+                = model_class.human_attribute_name(:number_of_workstations)
+                = @ride.number_of_workstations.to_i
         .col-xs-12.col-sm-4.col-md-4.col-lg-4
           #timer{"data-animated" => "FadeIn"}
             %p#message
@@ -42,13 +42,13 @@
               .row
                 .col-xs-12.col-sm-12.col-md-8.col-lg-8
                   %h3
-                    Ride Details 
+                    Workplace Details 
                 .col-xs-12.col-sm-12.col-md-4.col-lg-4
                   .panel-action  
                     = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
   
             .panel-body
-              %p= @ride.ride_description
+              %p= @ride.description
             %ul.list-group
               %li.list-group-item
                 %p= @ride.address
@@ -72,7 +72,7 @@
                               = link_to t('.cancel', :default => t("helpers.links.cancel")), '#', :class => 'btn btn-warn'
             
                       .panel-body
-                        %p= @ride.ride_title
+                        %p= @ride.title
                       %ul.list-group
                         %li.list-group-item
                           %label.info From:
@@ -95,8 +95,8 @@
                           = image_tag(image["thumbnail_url"])
                       .col-lg-6.col-sm-6.col-md-6
                         .ride-body
-                          %h4.media-heading= @ride.ride_title
-                          %h4= "#{@ride.subcategory.name} ( #{@ride.frame_size.to_i.to_cm} )"
+                          %h4.media-heading= @ride.title
+                          %h4= "#{@ride.subcategory.name} ( #{@ride.amenities} )"
                     %hr      
                     .row
                       .col-lg-6.col-sm-6.col-md-6
