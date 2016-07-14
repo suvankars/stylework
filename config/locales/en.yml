@@ -21,7 +21,8 @@
 
 en:
   hello: "Hello world"
-  caption: "Walk in to work nearby you ..." 
+  caption: "walk in and work in style ..." 
+  tag_line: "Rent a workstation near by you" 
   variants:
       no_products: 'No products to display.'
       variants_of: 'Variants of %{product}'

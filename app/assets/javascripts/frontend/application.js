@@ -26,7 +26,10 @@
 //= require chardinjs
 //= require bootstrap-datetimepicker
 
-//= require fullcalendar
+//= require  fullcalendar
+//= require contact_me
+//= require jqBootstrapValidation
+//= require freelancer.min
 
 
 //= require_tree .

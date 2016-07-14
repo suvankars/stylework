@@ -11,13 +11,6 @@
   transform: translate(-70%, -80%);
 }
 
-#gmaps-input-address {
-  height: 35px;
-  width: 400px;
-  border-color: darkorange;
-  border-bottom-style: dotted;
-}
-
 .slogan{
   padding-left: 36px;
   font-style: oblique;
@@ -25,7 +18,12 @@
   color: darkorange;
 }
 
-
+form#search_box {
+    padding: 0px;
+    overflow: inherit;
+    margin-left: 125px;
+    margin-right: 200px;
+} 
 .border-form-div {
   max-width: 300px;
   padding: 19px 29px 29px;
