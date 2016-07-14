@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
   
   scope module: 'frontend' do
+    resources :notifications
     resources :calendars, :only => [:index ]
     resources :rides do
       get 'search_index', :on => :collection 

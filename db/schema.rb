@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708200132) do
+ActiveRecord::Schema.define(version: 20160714221431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 20160708200132) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "contact_us", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.string   "email"
     t.string   "telephone"
@@ -79,6 +88,16 @@ ActiveRecord::Schema.define(version: 20160708200132) do
   end
 
   add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "pincode"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "product_fields", force: :cascade do |t|
     t.string   "name"

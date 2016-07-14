@@ -1,12 +1,20 @@
 - model_class = Ride
 %p
 %p
+%hr
 /TBD: refactor, Same form as search_index except 'id' field
-= form_tag rides_path, :method => :get, remote: true do
-  %p
-    = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
-    = submit_tag "Search Near", :name => nil, :id=>"ajax" 
+/ = form_tag rides_path, :method => :get, remote: true do
+/   %p
+/     = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
+/     = submit_tag "Search Near", :name => nil, :id=>"ajax" 
 
+= form_tag rides_path, :method => :get, :class => 'search', :style => 'elm_styledo' do
+  .row
+    .input-group.input-group-lg
+      %span#basic-addon1.input-group-addon.glyphicon.glyphicon-search
+      = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
+      %span.input-group-btn
+        = submit_tag "Search Near", :name => nil , :class => 'btn btn-lg btn-success'
 //Adding filter
 = form_for_filterrific @filterrific do |f|
   .row

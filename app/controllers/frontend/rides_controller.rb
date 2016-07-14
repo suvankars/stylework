@@ -59,7 +59,6 @@ class Frontend::RidesController < FrontendController
     
     if request.xhr?
       payload = {"rides": JSON::parse(@rides.to_json), "hash": @hash }
-      p payload
       respond_to do |format|
         format.json { render :json => payload}
         format.js 
