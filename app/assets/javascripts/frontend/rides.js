@@ -454,6 +454,7 @@ computeRental = function(startTime, endTime, slotType){
       };
       break;
     case "all_day":
+      debugger
       var duration = computeDuration(startTime, endTime);
       
       var rate = parseInt( document.getElementById("days").getElementsByTagName('h1')[0].textContent );
@@ -484,11 +485,18 @@ computeRental = function(startTime, endTime, slotType){
 };
 
 showRentalAmount = function(rentAmount){
-  document.getElementById("ride-fare").innerHTML = rentAmount;
-  document.getElementById("total-fare").innerHTML = "Total: " + rentAmount;
+  //Quick fix for no_of_ws selection
+  var elm = document.getElementById("ride_number_of_workstations");
+  var no_of_ws = Number(elm.options[elm.selectedIndex].value)
+  document.getElementById("ride-fare").innerHTML = rentAmount * no_of_ws;
+  document.getElementById("total-fare").innerHTML = "Total: " + rentAmount * no_of_ws;
 };
 
 showRentalBreakup = function(rentBreakups){
+  //Quick fix for no_of_ws selection
+  var elm = document.getElementById("ride_number_of_workstations");
+  var no_of_ws = Number(elm.options[elm.selectedIndex].value)
+
    //humainesRentBreakup
   var slotType = Object.keys(rentBreakups);
   var rentTypes = Object.keys(rentBreakups[slotType]);
@@ -497,7 +505,7 @@ showRentalBreakup = function(rentBreakups){
   function rentalBreakup(rentType, index, array) {
     var rentDetails = rentBreakups[slotType][rentType];
     //2 Weeks @ $70.00 / week $1200
-    msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit + ' = ' + rentDetails.rent + '</br>'
+    msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit + ' for ' + no_of_ws + ' work station = ' + rentDetails.rent * no_of_ws + '</br>'
   }
 
     rentTypes.forEach(rentalBreakup);
