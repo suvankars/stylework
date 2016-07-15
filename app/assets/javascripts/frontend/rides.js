@@ -615,14 +615,20 @@ $(document).ready(function(){
   $('#create_reservations').on('click', function() {
     console.log("I am about to explode")
     var $spinner = $('.spinner');
+    var elm = document.getElementById("ride_number_of_workstations");
+    var no_of_ws = elm.options[elm.selectedIndex].value
     var startTime = $("#schedule-start").text();
     var endTime = $("#schedule-end").text();
     var address = $("#address").text().trim();
     var price = $("#ride-fare").text();
-    var valuesToSubmit = {startTime: startTime,
+    var ride_id = document.getElementById("ride_id").innerText
+
+    var valuesToSubmit = {id: ride_id,
+                          startTime: startTime,
                           endTime: endTime,
                           address: address,
-                          price: price};
+                          price: price,
+                          no_of_ws: no_of_ws};
   
   console.log(valuesToSubmit);
 

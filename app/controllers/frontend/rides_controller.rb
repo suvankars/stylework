@@ -5,7 +5,8 @@ class Frontend::RidesController < FrontendController
   
   RADIOUS = 15; #mile
   DEFAULT_CATEGORY_NAME = "Workplace"
-
+  MIN_NO_SEAT = 1
+  
   def index
     #binding.pry
     # If search box is clicked without typing any address 
@@ -97,6 +98,9 @@ class Frontend::RidesController < FrontendController
       format.html {  }
       format.js {}
     end
+    max_available_seat = @ride.number_of_workstations
+    @workstations = (MIN_NO_SEAT..max_available_seat)
+    @default_number = @workstations.first
   end
 
   def show_ride
