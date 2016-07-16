@@ -30,7 +30,8 @@
 //= require  fullcalendar
 //= require contact_me
 //= require jqBootstrapValidation
+//= require freelancer
 //= require freelancer.min
-
+//= require jquery.easing.min
 
 //= require_tree .

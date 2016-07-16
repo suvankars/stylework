@@ -26,11 +26,11 @@ Rails.application.configure do
   #  :address              => "smtp.gmail.com",
   #  :port                 => 587,
   #  :user_name            => 'suvankar.17@gmail.com',
-  #  :password             => '#n5e88a2012**!',
+  #  :password             => '#******!',
   #  :authentication       => "plain"
   # }
 
-  puts Private['domain']
+  
   ActionMailer::Base.smtp_settings = {
     :port           => 587,
     :address        => "smtp.mailgun.org",

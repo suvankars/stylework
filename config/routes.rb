@@ -23,14 +23,15 @@ Rails.application.routes.draw do
 
 
   namespace :frontend do
+    
     get 'home/index'
     get 'reservations/index'
     post 'reservations/create'
   end
 
   #devise_for :users
-  devise_for :users, controllers: { sessions: 'users/sessions', 
-                                    registrations: 'users/registrations' }
+  devise_for :users#, controllers: { sessions: 'users/sessions', 
+                                #    registrations: 'users/registrations' }
 
   apipie
   

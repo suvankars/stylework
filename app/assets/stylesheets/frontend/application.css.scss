@@ -19,7 +19,6 @@
 
 
 /* Buy sell rent big buttons */
-
 @import 'components/chardinjs_overrides.css';
 
 /* upper left corner button */
@@ -127,20 +126,22 @@ fieldset .description{
 }
 
 
+/* Devise views */
 
 .border-form-div {
-  max-width: 300px;
-  padding: 19px 29px 29px;
-  margin: 0 auto 20px;
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-          box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    max-width: 500px;
+    padding: 34px 29px 29px;
+    margin: 0 auto 20px;
+    border: none;
+    background-color: #f7f9fc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 }
+
 .border-form-div .form-signin-heading,
 .border-form-div .checkbox {
   margin-bottom: 10px;
@@ -152,4 +153,22 @@ fieldset .description{
   height: auto;
   margin-bottom: 15px;
   padding: 7px 9px;
+}
+
+.align {
+  vertical-align: top;
+  display: inline-block;
+  position: relative;
+}
+
+form#new_user {
+    box-shadow: none;
+}
+
+.alert.alert-danger {
+    margin-top: 50px;
+}
+
+.alert.alert-success {
+    margin-top: 50px;
 }

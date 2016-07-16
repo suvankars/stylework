@@ -23,9 +23,10 @@
           / = link_to t('.cancel', :default => t("helpers.links.cancel")), notifications_path, :class => 'btn btn-default'
 
 :javascript
-
-$(document).ready ->
-  $("#new_notification").on("ajax:success", (e, data, status, xhr) ->
-    $("#new_notification").append xhr.responseText
-  ).on "ajax:error", (e, xhr, status, error) ->
-    $("#new_notification").append "<p>ERROR</p>"
+$(document).ready(function() {
+  $("#new_notification").on("ajax:success", function(e, data, status, xhr) {
+    $("#new_notification").append(xhr.responseText);
+  }).on("ajax:error", function(e, xhr, status, error) {
+    $("#new_notification").append("<p>ERROR</p>");
+  });
+});
