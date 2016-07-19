@@ -2,17 +2,24 @@
 %p
 %p
 %hr
-/TBD: refactor, Same form as search_index except 'id' field
-/ = form_tag rides_path, :method => :get, remote: true do
-/   %p
-/     = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
-/     = submit_tag "Search Near", :name => nil, :id=>"ajax" 
-
 = form_tag rides_path, :method => :get, :class => 'search', :style => 'elm_styledo' do
   .row
     .input-group.input-group-lg
       %span#basic-addon1.input-group-addon.glyphicon.glyphicon-search
-      = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
+      .row
+        .col-md-6.search-box
+          .input-group.input-group-lg.col-md-12
+            = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
+        .col-md-3.search-box
+          #datetimepicker6.input-group.input-group-lg.col-md-12.date
+            = text_field_tag :pick_up, params[:pick_up], :class => 'form-control'
+            %span.input-group-addon.search-box-icon
+              %span.glyphicon.glyphicon-calendar
+        .col-md-3.search-box
+          #datetimepicker7.input-group.input-group-lg.col-md-12.date
+            = text_field_tag :drop_of, params[:drop_of], :class => 'form-control'
+            %span.input-group-addon.search-box-icon
+              %span.glyphicon.glyphicon-calendar  
       %span.input-group-btn
         = submit_tag "Search Near", :name => nil , :class => 'btn btn-lg btn-success'
 //Adding filter
@@ -96,3 +103,17 @@
     $('body').chardinJs('start');
   });
   
+  //For date picker in the search box
+
+  $(function () {
+      $('#datetimepicker6').datetimepicker();
+      $('#datetimepicker7').datetimepicker({
+          useCurrent: false //Important! See issue #1075
+      });
+      $("#datetimepicker6").on("dp.change", function (e) {
+          $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+      });
+      $("#datetimepicker7").on("dp.change", function (e) {
+          $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+      });
+  });  

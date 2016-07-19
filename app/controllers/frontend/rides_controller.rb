@@ -52,6 +52,11 @@ class Frontend::RidesController < FrontendController
       @rides = Ride.all
     end
 
+    #again filter by date.. bad
+    if params[:drop_of].present? && params[:drop_of].present?
+      @rides = filter_by_date(@rides, params[:pick_up], params[:drop_of])
+    end
+
     @hash = Gmaps4rails.build_markers(@rides) do |ride, marker|
       marker.lat ride.latitude
       marker.lng ride.longitude
@@ -193,5 +198,15 @@ class Frontend::RidesController < FrontendController
 
     def default_category
       Category.where( name: DEFAULT_CATEGORY_NAME).first
+    end
+
+    def filter_by_date(rides, pick_up, drop_of)
+      pick_up_time = DateTime.strptime(pick_up, "%m/%d/%Y %H:%M %P")
+      drop_of_time = DateTime.strptime(drop_of, "%m/%d/%Y %H:%M %P")
+      scheduled_ride = []
+      rides.each do |ride|
+          scheduled_ride.push(ride) if ride.avilable?(pick_up_time, drop_of_time)
+      end
+      scheduled_ride
     end
 end

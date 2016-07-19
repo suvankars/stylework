@@ -70,6 +70,12 @@ class Ride < ActiveRecord::Base
   def nearby_me
     self.nearbys(SHORT_DISTANCE)
   end
+
+  def avilable?(pick_up_time, drop_of_time)
+    #If any rent schedule exists on the ride then return availability true
+    schedules = self.schedules.where("start_time >=? AND end_time <= ?", pick_up_time, drop_of_time) 
+    schedules.any? ? true : false
+  end
 end
 
 
